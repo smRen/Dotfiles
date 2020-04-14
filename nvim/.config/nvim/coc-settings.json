@@ -1,0 +1,7 @@
+{
+    "python.jediEnabled": false,
+    "diagnostic.messageTarget": "float",
+    "signature.target": "float",
+    "coc.preferences.hoverTarget": "float",
+    "suggest.floatEnable": true
+}
