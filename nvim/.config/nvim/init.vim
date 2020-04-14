@@ -107,18 +107,18 @@ nnoremap <C-W><leader>q :bd! <CR>
 nnoremap <leader>n :bn <CR>
 nnoremap <leader>p :bp! <CR>
 " Movement between windows
-tnoremap <C-h> <C-\><C-N><C-w>h
-tnoremap <C-j> <C-\><C-N><C-w>j
-tnoremap <C-k> <C-\><C-N><C-w>k
-tnoremap <C-l> <C-\><C-N><C-w>l
-inoremap <C-h> <C-\><C-N><C-w>h
-inoremap <C-j> <C-\><C-N><C-w>j
-inoremap <C-k> <C-\><C-N><C-w>k
-inoremap <C-l> <C-\><C-N><C-w>l
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+tnoremap <M-h> <C-\><C-N><C-w>h
+tnoremap <M-j> <C-\><C-N><C-w>j
+tnoremap <M-k> <C-\><C-N><C-w>k
+tnoremap <M-l> <C-\><C-N><C-w>l
+inoremap <M-h> <C-\><C-N><C-w>h
+inoremap <M-j> <C-\><C-N><C-w>j
+inoremap <M-k> <C-\><C-N><C-w>k
+inoremap <M-l> <C-\><C-N><C-w>l
+nnoremap <M-h> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
 
 "" Handle html tab spacing
 autocmd BufRead,BufNewFile *.htm,*.html,*.js,*.css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
