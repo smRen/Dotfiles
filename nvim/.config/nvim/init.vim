@@ -133,6 +133,9 @@ nnoremap <M-l> <C-w>l
 "" Handle html tab spacing
 autocmd BufRead,BufNewFile *.htm,*.html,*.js,*.css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 
+"" FZF
+nnoremap <C-p> :Files <CR>
+
 """"""""""""" Coc Settings """""""""""""""""
 " TextEdit might fail if hidden is not set.
 set hidden
