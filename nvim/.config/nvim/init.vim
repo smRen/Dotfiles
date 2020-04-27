@@ -104,7 +104,7 @@ nnoremap <F1> :10sp term://zsh <CR>
 " Escape terminal with escape
 tnoremap <Esc> <C-\><C-n>		      	
 " CTRL-R paste in insert mode inside terminal
-tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+tnoremap <expr> <M-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " Show job id
 nnoremap <leader><C-i> :echo b:terminal_job_id <CR>
 
@@ -135,6 +135,38 @@ autocmd BufRead,BufNewFile *.htm,*.html,*.js,*.css setlocal tabstop=2 shiftwidth
 
 "" FZF
 nnoremap <C-p> :Files <CR>
+nnoremap <M-p> :Buffers <CR>
+
+"" Save cursor and window position when moving between buffers
+"autocmd! BufWinLeave * let b:winview = winsaveview()
+"autocmd! BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
+" Save current view settings on a per-window, per-buffer basis.
+
+function! AutoSaveWinView()
+    if !exists("w:SavedBufView")
+        let w:SavedBufView = {}
+    endif
+    let w:SavedBufView[bufnr("%")] = winsaveview()
+endfunction
+
+" Restore current view settings.
+function! AutoRestoreWinView()
+    let buf = bufnr("%")
+    if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
+        let v = winsaveview()
+        let atStartOfFile = v.lnum == 1 && v.col == 0
+        if atStartOfFile && !&diff
+            call winrestview(w:SavedBufView[buf])
+        endif
+        unlet w:SavedBufView[buf]
+    endif
+endfunction
+
+" When switching buffers, preserve window view.
+if v:version >= 700
+    autocmd BufLeave * call AutoSaveWinView()
+    autocmd BufEnter * call AutoRestoreWinView()
+endif
 
 """"""""""""" Coc Settings """""""""""""""""
 " TextEdit might fail if hidden is not set.
@@ -243,8 +275,8 @@ omap af <Plug>(coc-funcobj-a)
 " Use <TAB> for selections ranges.
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
 " coc-tsserver, coc-python are the examples of servers that support it.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
+" nmap <silent> <TAB> <Plug>(coc-range-select)
+" xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
