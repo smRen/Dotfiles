@@ -10,6 +10,9 @@ unlet autoload_plug_path
 "" Plugins
 call plug#begin()
 
+"" Surround
+Plug 'tpope/vim-surround'
+
 ""Comment lines filetype specific
 Plug 'tpope/vim-commentary'
 
