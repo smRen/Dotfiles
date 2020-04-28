@@ -10,6 +10,9 @@ unlet autoload_plug_path
 "" Plugins
 call plug#begin()
 
+""Comment lines filetype specific
+Plug 'tpope/vim-commentary'
+
 "" Snippets
 " Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
