@@ -64,6 +64,7 @@ Plug 'jeetsukumaran/vim-pythonsense' " Vim objects for python objects
 " Warping through text
 Plug 'easymotion/vim-easymotion' " <leader> <leader> w
 
+
 "" Vim-Slime -> Send text to other panel
 Plug 'jpalardy/vim-slime'
 
@@ -73,6 +74,9 @@ call plug#end()
 " remap leader key to comma 
 let mapleader = ","
 let maplocalleader = "\\"
+
+"Turn off search highlight with esc 
+noremap <silent><esc> <esc>:noh<CR><esc>   
 
 "" Theming
 " colorscheme gruvbox
@@ -110,6 +114,19 @@ let g:airline_theme='onedark'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#ignore_bufadd_pat = 'defx|gundo|nerd_tree|startify|tagbar|undotree|vimfiler'
+
+"" Netrw 
+"" Use :Vexplore
+nnoremap <F2> :Vexplore <CR>
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+augroup ProjectDrawer
+  autocmd!
+  autocmd VimEnter * :Vexplore
+augroup END
 
 " Terminal stuff
 " Launch terminal below
