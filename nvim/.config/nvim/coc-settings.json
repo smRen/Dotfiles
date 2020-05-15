@@ -3,5 +3,8 @@
     "diagnostic.messageTarget": "float",
     "signature.target": "float",
     "coc.preferences.hoverTarget": "float",
-    "suggest.floatEnable": true
+    "suggest.floatEnable": true,
+    "snippets.extends": {
+            "html": ["jinja2","ejs"]
+    }
 }

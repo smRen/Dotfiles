@@ -13,7 +13,7 @@ call plug#begin()
 ""REPL
 Plug 'jalvesaq/vimcmdline'
 
-"" Surround
+"" Surround objects with other stuff
 Plug 'tpope/vim-surround'
 
 ""Comment lines filetype specific
@@ -24,7 +24,7 @@ Plug 'tpope/vim-commentary'
 Plug 'honza/vim-snippets'
 
 ""Jinja syntax
-Plug 'Glench/Vim-Jinja2-Syntax'
+"Plug 'Glench/Vim-Jinja2-Syntax'
 
 "" Vertical Line indentation
 Plug 'Yggdroot/indentLine'
@@ -46,18 +46,13 @@ Plug 'morhetz/gruvbox'
 
 "" Autocomplete and linting
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"" Extensions for COC
-"Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
 
 "" Fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 "" Neovim Grammar Modifications for python
-Plug 'jeetsukumaran/vim-pythonsense' " Vim objects for python objects
+"Plug 'jeetsukumaran/vim-pythonsense' " Vim objects for python objects
 " ac -> outer class, ic -> inner class, af -> outer function
 " if -> inner function, ad -> outer docstring, id -> inner docstring
 
@@ -174,20 +169,13 @@ nnoremap <M-j> <C-w>j
 nnoremap <M-k> <C-w>k
 nnoremap <M-l> <C-w>l
 
-"" Handle ejs files to make them html
-au BufRead,BufNewFile *.ejs setfiletype html
 "" Handle html tab spacing
-autocmd BufRead,BufNewFile *.ejs,*.htm,*.html,*.js,*.css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+" autocmd BufRead,BufNewFile *.ejs,*.htm,*.html,*.js,*.css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 
 
 "" FZF
 nnoremap <C-p> :Files <CR>
 nnoremap <M-p> :Buffers <CR>
-
-"" Save cursor and window position when moving between buffers
-"autocmd! BufWinLeave * let b:winview = winsaveview()
-"autocmd! BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
-" Save current view settings on a per-window, per-buffer basis.
 
 function! AutoSaveWinView()
     if !exists("w:SavedBufView")
@@ -340,7 +328,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
 " Show all diagnostics.
