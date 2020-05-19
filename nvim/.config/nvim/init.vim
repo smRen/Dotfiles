@@ -43,6 +43,10 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'danilo-augusto/vim-afterglow'
+
 
 "" Autocomplete and linting
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -75,8 +79,16 @@ noremap <silent><esc> <esc>:noh<CR><esc>
 
 "" Theming
 " colorscheme gruvbox
-colorscheme onedark
-set background=dark
+" colorscheme onedark
+colorscheme ayu
+let ayucolor="dark"
+" set background=dark
+
+"" IndentLine stuff
+let g:indentLine_char = ''
+let g:indentLine_first_char = ''
+let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_setColors = 0
 
 "" General Config
 filetype plugin indent on                   " File specific settings (like number of spaces in tabs) 
@@ -105,7 +117,7 @@ set wildmode=longest,full,list              " Menu for tab complete files
 "" Airline Configs
 let g:tmuxline_powerline_separators = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme='onedark'
+let g:airline_theme='ayu'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#ignore_bufadd_pat = 'defx|gundo|nerd_tree|startify|tagbar|undotree|vimfiler'
@@ -168,10 +180,6 @@ nnoremap <M-h> <C-w>h
 nnoremap <M-j> <C-w>j
 nnoremap <M-k> <C-w>k
 nnoremap <M-l> <C-w>l
-
-"" Handle html tab spacing
-" autocmd BufRead,BufNewFile *.ejs,*.htm,*.html,*.js,*.css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
-
 
 "" FZF
 nnoremap <C-p> :Files <CR>
@@ -347,3 +355,19 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+" Coc Snippets
+" " Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)

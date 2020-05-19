@@ -5,6 +5,7 @@
     "coc.preferences.hoverTarget": "float",
     "suggest.floatEnable": true,
     "snippets.extends": {
-            "html": ["jinja2","ejs"]
+            "html": ["jinja2","ejs"],
+            "jst": ["ejs","html"]
     }
 }

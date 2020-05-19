@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/home/smakey18/Projects/webdev/todolist-v2-starting-files'
+let g:netrw_dirhist_2='/home/smakey18/Projects/webdev/todolist-v2-starting-files/views'
+let g:netrw_dirhist_1='/home/smakey18/Projects/webdev/todolist-v2-starting-files/public'
+let g:netrw_dirhist_0='/home/smakey18/Projects/webdev/todolist-v2-starting-files/views'
+let g:netrw_dirhist_9='/home/smakey18/Projects/webdev/todolist-v2-starting-files'
+let g:netrw_dirhist_8='/home/smakey18/Projects/webdev/ejs-challenge/views'
+let g:netrw_dirhist_7='/home/smakey18/Projects/webdev/ejs-challenge/views/partials'
+let g:netrw_dirhist_6='/home/smakey18/Projects/webdev/ejs-challenge/views'
+let g:netrw_dirhist_5='/home/smakey18/Projects/webdev/ejs-challenge'
+let g:netrw_dirhist_4='/home/smakey18/Projects/webdev/ejs-challenge/views'
