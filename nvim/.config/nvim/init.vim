@@ -54,6 +54,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "" Fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 
 "" Neovim Grammar Modifications for python
 "Plug 'jeetsukumaran/vim-pythonsense' " Vim objects for python objects
@@ -184,6 +185,8 @@ nnoremap <M-l> <C-w>l
 "" FZF
 nnoremap <C-p> :Files <CR>
 nnoremap <M-p> :Buffers <CR>
+let FZF_DEFAULT_COMMAND='rg --hidden --no-ignore -l ""'
+
 
 function! AutoSaveWinView()
     if !exists("w:SavedBufView")
