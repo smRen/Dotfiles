@@ -10,9 +10,6 @@ unlet autoload_plug_path
 "" Plugins
 call plug#begin()
 
-""REPL
-Plug 'jalvesaq/vimcmdline'
-
 "" Surround objects with other stuff
 Plug 'tpope/vim-surround'
 
@@ -23,15 +20,11 @@ Plug 'tpope/vim-commentary'
 " Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
-""Jinja syntax
-"Plug 'Glench/Vim-Jinja2-Syntax'
-
 "" Vertical Line indentation
 Plug 'Yggdroot/indentLine'
 
 "" Highlight same objects/words
 Plug 'RRethy/vim-illuminate'
-"Plug 'itchyny/vim-cursorword'
 
 "" Better syntax highlighting
 Plug 'sheerun/vim-polyglot'
@@ -47,7 +40,6 @@ Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'danilo-augusto/vim-afterglow'
 
-
 "" Autocomplete and linting
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -56,14 +48,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 
-"" Neovim Grammar Modifications for python
-"Plug 'jeetsukumaran/vim-pythonsense' " Vim objects for python objects
-" ac -> outer class, ic -> inner class, af -> outer function
-" if -> inner function, ad -> outer docstring, id -> inner docstring
-
 " Warping through text
 Plug 'easymotion/vim-easymotion' " <leader> <leader> w
-
 
 "" Vim-Slime -> Send text to other panel
 Plug 'jpalardy/vim-slime'
@@ -86,14 +72,15 @@ let ayucolor="dark"
 " set background=dark
 
 "" IndentLine stuff
-let g:indentLine_char = ''
-let g:indentLine_first_char = ''
+let g:indentLine_char = '┆'
+let g:indentLine_first_char = '┆'
 let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_setColors = 0
 
 "" General Config
 filetype plugin indent on                   " File specific settings (like number of spaces in tabs) 
 syntax enable                               " Nice looking colors
+set nohls                                   " No search highlight
 set number                                  " Absolute number
 set ruler    
 set termguicolors                           " enable true colors support
@@ -129,26 +116,24 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
-" Toggle netrw
-function! ToggleVExplorer()
-  if exists("t:expl_buf_num")
-      let expl_win_num = bufwinnr(t:expl_buf_num)
-      if expl_win_num != -1
-          let cur_win_nr = winnr()
-          exec expl_win_num . 'wincmd w'
-          close
-          exec cur_win_nr . 'wincmd w'
-          unlet t:expl_buf_num
-      else
-          unlet t:expl_buf_num
-      endif
-  else
-      exec '1wincmd w'
-      Vexplore
-      let t:expl_buf_num = bufnr("%")
-  endif
+let g:NetrwIsOpen=0
+function! ToggleNetrw()
+    if g:NetrwIsOpen
+        let i = bufnr("$")
+        while (i >= 1)
+            if (getbufvar(i, "&filetype") == "netrw")
+                silent exe "bwipeout " . i 
+            endif
+            let i-=1
+        endwhile
+        let g:NetrwIsOpen=0
+    else
+        let g:NetrwIsOpen=1
+        silent Lexplore
+    endif
 endfunction
-map <silent> <F2> :call ToggleVExplorer()<CR>
+" Add your own mapping. For example:
+noremap <silent> <F2> :call ToggleNetrw()<CR>
 
 " Terminal stuff
 " Launch terminal below
@@ -215,6 +200,21 @@ if v:version >= 700
 endif
 
 """"""""""""" Coc Settings """""""""""""""""
+
+" Extensions
+let g:coc_global_extensions=[
+                        \"coc-snippets",
+                        \"coc-json",
+                        \"coc-tsserver",
+                        \"coc-html",
+                        \"coc-css",
+                        \"coc-yaml",
+                        \"coc-python",
+                        \"coc-pairs",
+                        \"coc-eslint",
+                        \"coc-clangd",
+                        \"coc-vimlsp"]
+
 " TextEdit might fail if hidden is not set.
 set hidden
 
