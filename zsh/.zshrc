@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:/Users/smakey18/.pyenv/bin:/snap/bin:/home/smakey18/.poetry/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/Users/smakey18/.pyenv/bin:/snap/bin:/home/smakey18/.poetry/bin:/home/smakey18/Applications/:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/smakey18/.oh-my-zsh"
@@ -99,10 +99,11 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #nvm Node manager
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
+source /usr/share/doc/fzf/examples/key-bindings.zsh

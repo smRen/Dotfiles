@@ -46,7 +46,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "" Fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 
 " Warping through text
 Plug 'easymotion/vim-easymotion' " <leader> <leader> w
@@ -55,6 +54,9 @@ Plug 'easymotion/vim-easymotion' " <leader> <leader> w
 Plug 'jpalardy/vim-slime'
 
 call plug#end()
+
+"" FZF
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 
 "" Remappings
 " remap leader key to comma 
