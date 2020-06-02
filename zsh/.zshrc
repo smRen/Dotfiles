@@ -4,6 +4,11 @@ export PATH=$HOME/bin:/usr/local/bin:/Users/smakey18/.pyenv/bin:/snap/bin:/home/
 # Path to your oh-my-zsh installation.
 export ZSH="/home/smakey18/.oh-my-zsh"
 
+export PATH=/home/smakey18/.emacs.d/bin:$PATH
+export PATH=/home/smakey18/.gem/ruby/2.7.0/bin:$PATH
+
+export PIPENV_VENV_IN_PROJECT=1
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -101,14 +106,16 @@ source $ZSH/oh-my-zsh.sh
 # FZF
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-#nvm Node manager
- export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
- [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 #source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/fzf/fzf-extras.zsh
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
+source /usr/share/nvm/init-nvm.sh
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
+  source "${VIRTUAL_ENV}/bin/activate"
+fi

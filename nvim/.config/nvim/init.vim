@@ -55,9 +55,6 @@ Plug 'jpalardy/vim-slime'
 
 call plug#end()
 
-"" FZF
-let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
-
 "" Remappings
 " remap leader key to comma 
 let mapleader = ","
@@ -80,6 +77,7 @@ let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_setColors = 0
 
 "" General Config
+let g:python3_host_prog = "/home/smakey18/.pyenv/versions/neovim/bin/python" 
 filetype plugin indent on                   " File specific settings (like number of spaces in tabs) 
 syntax enable                               " Nice looking colors
 set nohls                                   " No search highlight
@@ -134,7 +132,6 @@ function! ToggleNetrw()
         silent Lexplore
     endif
 endfunction
-" Add your own mapping. For example:
 noremap <silent> <F2> :call ToggleNetrw()<CR>
 
 " Terminal stuff
