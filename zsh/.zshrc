@@ -104,7 +104,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # FZF
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
@@ -113,6 +113,9 @@ source /usr/share/fzf/fzf-extras.zsh
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 source /usr/share/nvm/init-nvm.sh
+# source /usr/share/fzf/fzf-extras.zsh
+# source /usr/share/fzf/key-bindings.zsh
+# source /usr/share/fzf/completion.zsh
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
