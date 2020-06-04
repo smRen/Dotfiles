@@ -53,10 +53,10 @@ There are two things you can do about this warning:
 (use-package vterm)
 
 ;; Recent files
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
-(setq recentf-max-saved-items 25)
-(global-set-key "\C-x\ \C-r" 'recentf-open-files)
+;;(recentf-mode 1)
+;;(setq recentf-max-menu-items 25)
+;;(setq recentf-max-saved-items 25)
+;;(global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
 ;; Prevent shell prompt deletion
 (setq comint-prompt-read-only t)
@@ -74,11 +74,79 @@ There are two things you can do about this warning:
 (global-hl-line-mode t)                        ; Highlight cursor line
 (setq-default indent-tabs-mode nil)            ; Use spaces instead of tabs
 (show-paren-mode 1)                            ; Highlight parenthesis pairs
+(windmove-default-keybindings)                 ; Shift arrows switch windows
+(defalias 'yes-or-no-p 'y-or-n-p)              ; y/n instead of yes/no
+(blink-cursor-mode 0)                          ; No blinking cursor
+;; (setq blink-matching-paren-distance nil)       ; Blinking parenthesis
+;; (setq show-paren-style 'expression)            ; Highlight text between parens
+
+;; Line number
+(require 'display-line-numbers)
+(defcustom display-line-numbers-exempt-modes '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode)
+  "Major modes on which to disable the linum mode, exempts them from global requirement"
+  :group 'display-line-numbers
+  :type 'list
+  :version "green")
+
+(defun display-line-numbers--turn-on ()
+  "turn on line numbers but excempting certain majore modes defined in `display-line-numbers-exempt-modes'"
+  (if (and
+       (not (member major-mode display-line-numbers-exempt-modes))
+       (not (minibufferp)))
+      (display-line-numbers-mode)))
+
+(global-display-line-numbers-mode)
+
 
 ;; Disable line highlight in vterm
 (add-hook 'vterm-mode-hook (lambda ()
                             (setq-local global-hl-line-mode
                                         nil)))
+
+;; Kind of fuzzy matching native
+;;(ido-mode t)
+;;(setq ido-everywhere t)
+;;(setq ido-enable-flex-matching t)
+
+;; Another fuzzy searching thing
+;;(use-package helm
+;;  :config (helm-mode 1))
+
+;; Ivy fuzzy searcher again
+(use-package ivy
+  :config (ivy-mode 1))
+(use-package counsel)
+(use-package swiper)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+;; enable this if you want `swiper' to use it
+;; (setq search-default-mode #'char-fold-to-regexp)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
+(global-set-key (kbd "<f1> l") 'counsel-find-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c k") 'counsel-ag)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-c J") 'counsel-file-jump)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+(use-package ivy-hydra)
+
+(use-package projectile
+  :config (projectile-mode 1))
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(use-package counsel-projectile)
+(setq projectile-project-search-path '("~/Projects/"))
+(setq projectile-completion-system 'ivy)
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -88,11 +156,9 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (vterm doom-modeline doom-themes all-the-icons which-key use-package))))
+    (ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package))))
  ;; Start fullscreen
 
-;; (setq blink-matching-paren-distance nil)       ; Blinking parenthesis
-;; (setq show-paren-style 'expression)            ; Highlight text between parens
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
