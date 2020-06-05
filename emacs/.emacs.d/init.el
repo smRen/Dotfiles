@@ -14,7 +14,7 @@ There are two things you can do about this warning:
   ;; (add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
   )
 (package-initialize)
-
+	
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -51,6 +51,24 @@ There are two things you can do about this warning:
   :init (doom-modeline-mode 1))
 
 (use-package vterm)
+(use-package vterm-toggle)
+(global-set-key [f3] 'vterm-toggle)
+(global-set-key [C-f3] 'vterm-toggle-cd)
+
+;; you can cd to the directory where your previous buffer file exists
+;; after you have toggle to the vterm buffer with `vterm-toggle'.
+(define-key vterm-mode-map [(control return)]   #'vterm-toggle-insert-cd)
+(setq vterm-toggle-fullscreen-p nil)
+(add-to-list 'display-buffer-alist
+             '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
+                (display-buffer-reuse-window display-buffer-at-bottom)
+                ;;(display-buffer-reuse-window display-buffer-in-direction)
+                ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                ;;(direction . bottom)
+                ;;(dedicated . t) ;dedicated is supported in emacs27
+                (reusable-frames . visible)
+                (window-height . 0.3)))
+
 
 ;; Recent files
 ;;(recentf-mode 1)
@@ -72,14 +90,16 @@ There are two things you can do about this warning:
 (setq inhibit-startup-message t)               ; No message at startup
 (setq visible-bell t)                          ; No beep when reporting errors
 (global-hl-line-mode t)                        ; Highlight cursor line
-(setq-default indent-tabs-mode nil)            ; Use spaces instead of tabs
+(setq-default indent-tabs-mode nil)            ; Use spaces instead of tab
 (show-paren-mode 1)                            ; Highlight parenthesis pairs
 (windmove-default-keybindings)                 ; Shift arrows switch windows
 (defalias 'yes-or-no-p 'y-or-n-p)              ; y/n instead of yes/no
 (blink-cursor-mode 0)                          ; No blinking cursor
+(add-to-list 'default-frame-alist
+                       '(font . "Hack-10"))
 ;; (setq blink-matching-paren-distance nil)       ; Blinking parenthesis
 ;; (setq show-paren-style 'expression)            ; Highlight text between parens
-
+	
 ;; Line number
 (require 'display-line-numbers)
 (defcustom display-line-numbers-exempt-modes '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode)
@@ -89,12 +109,11 @@ There are two things you can do about this warning:
   :version "green")
 
 (defun display-line-numbers--turn-on ()
-  "turn on line numbers but excempting certain majore modes defined in `display-line-numbers-exempt-modes'"
+  "turn on line numbers but excempting certain major modes defined in `display-line-numbers-exempt-modes'"
   (if (and
        (not (member major-mode display-line-numbers-exempt-modes))
        (not (minibufferp)))
       (display-line-numbers-mode)))
-
 (global-display-line-numbers-mode)
 
 
@@ -117,28 +136,44 @@ There are two things you can do about this warning:
   :config (ivy-mode 1))
 (use-package counsel)
 (use-package swiper)
+(use-package counsel-tramp)
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
 ;; enable this if you want `swiper' to use it
 ;; (setq search-default-mode #'char-fold-to-regexp)
 (global-set-key "\C-s" 'swiper)
+(global-set-key "\C-r" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "<f1> f") 'counsel-describe-function)
-(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-(global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
-(global-set-key (kbd "<f1> l") 'counsel-find-library)
-(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "C-c f") 'counsel-describe-function)
+(global-set-key (kbd "C-c v") 'counsel-describe-variable)
+(global-set-key (kbd "C-c o") 'counsel-describe-symbol)
+(global-set-key (kbd "C-c l") 'counsel-find-library)
+(global-set-key (kbd "C-c i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "C-c u") 'counsel-unicode-char)
 (global-set-key (kbd "C-c g") 'counsel-git)
 (global-set-key (kbd "C-c j") 'counsel-git-grep)
 (global-set-key (kbd "C-c k") 'counsel-ag)
-(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-c l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
-(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(global-set-key (kbd "C-x d") 'counsel-dired)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 (use-package ivy-hydra)
+(setq tramp-default-method "ssh")
+(setq tramp-terminal-type "dumb")
+(define-key global-map (kbd "C-c C-t") 'counsel-tramp)
+
+;; Tramp speedup
+;; (add-hook 'counsel-tramp-pre-command-hook '(lambda () (global-aggressive-indent-mode 0)
+;; 				     (projectile-mode 0)
+;; 				     (editorconfig-mode 0)))
+;; (add-hook 'counsel-tramp-quit-hook '(lambda () (global-aggressive-indent-mode 1)
+;; 			      (projectile-mode 1)
+;; 			      (editorconfig-mode 1)))
+
+
+
 
 (use-package projectile
   :config (projectile-mode 1))
@@ -147,6 +182,28 @@ There are two things you can do about this warning:
 (setq projectile-project-search-path '("~/Projects/"))
 (setq projectile-completion-system 'ivy)
 
+;; Dashboard
+(use-package page-break-lines)
+(use-package dashboard
+  :config
+  (setq dashboard-items '((recents . 5)
+                        (projects . 5)
+                        (agenda . 5)))
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-center-content t)
+  (dashboard-setup-startup-hook))
+
+;; Company Autocompletion
+(use-package company
+  ;; Navigate in completion minibuffer with `C-n` and `C-p`.
+  :config
+  ;; Provide instant autocompletion.
+  (setq company-idle-delay 0)
+  ;; Number of characters to activate 
+  (setq company-minimum-prefix-length 1)
+  ;; Use Company mode everywhere.
+  (global-company-mode t))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -156,7 +213,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package))))
+    (company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package))))
  ;; Start fullscreen
 
 (custom-set-faces

@@ -1,11 +1,11 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:/Users/smakey18/.pyenv/bin:/snap/bin:/home/smakey18/.poetry/bin:/home/smakey18/Applications/:$PATH
+#export PATH=$HOME/bin:/usr/local/bin:/Users/smakey18/.pyenv/bin:/snap/bin:/home/smakey18/.poetry/bin:/home/smakey18/Applications/:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/smakey18/.oh-my-zsh"
 
-export PATH=/home/smakey18/.emacs.d/bin:$PATH
-export PATH=/home/smakey18/.gem/ruby/2.7.0/bin:$PATH
+
+
 
 export PIPENV_VENV_IN_PROJECT=1
 
@@ -136,3 +136,8 @@ function vterm_printf(){
         printf "\e]%s\e\\" "$1"
     fi
 }
+vterm_prompt_end() {
+    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
+}
+setopt PROMPT_SUBST
+PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
