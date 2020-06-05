@@ -36,12 +36,12 @@ There are two things you can do about this warning:
   (load-theme 'doom-horizon t)
 
   ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
+  ;; (doom-themes-visual-bell-config)
   
   ;; Enable custom neotree theme (all-the-icons must be installed!)
   ;; (doom-themes-neotree-config)
   ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-horizon") ; use the colorful treemacs theme
+  ;;(setq doom-themes-treemacs-theme "doom-horizon") ; use the colorful treemacs theme
   (doom-themes-treemacs-config)
   
   ;; Corrects (and improves) org-mode's native fontification.
@@ -61,11 +61,11 @@ There are two things you can do about this warning:
 (setq vterm-toggle-fullscreen-p nil)
 (add-to-list 'display-buffer-alist
              '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
-                (display-buffer-reuse-window display-buffer-at-bottom)
-                ;;(display-buffer-reuse-window display-buffer-in-direction)
+                ;;(display-buffer-reuse-window display-buffer-at-bottom)
+                (display-buffer-reuse-window display-buffer-in-direction)
                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                ;;(direction . bottom)
-                ;;(dedicated . t) ;dedicated is supported in emacs27
+                (direction . bottom)
+                (dedicated . t) ;dedicated is supported in emacs27
                 (reusable-frames . visible)
                 (window-height . 0.3)))
 
@@ -88,11 +88,12 @@ There are two things you can do about this warning:
 (scroll-bar-mode -1)                           ; No scrollbar
 (menu-bar-mode -1)                             ; No menubar
 (setq inhibit-startup-message t)               ; No message at startup
-(setq visible-bell t)                          ; No beep when reporting errors
+;;(setq visible-bell t)                          ; No beep when reporting errors
+(setq ring-bell-function 'ignore)              ; no bell
 (global-hl-line-mode t)                        ; Highlight cursor line
 (setq-default indent-tabs-mode nil)            ; Use spaces instead of tab
 (show-paren-mode 1)                            ; Highlight parenthesis pairs
-(windmove-default-keybindings)                 ; Shift arrows switch windows
+;; (windmove-default-keybindings)                 ; Shift arrows switch windows
 (defalias 'yes-or-no-p 'y-or-n-p)              ; y/n instead of yes/no
 (blink-cursor-mode 0)                          ; No blinking cursor
 (add-to-list 'default-frame-alist
@@ -103,13 +104,13 @@ There are two things you can do about this warning:
 ;; Line number
 (require 'display-line-numbers)
 (defcustom display-line-numbers-exempt-modes '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode)
-  "Major modes on which to disable the linum mode, exempts them from global requirement"
+  "Major modes on which to disable the linum mode, exempts them from global requirement."
   :group 'display-line-numbers
   :type 'list
   :version "green")
 
 (defun display-line-numbers--turn-on ()
-  "turn on line numbers but excempting certain major modes defined in `display-line-numbers-exempt-modes'"
+  "Turn on line numbers but excempting certain major modes defined in `display-line-numbers-exempt-modes'."
   (if (and
        (not (member major-mode display-line-numbers-exempt-modes))
        (not (minibufferp)))
@@ -117,10 +118,6 @@ There are two things you can do about this warning:
 (global-display-line-numbers-mode)
 
 
-;; Disable line highlight in vterm
-(add-hook 'vterm-mode-hook (lambda ()
-                            (setq-local global-hl-line-mode
-                                        nil)))
 
 ;; Kind of fuzzy matching native
 ;;(ido-mode t)
@@ -164,16 +161,12 @@ There are two things you can do about this warning:
 (setq tramp-terminal-type "dumb")
 (define-key global-map (kbd "C-c C-t") 'counsel-tramp)
 
-;; Tramp speedup
-;; (add-hook 'counsel-tramp-pre-command-hook '(lambda () (global-aggressive-indent-mode 0)
-;; 				     (projectile-mode 0)
-;; 				     (editorconfig-mode 0)))
-;; (add-hook 'counsel-tramp-quit-hook '(lambda () (global-aggressive-indent-mode 1)
-;; 			      (projectile-mode 1)
-;; 			      (editorconfig-mode 1)))
+;; Disable line highlight in vterm
+(add-hook 'vterm-mode-hook (lambda ()
+                            (setq-local global-hl-line-mode
+                                        nil)))
 
-
-
+(use-package restart-emacs)
 
 (use-package projectile
   :config (projectile-mode 1))
@@ -200,20 +193,96 @@ There are two things you can do about this warning:
   :config
   ;; Provide instant autocompletion.
   (setq company-idle-delay 0)
-  ;; Number of characters to activate 
+  ;; Number of characters to activate
   (setq company-minimum-prefix-length 1)
   ;; Use Company mode everywhere.
   (global-company-mode t))
+
+;; Indent guide
+(use-package highlight-indent-guides
+  :ensure t
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :init
+  (setq highlight-indent-guides-responsive 'top)
+  (setq highlight-indent-guides-method 'character)
+  (setq highlight-indent-guides-character ?│))
+
+(use-package evil
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t) ;; Warning rebind conflict!
+  :config
+  (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package evil-surround
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
+
+(use-package evil-commentary
+  :after evil
+  :config
+  (evil-commentary-mode))
+
+(use-package evil-easymotion)
+(evilem-default-keybindings "C-,")
+
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+
+;; LSP
+;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+(evil-define-key 'normal lsp-mode-map (kbd "\\") lsp-command-map)
+
+(use-package lsp-mode
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (python-mode . lsp-deferred)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp lsp-deferred)
+
+;; optionally
+(use-package lsp-ui
+  :commands lsp-ui-mode
+  :config
+  (setq lsp-ui-doc-position 'top)
+  (setq lsp-ui-doc-delay 2))
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+
+;; optionally if you want to use debugger
+(use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq lsp-idle-delay 0.500)
+
+;; Language specific
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp-deferred))))  ; or lsp-deferred
+(use-package pyvenv
+  :config
+  (pyvenv-mode 1))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
-   (quote
-    (company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package))))
+   '(pyvenv lsp-python-ms dap-mode lsp-ivy lsp-ui lsp-mode flycheck-status-emoji flycheck highlight-indent-guides evil-easymotion evil-commentary evil-surround restart-emacs evil-collection company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package)))
  ;; Start fullscreen
 
 (custom-set-faces
