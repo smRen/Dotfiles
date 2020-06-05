@@ -9,6 +9,9 @@ if [[ "$TERM" == "dumb" ]]; then
    return
 fi
 
+# Emacs readline
+bindkey -e
+
 source ~/.zplug/init.zsh
 
 zplug "dracula/zsh", as:theme
@@ -16,8 +19,16 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
-
 zplug "zsh-users/zsh-autosuggestions"
+
+zplug load
+
+# ZSH history
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+
 
 path+=('/home/smakey18/.pyenv/bin')
 path+=('/home/smakey18/Applications/')
@@ -32,7 +43,7 @@ source /usr/share/fzf/completion.zsh
 # source /usr/share/fzf/fzf-extras.zsh
 # source /usr/share/fzf/key-bindings.zsh
 # source /usr/share/fzf/completion.zsh
-source /usr/share/doc/fzf/examples/key-bindings.zsh # Debian
+# source /usr/share/doc/fzf/examples/key-bindings.zsh # Debian
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
