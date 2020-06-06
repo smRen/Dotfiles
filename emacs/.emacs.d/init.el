@@ -32,8 +32,8 @@ There are two things you can do about this warning:
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-horizon t)
+        doom-themes-enable-italic nil) ; if nil, italics is universally disabled
+  (load-theme 'doom-snazzy t))
 
   ;; Enable flashing mode-line on errors
   ;; (doom-themes-visual-bell-config)
@@ -42,10 +42,10 @@ There are two things you can do about this warning:
   ;; (doom-themes-neotree-config)
   ;; or for treemacs users
   ;;(setq doom-themes-treemacs-theme "doom-horizon") ; use the colorful treemacs theme
-  (doom-themes-treemacs-config)
+  ;;(doom-themes-treemacs-config)
   
   ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+  ;;(doom-themes-org-config))
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
@@ -81,6 +81,7 @@ There are two things you can do about this warning:
 
 ;; Basic config stuff
 ;; User customizations
+(global-set-key (kbd "<f1>") nil) ;; Disable f1 key for treemacs
 (setq-default case-fold-search nil) ;; No search case
 (setq scroll-preserve-screen-position `t)
 (setq user-mail-address "smakey18@gmail.com") ;; Default email
@@ -96,8 +97,10 @@ There are two things you can do about this warning:
 ;; (windmove-default-keybindings)                 ; Shift arrows switch windows
 (defalias 'yes-or-no-p 'y-or-n-p)              ; y/n instead of yes/no
 (blink-cursor-mode 0)                          ; No blinking cursor
-(add-to-list 'default-frame-alist
-                       '(font . "Hack-11"))
+;;(add-to-list 'default-frame-alist
+;;                       '(font . "Hack-11"))
+;;(set-face-attribute 'default t :font "Hack-10" )
+;;(set-frame-font "Fira Code Retina-12" t)
 ;; (setq blink-matching-paren-distance nil)       ; Blinking parenthesis
 ;; (setq show-paren-style 'expression)            ; Highlight text between parens
 	
@@ -241,10 +244,13 @@ There are two things you can do about this warning:
 
 (use-package lsp-mode
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (python-mode . lsp-deferred)
+         (python-mode . lsp-deferred))
          ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
+         ;;(lsp-mode . lsp-enable-which-key-integration))
   :commands lsp lsp-deferred)
+(with-eval-after-load 'lsp-mode
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+
 
 ;; optionally
 (use-package lsp-ui
@@ -269,7 +275,10 @@ There are two things you can do about this warning:
   (setenv "WORKON_HOME" "~/.pyenv/versions")
   :config
   (pyvenv-mode 1))
+
 (use-package poetry
+  ;; :mode ("\\.py\\'" . python-mode)
+  ;; :interpreter ("python" . python-mode)
   :config
   (poetry-tracking-mode))
 
@@ -289,11 +298,12 @@ There are two things you can do about this warning:
   (setq centaur-tabs-style "bar"
         centaur-tabs-height 40
         centaur-tabs-set-icons t
-        centaur-tabs-set-bar 'under
-        x-underline-at-descent-line t
+        centaur-tabs-set-bar 'left
+        ;; x-underline-at-descent-line t
         centaur-tabs-set-modified-marker t)
+  (centaur-tabs-group-by-projectile-project)
   (centaur-tabs-headline-match)
-  (centaur-tabs-change-fonts "noto-sans" 120)
+  (centaur-tabs-change-fonts "cantarell" 130)
   (centaur-tabs-mode 1)
   :bind
   (:map evil-normal-state-map
@@ -317,6 +327,232 @@ There are two things you can do about this warning:
 
 (add-to-list 'find-file-not-found-functions #'my-create-non-existent-directory)
 
+(use-package treemacs
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (progn
+    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+          treemacs-deferred-git-apply-delay      0.5
+          treemacs-directory-name-transformer    #'identity
+          treemacs-display-in-side-window        t
+          treemacs-eldoc-display                 t
+          treemacs-file-event-delay              5000
+          treemacs-file-extension-regex          treemacs-last-period-regex-value
+          treemacs-file-follow-delay             0.2
+          treemacs-file-name-transformer         #'identity
+          treemacs-follow-after-init             t
+          treemacs-git-command-pipe              ""
+          treemacs-goto-tag-strategy             'refetch-index
+          treemacs-indentation                   2
+          treemacs-indentation-string            " "
+          treemacs-is-never-other-window         nil
+          treemacs-max-git-entries               5000
+          treemacs-missing-project-action        'ask
+          treemacs-move-forward-on-expand        nil
+          treemacs-no-png-images                 nil
+          treemacs-no-delete-other-windows       t
+          treemacs-project-follow-cleanup        nil
+          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+          treemacs-position                      'left
+          treemacs-recenter-distance             0.1
+          treemacs-recenter-after-file-follow    nil
+          treemacs-recenter-after-tag-follow     nil
+          treemacs-recenter-after-project-jump   'always
+          treemacs-recenter-after-project-expand 'on-distance
+          treemacs-show-cursor                   nil
+          treemacs-show-hidden-files             t
+          treemacs-silent-filewatch              nil
+          treemacs-silent-refresh                nil
+          treemacs-sorting                       'alphabetic-asc
+          treemacs-space-between-root-nodes      t
+          treemacs-tag-follow-cleanup            t
+          treemacs-tag-follow-delay              1.5
+          treemacs-user-mode-line-format         nil
+          treemacs-user-header-line-format       nil
+          treemacs-width                         35)
+
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    ;;(treemacs-resize-icons 44)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple))))
+  :bind
+  (:map global-map
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("M-0"       . treemacs-select-window)
+        ("<f1>" . treemacs)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+
+(use-package treemacs-evil
+  :after treemacs evil
+  )
+
+(use-package treemacs-projectile
+  :after treemacs projectile
+  )
+
+(use-package treemacs-icons-dired
+  :after treemacs dired
+  :config (treemacs-icons-dired-mode))
+
+(use-package treemacs-magit
+  :after treemacs magit
+  )
+
+(use-package treemacs-persp
+  :after treemacs persp-mode
+  :config (treemacs-set-scope-type 'Perspectives))
+
+;; ;; Like spacemacs
+;; (use-package major-mode-hydra
+;;   :ensure t
+;;   :bind
+;;   ("s-SPC" . major-mode-hydra))
+
+;; (setq major-mode-hydra-title-generator
+;;       '(lambda (mode)
+;;          (s-concat "\n"
+;;                    (s-repeat 10 " ")
+;;                    (all-the-icons-icon-for-mode mode :v-adjust 0.05)
+;;                    " "
+;;                    (symbol-name mode)
+;;                    " commands")))
+
+;; (setq major-mode-hydra-invisible-quit-key "q")
+
+;; (major-mode-hydra-define emacs-lisp-mode nil
+;;   ("Eval"
+;;    (("b" eval-buffer "buffer" :color red)
+;;     ("e" eval-defun "defun" :color red)
+;;     ("r" eval-region "region" :color red))
+;;    "REPL"
+;;    (("I" ielm "ielm" :color red))
+;;    "Test"
+;;    (("t" ert "prompt" :color red)
+;;     ("T" (ert t) "all" :color red)
+;;     ("F" (ert :failed) "failed" :color red))
+;;    "Doc"
+;;    (("d" describe-foo-at-point "thing-at-pt" :color red)
+;;     ("f" describe-function "function" :color red)
+;;     ("v" describe-variable "variable" :color red)
+;;     ("i" info-lookup-symbol "info lookup" :color red))
+;;    "Emacs"
+;;    (("R" restart-emacs "Restart" :color red)
+;;     ("Q" save-buffers-kill-terminal "Quit" :color red))))
+
+;; (use-package helpful
+;;   :pretty-hydra
+;;   ((:color teal :quit-key "q")
+;;    ("Helpful"
+;;     (("f" helpful-callable "callable")
+;;      ("v" helpful-variable "variable")
+;;      ("k" helpful-key "key")
+;;      ("c" helpful-command "command")
+;;      ("d" helpful-at-point "thing at point"))))
+;;   :bind ("C-h" . helpful-hydra/body))
+
+;; (use-package elisp-mode
+;;   :ensure t
+;;   :mode "\\.el\\'"
+;;   :mode-hydra
+;;   (go-mode
+;;    (:title "Elisp Commands")
+;;    ("Doc"
+;;     (("d" eval-buffer "doc at point"))
+;;     "Imports"
+;;     (("ia" eval-defun "add")
+;;      ("ir" eval-region "cleanup")))))
+
+(use-package hydra
+  :defer t
+  :bind
+  ("M-p" . hydra-projectile/body)
+  ("C-c C-f" . hydra-flycheck/body)
+  ("C-c s" . hydra-system/body)
+  :custom
+  (hydra-default-hint nil))
+
+(defhydra hydra-projectile (:color blue)
+  "
+^
+^Projectile^        ^Buffers^           ^Find^              ^Search^
+^──────────^────────^───────^───────────^────^───^─^
+_q_ quit            _b_ list            _d_ directory       _r_ replace
+_i_ reset cache     _K_ kill all        _D_ root            _R_ regexp replace
+^^                  _S_ save all        _f_ file            _s_ rg
+^^                  ^^                  _p_ project         ^^
+^^                  ^^                  ^^                  ^^
+"
+  ("q" nil)
+  ("b" counsel-projectile-switch-to-buffer)
+  ("d" counsel-projectile-find-dir)
+  ("D" projectile-dired)
+  ("f" counsel-projectile-find-file)
+  ("i" projectile-invalidate-cache :color red)
+  ("K" projectile-kill-buffers)
+  ("p" counsel-projectile-switch-project)
+  ("r" projectile-replace)
+  ("R" projectile-replace-regexp)
+  ("s" counsel-projectile-rg)
+  ("S" projectile-save-project-buffers))
+
+(defhydra hydra-flycheck (:color blue)
+  "
+^
+^Flycheck^          ^Errors^            ^Checker^
+^────────^──────────^──────^─────^
+_q_ quit            _<_ previous        _?_ describe
+_m_ manual          _>_ next            _d_ disable
+_v_ verify setup    _f_ check           _s_ select
+^^                  _l_ list            ^^
+^^                  ^^                  ^^
+"
+  ("q" nil)
+  ("<" flycheck-previous-error :color pink)
+  (">" flycheck-next-error :color pink)
+  ("?" flycheck-describe-checker)
+  ("d" flycheck-disable-checker)
+  ("f" flycheck-buffer)
+  ("l" flycheck-list-errors)
+  ("m" flycheck-manual)
+  ("s" flycheck-select-checker)
+  ("v" flycheck-verify-setup))
+
+(defhydra hydra-system (:color blue)
+  "
+^
+^System^            ^Packages^          ^Processes^         ^Shell^
+^──────^────────────^────────^──────────^─────────^─────────^─────^─────────────
+_q_ quit            _p_ list            _s_ list            _e_ eshell
+_Q_ quit Emacs      _P_ upgrade         ^^                  _t_ vterm
+_R_ restart Emacs   ^^                  ^^                  _T_ ansi-term
+"
+  ("q" nil)
+  ("Q" save-buffers-kill-terminal)
+  ("R" restart-emacs)
+  ("e" (eshell t))
+  ("p" paradox-list-packages)
+  ("P" paradox-upgrade-packages)
+  ("s" list-processes)
+  ("t" vterm)
+  ("T" ansi-term))
+
+
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -324,7 +560,7 @@ There are two things you can do about this warning:
  ;; If there is more than one, they won't work right.
  '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
-   '(centaur-tabs direnv pyvenv lsp-python-ms dap-mode lsp-ivy lsp-ui lsp-mode flycheck-status-emoji flycheck highlight-indent-guides evil-easymotion evil-commentary evil-surround restart-emacs evil-collection company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package)))
+   '(elisp-mode posframe hydra-posframe helpful major-mode-hydra treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil centaur-tabs direnv pyvenv lsp-python-ms dap-mode lsp-ivy lsp-ui lsp-mode flycheck-status-emoji flycheck highlight-indent-guides evil-easymotion evil-commentary evil-surround restart-emacs evil-collection company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package)))
  ;; Start fullscreen
 
 (custom-set-faces
