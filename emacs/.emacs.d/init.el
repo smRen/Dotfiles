@@ -417,42 +417,50 @@ There are two things you can do about this warning:
   :config (treemacs-set-scope-type 'Perspectives))
 
 ;; ;; Like spacemacs
-;; (use-package major-mode-hydra
-;;   :ensure t
-;;   :bind
-;;   ("s-SPC" . major-mode-hydra))
+(use-package major-mode-hydra
+  :ensure t
+  :bind
+  ("s-SPC" . major-mode-hydra))
 
-;; (setq major-mode-hydra-title-generator
-;;       '(lambda (mode)
-;;          (s-concat "\n"
-;;                    (s-repeat 10 " ")
-;;                    (all-the-icons-icon-for-mode mode :v-adjust 0.05)
-;;                    " "
-;;                    (symbol-name mode)
-;;                    " commands")))
+(setq major-mode-hydra-title-generator
+      '(lambda (mode)
+         (s-concat "\n"
+                   (s-repeat 10 " ")
+                   (all-the-icons-icon-for-mode mode :v-adjust 0.05)
+                   " "
+                   (symbol-name mode)
+                   " commands")))
 
-;; (setq major-mode-hydra-invisible-quit-key "q")
+(setq major-mode-hydra-invisible-quit-key "q")
 
-;; (major-mode-hydra-define emacs-lisp-mode nil
-;;   ("Eval"
-;;    (("b" eval-buffer "buffer" :color red)
-;;     ("e" eval-defun "defun" :color red)
-;;     ("r" eval-region "region" :color red))
-;;    "REPL"
-;;    (("I" ielm "ielm" :color red))
-;;    "Test"
-;;    (("t" ert "prompt" :color red)
-;;     ("T" (ert t) "all" :color red)
-;;     ("F" (ert :failed) "failed" :color red))
-;;    "Doc"
-;;    (("d" describe-foo-at-point "thing-at-pt" :color red)
-;;     ("f" describe-function "function" :color red)
-;;     ("v" describe-variable "variable" :color red)
-;;     ("i" info-lookup-symbol "info lookup" :color red))
-;;    "Emacs"
-;;    (("R" restart-emacs "Restart" :color red)
-;;     ("Q" save-buffers-kill-terminal "Quit" :color red))))
+(major-mode-hydra-define emacs-lisp-mode nil
+  ("Eval"
+   (("b" eval-buffer "buffer" )
+    ("e" eval-defun "defun")
+    ("r" eval-region "region"))
+   "REPL"
+   (("I" ielm "ielm"))
+   "Test"
+   (("t" ert "prompt")
+    ("T" (ert t) "all")
+    ("F" (ert :failed) "failed"))
+   "Doc"
+   (("d" describe-foo-at-point "thing-at-pt")
+    ("f" describe-function "function")
+    ("v" describe-variable "variable")
+    ("i" info-lookup-symbol "info lookup"))))
 
+(major-mode-hydra-define python-mode nil
+  ("Eval"
+   (("b" python-shell-send-buffer "buffer")
+    ("e" python-shell-send-defun "defun")
+    ("f" python-shell-send-file "file")
+    ("r" python-shell-send-region "region"))
+   "REPL"
+   (("I" run-python "start repl"))
+   "Doc"
+   (("D" python-describe-at-point "thing-at-pt")
+    ("E" python-eldoc-at-point "eldoc-at-pt"))))
 ;; (use-package helpful
 ;;   :pretty-hydra
 ;;   ((:color teal :quit-key "q")
