@@ -97,7 +97,7 @@ There are two things you can do about this warning:
 (defalias 'yes-or-no-p 'y-or-n-p)              ; y/n instead of yes/no
 (blink-cursor-mode 0)                          ; No blinking cursor
 (add-to-list 'default-frame-alist
-                       '(font . "Hack-11"))
+                       '(font . "Hack-10"))
 ;; (setq blink-matching-paren-distance nil)       ; Blinking parenthesis
 ;; (setq show-paren-style 'expression)            ; Highlight text between parens
 	
@@ -116,6 +116,8 @@ There are two things you can do about this warning:
        (not (minibufferp)))
       (display-line-numbers-mode)))
 (global-display-line-numbers-mode)
+
+
 
 ;; Kind of fuzzy matching native
 ;;(ido-mode t)
@@ -203,7 +205,6 @@ There are two things you can do about this warning:
   :init
   (setq highlight-indent-guides-responsive 'top)
   (setq highlight-indent-guides-method 'character)
-  (setq highlight-indent-guides-delay 0)
   (setq highlight-indent-guides-character ?│))
 
 (use-package evil
@@ -234,6 +235,7 @@ There are two things you can do about this warning:
 
 (use-package flycheck
   :init (global-flycheck-mode))
+
 
 ;; LSP
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
@@ -270,33 +272,15 @@ There are two things you can do about this warning:
                           (require 'lsp-python-ms)
                           (lsp-deferred))))  ; or lsp-deferred
 
-;; Python environment
-(use-package transient)
-(use-package poetry
-  :config
-  (poetry-tracking-mode))
 (use-package pyvenv
   :init
   (setenv "WORKON_HOME" "~/.pyenv/versions")
   :config
   (pyvenv-mode 1))
 
-;; Use ipython for shell
-;; (setq python-shell-interpreter "ipython"
-;;         python-shell-interpreter-args "--simple-prompt -i")
-
-;; (use-package direnv
-;;   :config
-;;   (direnv-mode))
-
-;; Create directory if not made yet when opening a new file
-(defun my-create-non-existent-directory ()
-  (let ((parent-directory (file-name-directory buffer-file-name)))
-    (when (and (not (file-exists-p parent-directory))
-               (y-or-n-p (format "Directory `%s' does not exist! Create it?" parent-directory)))
-      (make-directory parent-directory t))))
-
-(add-to-list 'find-file-not-found-functions #'my-create-non-existent-directory)
+(use-package direnv
+  :config
+  (direnv-mode))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
