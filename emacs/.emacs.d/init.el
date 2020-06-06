@@ -262,24 +262,43 @@ There are two things you can do about this warning:
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq lsp-idle-delay 0.500)
 
-;; Language specific
-(use-package lsp-python-ms
-  :ensure t
-  :init (setq lsp-python-ms-auto-install-server t)
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
-                          (lsp-deferred))))  ; or lsp-deferred
-
 ;; Python environment
 (use-package transient)
-(use-package poetry
-  :config
-  (poetry-tracking-mode))
 (use-package pyvenv
   :init
   (setenv "WORKON_HOME" "~/.pyenv/versions")
   :config
   (pyvenv-mode 1))
+(use-package poetry
+  :config
+  (poetry-tracking-mode))
+
+;; Language specific
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :after (poetry)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp-deferred))))  ; or lsp-deferred
+
+
+(use-package centaur-tabs
+  :demand
+  :config
+  (setq centaur-tabs-style "bar"
+        centaur-tabs-height 40
+        centaur-tabs-set-icons t
+        centaur-tabs-set-bar 'under
+        x-underline-at-descent-line t
+        centaur-tabs-set-modified-marker t)
+  (centaur-tabs-headline-match)
+  (centaur-tabs-change-fonts "noto-sans" 120)
+  (centaur-tabs-mode 1)
+  :bind
+  (:map evil-normal-state-map
+	     ("g t" . centaur-tabs-forward)
+	     ("g T" . centaur-tabs-backward)))
 
 ;; Use ipython for shell
 ;; (setq python-shell-interpreter "ipython"
@@ -305,7 +324,7 @@ There are two things you can do about this warning:
  ;; If there is more than one, they won't work right.
  '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
-   '(direnv pyvenv lsp-python-ms dap-mode lsp-ivy lsp-ui lsp-mode flycheck-status-emoji flycheck highlight-indent-guides evil-easymotion evil-commentary evil-surround restart-emacs evil-collection company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package)))
+   '(centaur-tabs direnv pyvenv lsp-python-ms dap-mode lsp-ivy lsp-ui lsp-mode flycheck-status-emoji flycheck highlight-indent-guides evil-easymotion evil-commentary evil-surround restart-emacs evil-collection company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package)))
  ;; Start fullscreen
 
 (custom-set-faces
