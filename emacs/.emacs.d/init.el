@@ -49,6 +49,7 @@ There are two things you can do about this warning:
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
+(setq inhibit-compacting-font-caches t)
 
 (use-package vterm)
 (use-package vterm-toggle)
@@ -186,6 +187,7 @@ There are two things you can do about this warning:
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-center-content t)
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (dashboard-setup-startup-hook))
 
 ;; Company Autocompletion
@@ -292,23 +294,23 @@ There are two things you can do about this warning:
                           (lsp-deferred))))  ; or lsp-deferred
 
 
-(use-package centaur-tabs
-  :demand
-  :config
-  (setq centaur-tabs-style "bar"
-        centaur-tabs-height 40
-        centaur-tabs-set-icons t
-        centaur-tabs-set-bar 'left
-        ;; x-underline-at-descent-line t
-        centaur-tabs-set-modified-marker t)
-  (centaur-tabs-group-by-projectile-project)
-  (centaur-tabs-headline-match)
-  (centaur-tabs-change-fonts "cantarell" 130)
-  (centaur-tabs-mode 1)
-  :bind
-  (:map evil-normal-state-map
-	     ("g t" . centaur-tabs-forward)
-	     ("g T" . centaur-tabs-backward)))
+;; (use-package centaur-tabs
+;;   :demand
+;;   :config
+;;   (setq centaur-tabs-style "bar"
+;;         centaur-tabs-height 40
+;;         centaur-tabs-set-icons t
+;;         centaur-tabs-set-bar 'left
+;;         ;; x-underline-at-descent-line t
+;;         centaur-tabs-set-modified-marker t)
+;;   (centaur-tabs-group-by-projectile-project)
+;;   (centaur-tabs-headline-match)
+;;   (centaur-tabs-change-fonts "cantarell" 130)
+;;   (centaur-tabs-mode 1)
+;;   :bind
+;;   (:map evil-normal-state-map
+;; 	     ("g t" . centaur-tabs-forward)
+;; 	     ("g T" . centaur-tabs-backward)))
 
 ;; Use ipython for shell
 ;; (setq python-shell-interpreter "ipython"
@@ -416,6 +418,10 @@ There are two things you can do about this warning:
   :after treemacs persp-mode
   :config (treemacs-set-scope-type 'Perspectives))
 
+;; (use-package lsp-treemacs
+;;   :config
+;;   (lsp-treemacs-sync-mode 1))
+
 ;; ;; Like spacemacs
 (use-package major-mode-hydra
   :ensure t
@@ -458,31 +464,10 @@ There are two things you can do about this warning:
     ("r" python-shell-send-region "region"))
    "REPL"
    (("I" run-python "start repl"))
-   "Doc"
+   "Other"
    (("D" python-describe-at-point "thing-at-pt")
-    ("E" python-eldoc-at-point "eldoc-at-pt"))))
-;; (use-package helpful
-;;   :pretty-hydra
-;;   ((:color teal :quit-key "q")
-;;    ("Helpful"
-;;     (("f" helpful-callable "callable")
-;;      ("v" helpful-variable "variable")
-;;      ("k" helpful-key "key")
-;;      ("c" helpful-command "command")
-;;      ("d" helpful-at-point "thing at point"))))
-;;   :bind ("C-h" . helpful-hydra/body))
-
-;; (use-package elisp-mode
-;;   :ensure t
-;;   :mode "\\.el\\'"
-;;   :mode-hydra
-;;   (go-mode
-;;    (:title "Elisp Commands")
-;;    ("Doc"
-;;     (("d" eval-buffer "doc at point"))
-;;     "Imports"
-;;     (("ia" eval-defun "add")
-;;      ("ir" eval-region "cleanup")))))
+    ("E" python-eldoc-at-point "eldoc-at-pt")
+    ("S" lsp-ivy-workspace-symbol "find symbol"))))
 
 (use-package hydra
   :defer t
@@ -545,30 +530,37 @@ _v_ verify setup    _f_ check           _s_ select
 ^System^            ^Packages^          ^Processes^         ^Shell^
 ^──────^────────────^────────^──────────^─────────^─────────^─────^─────────────
 _q_ quit            _p_ list            _s_ list            _e_ eshell
-_Q_ quit Emacs      _P_ upgrade         ^^                  _t_ vterm
+_Q_ quit Emacs      ^^                  ^^                  _t_ vterm
 _R_ restart Emacs   ^^                  ^^                  _T_ ansi-term
 "
   ("q" nil)
   ("Q" save-buffers-kill-terminal)
   ("R" restart-emacs)
   ("e" (eshell t))
-  ("p" paradox-list-packages)
-  ("P" paradox-upgrade-packages)
+  ("p" list-packages)
   ("s" list-processes)
   ("t" vterm)
   ("T" ansi-term))
 
+(use-package fast-scroll
+  :config
+  (fast-scroll-config)
+  (fast-scroll-mode 1))
+
+;; (use-package ein
+;;   :defer t)
 
 
+
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
-   '(elisp-mode posframe hydra-posframe helpful major-mode-hydra treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil centaur-tabs direnv pyvenv lsp-python-ms dap-mode lsp-ivy lsp-ui lsp-mode flycheck-status-emoji flycheck highlight-indent-guides evil-easymotion evil-commentary evil-surround restart-emacs evil-collection company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package)))
+   '(ein fast-scroll elisp-mode posframe hydra-posframe helpful major-mode-hydra treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil centaur-tabs direnv pyvenv lsp-python-ms dap-mode lsp-ivy lsp-ui lsp-mode flycheck-status-emoji flycheck highlight-indent-guides evil-easymotion evil-commentary evil-surround restart-emacs evil-collection company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package)))
  ;; Start fullscreen
 
 (custom-set-faces
