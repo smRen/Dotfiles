@@ -14,7 +14,7 @@ There are two things you can do about this warning:
   ;; (add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
   )
 (package-initialize)
-	
+
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -28,15 +28,15 @@ There are two things you can do about this warning:
 
 (use-package all-the-icons)
 
-(use-package ayu-theme
-  :config (load-theme 'ayu-dark t))
+;; (use-package ayu-theme
+;;   :config (load-theme 'ayu-grey t))
 
-;; (use-package doom-themes
-;;   :config
-;;   ;; Global settings (defaults)
-;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
-;;   (load-theme 'doom-snazzy t))
+(use-package doom-themes
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold nil    ; if nil, bold is universally disabled
+        doom-themes-enable-italic nil) ; if nil, italics is universally disabled
+  (load-theme 'doom-snazzy t))
 
   ;; Enable flashing mode-line on errors
   ;; (doom-themes-visual-bell-config)
@@ -107,7 +107,7 @@ There are two things you can do about this warning:
 ;;(set-frame-font "Fira Code Retina-12" t)
 ;; (setq blink-matching-paren-distance nil)       ; Blinking parenthesis
 ;; (setq show-paren-style 'expression)            ; Highlight text between parens
-	
+
 ;; Line number
 (require 'display-line-numbers)
 (defcustom display-line-numbers-exempt-modes '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode)
@@ -160,7 +160,7 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-c l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
 (global-set-key (kbd "C-x d") 'counsel-dired)
-(global-set-key (kbd "C-x b") 'counsel-switch-buffer)
+;; (global-set-key (kbd "C-x b") 'counsel-switch-buffer)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 (use-package ivy-hydra)
 (setq tramp-default-method "ssh")
@@ -202,18 +202,24 @@ There are two things you can do about this warning:
   (setq company-idle-delay 0)
   ;; Number of characters to activate
   (setq company-minimum-prefix-length 1)
+  (setq company-selection-wrap-around t)
   ;; Use Company mode everywhere.
   (global-company-mode t))
 
-;; ;; Indent guide
-;; (use-package highlight-indent-guides
-;;   :ensure t
-;;   :hook (prog-mode . highlight-indent-guides-mode)
-;;   :init
-;;   (setq highlight-indent-guides-responsive 'top)
-;;   (setq highlight-indent-guides-method 'character)
-;;   (setq highlight-indent-guides-delay 0)
-;;   (setq highlight-indent-guides-character ?│))
+;; Indent guide
+(use-package highlight-indent-guides
+  :ensure t
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :init
+  (setq highlight-indent-guides-responsive 'top)
+  (setq highlight-indent-guides-method 'character)
+  (setq highlight-indent-guides-delay 0)
+  (setq highlight-indent-guides-character ?│))
+
+(use-package company-box
+  :after company
+  :diminish
+  :hook (company-mode . company-box-mode))
 
 (use-package evil
   :init
@@ -245,6 +251,7 @@ There are two things you can do about this warning:
   :init
   (global-flycheck-mode))
 
+
 ;; LSP
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 (evil-define-key 'normal lsp-mode-map (kbd "C-c M-l") lsp-command-map)
@@ -258,13 +265,12 @@ There are two things you can do about this warning:
 ;; (with-eval-after-load 'lsp-mode
 ;;   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
-
-;; optionally
 (use-package lsp-ui
-  :commands lsp-ui-mode
-  :config
-  (setq lsp-ui-doc-position 'top)
-  (setq lsp-ui-doc-delay 2))
+  :after lsp-mode
+  :init
+  (setq lsp-ui-doc-enable nil))
+
+
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 
 ;; optionally if you want to use debugger
@@ -472,7 +478,7 @@ There are two things you can do about this warning:
    "REPL"
    (("I" run-python "start repl"))
    "Other"
-   (("D" python-describe-at-point "thing-at-pt")
+   (("D" lsp-ui-doc-glance "glance-at-doc")
     ("E" python-eldoc-at-point "eldoc-at-pt")
     ("P" poetry "poetry")
     ("S" lsp-ivy-workspace-symbol "find symbol"))))
@@ -553,8 +559,6 @@ _R_ restart Emacs   ^^                  ^^                  _T_ ansi-term
 ;; (use-package ein
 ;;   :defer t)
 
-
-
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (custom-set-variables
@@ -562,8 +566,13 @@ _R_ restart Emacs   ^^                  ^^                  _T_ ansi-term
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(company-backends
+   '(company-bbdb company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-files
+                  (company-dabbrev-code company-gtags company-etags company-keywords company-files)
+                  company-oddmuse company-dabbrev))
+ '(evil-collection-company-use-tng t)
  '(package-selected-packages
-   '(ayu-theme ein fast-scroll elisp-mode posframe hydra-posframe helpful major-mode-hydra treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil centaur-tabs direnv pyvenv lsp-python-ms dap-mode lsp-ivy lsp-ui lsp-mode flycheck-status-emoji flycheck highlight-indent-guides evil-easymotion evil-commentary evil-surround restart-emacs evil-collection company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package)))
+   '(company-box ayu-theme ein fast-scroll elisp-mode posframe hydra-posframe helpful major-mode-hydra treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil centaur-tabs direnv pyvenv lsp-python-ms dap-mode lsp-ivy lsp-ui lsp-mode flycheck-status-emoji flycheck highlight-indent-guides evil-easymotion evil-commentary evil-surround restart-emacs evil-collection company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package)))
  ;; Start fullscreen
 
 (custom-set-faces
