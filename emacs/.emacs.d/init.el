@@ -28,12 +28,15 @@ There are two things you can do about this warning:
 
 (use-package all-the-icons)
 
-(use-package doom-themes
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic nil) ; if nil, italics is universally disabled
-  (load-theme 'doom-snazzy t))
+(use-package ayu-theme
+  :config (load-theme 'ayu-dark t))
+
+;; (use-package doom-themes
+;;   :config
+;;   ;; Global settings (defaults)
+;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
+;;   (load-theme 'doom-snazzy t))
 
   ;; Enable flashing mode-line on errors
   ;; (doom-themes-visual-bell-config)
@@ -92,7 +95,7 @@ There are two things you can do about this warning:
 (setq inhibit-startup-message t)               ; No message at startup
 ;;(setq visible-bell t)                          ; No beep when reporting errors
 (setq ring-bell-function 'ignore)              ; no bell
-(global-hl-line-mode t)                        ; Highlight cursor line
+;; (global-hl-line-mode t)                        ; Highlight cursor line
 (setq-default indent-tabs-mode nil)            ; Use spaces instead of tab
 (show-paren-mode 1)                            ; Highlight parenthesis pairs
 ;; (windmove-default-keybindings)                 ; Shift arrows switch windows
@@ -157,6 +160,7 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-c l") 'counsel-locate)
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
 (global-set-key (kbd "C-x d") 'counsel-dired)
+(global-set-key (kbd "C-x b") 'counsel-switch-buffer)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 (use-package ivy-hydra)
 (setq tramp-default-method "ssh")
@@ -201,15 +205,15 @@ There are two things you can do about this warning:
   ;; Use Company mode everywhere.
   (global-company-mode t))
 
-;; Indent guide
-(use-package highlight-indent-guides
-  :ensure t
-  :hook (prog-mode . highlight-indent-guides-mode)
-  :init
-  (setq highlight-indent-guides-responsive 'top)
-  (setq highlight-indent-guides-method 'character)
-  (setq highlight-indent-guides-delay 0)
-  (setq highlight-indent-guides-character ?│))
+;; ;; Indent guide
+;; (use-package highlight-indent-guides
+;;   :ensure t
+;;   :hook (prog-mode . highlight-indent-guides-mode)
+;;   :init
+;;   (setq highlight-indent-guides-responsive 'top)
+;;   (setq highlight-indent-guides-method 'character)
+;;   (setq highlight-indent-guides-delay 0)
+;;   (setq highlight-indent-guides-character ?│))
 
 (use-package evil
   :init
@@ -238,20 +242,21 @@ There are two things you can do about this warning:
 (evilem-default-keybindings "C-,")
 
 (use-package flycheck
-  :init (global-flycheck-mode))
+  :init
+  (global-flycheck-mode))
 
 ;; LSP
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-(evil-define-key 'normal lsp-mode-map (kbd "\\") lsp-command-map)
+(evil-define-key 'normal lsp-mode-map (kbd "C-c M-l") lsp-command-map)
 
 (use-package lsp-mode
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (python-mode . lsp-deferred))
+         (python-mode . lsp-deferred)
          ;; if you want which-key integration
-         ;;(lsp-mode . lsp-enable-which-key-integration))
+         (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp lsp-deferred)
-(with-eval-after-load 'lsp-mode
-  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+;; (with-eval-after-load 'lsp-mode
+;;   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
 
 ;; optionally
@@ -272,6 +277,7 @@ There are two things you can do about this warning:
 
 ;; Python environment
 (use-package transient)
+
 (use-package pyvenv
   :init
   (setenv "WORKON_HOME" "~/.pyenv/versions")
@@ -279,16 +285,17 @@ There are two things you can do about this warning:
   (pyvenv-mode 1))
 
 (use-package poetry
+  :ensure  t
   ;; :mode ("\\.py\\'" . python-mode)
   ;; :interpreter ("python" . python-mode)
   :config
+  (setq poetry-tracking-strategy 'switch-buffer)
   (poetry-tracking-mode))
 
 ;; Language specific
 (use-package lsp-python-ms
   :ensure t
   :init (setq lsp-python-ms-auto-install-server t)
-  :after (poetry)
   :hook (python-mode . (lambda ()
                           (require 'lsp-python-ms)
                           (lsp-deferred))))  ; or lsp-deferred
@@ -426,7 +433,7 @@ There are two things you can do about this warning:
 (use-package major-mode-hydra
   :ensure t
   :bind
-  ("s-SPC" . major-mode-hydra))
+  ("C-c C-m" . major-mode-hydra))
 
 (setq major-mode-hydra-title-generator
       '(lambda (mode)
@@ -467,6 +474,7 @@ There are two things you can do about this warning:
    "Other"
    (("D" python-describe-at-point "thing-at-pt")
     ("E" python-eldoc-at-point "eldoc-at-pt")
+    ("P" poetry "poetry")
     ("S" lsp-ivy-workspace-symbol "find symbol"))))
 
 (use-package hydra
@@ -542,11 +550,6 @@ _R_ restart Emacs   ^^                  ^^                  _T_ ansi-term
   ("t" vterm)
   ("T" ansi-term))
 
-(use-package fast-scroll
-  :config
-  (fast-scroll-config)
-  (fast-scroll-mode 1))
-
 ;; (use-package ein
 ;;   :defer t)
 
@@ -560,7 +563,7 @@ _R_ restart Emacs   ^^                  ^^                  _T_ ansi-term
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ein fast-scroll elisp-mode posframe hydra-posframe helpful major-mode-hydra treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil centaur-tabs direnv pyvenv lsp-python-ms dap-mode lsp-ivy lsp-ui lsp-mode flycheck-status-emoji flycheck highlight-indent-guides evil-easymotion evil-commentary evil-surround restart-emacs evil-collection company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package)))
+   '(ayu-theme ein fast-scroll elisp-mode posframe hydra-posframe helpful major-mode-hydra treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil centaur-tabs direnv pyvenv lsp-python-ms dap-mode lsp-ivy lsp-ui lsp-mode flycheck-status-emoji flycheck highlight-indent-guides evil-easymotion evil-commentary evil-surround restart-emacs evil-collection company ivy-hydra counsel-projectile projectile helm vterm doom-modeline doom-themes all-the-icons which-key use-package)))
  ;; Start fullscreen
 
 (custom-set-faces
