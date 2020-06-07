@@ -32,6 +32,7 @@ setopt appendhistory
 
 path+=('/home/smakey18/.pyenv/bin')
 path+=('/home/smakey18/Applications/')
+path+=('/home/smakey18/.emacs.d/bin/')
 export PATH
 export PIPENV_VENV_IN_PROJECT=1
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
@@ -47,9 +48,9 @@ source /usr/share/fzf/completion.zsh
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-# if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
-#   source "${VIRTUAL_ENV}/bin/activate"
-# fi
+if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
+  source "${VIRTUAL_ENV}/bin/activate"
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
