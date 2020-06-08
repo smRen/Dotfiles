@@ -62,17 +62,7 @@
 (setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
 (setq +python-jupyter-repl-args '("--simple-prompt"))
 
-(use-package poetry
-  :config
-  (setq poetry-tracking-strategy 'switch-buffer)
-  (poetry-tracking-mode))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; (use-package pyvenv
-;;   :config
-;;   (pyvenv-tracking-mode))
-
-(map! :map python-mode-map
-      ;; :m "C-c C" #'pyvenv-create
-      ;; :m "C-c W" #'pyvenv-workon
-      ;; :m "C-c A" #'pyvenv-activate
-      :m "C-c P" #'poetry)
+;; Ejs filetype to web mode
+(add-to-list 'auto-mode-alist '("\\.ejs\\'" . web-mode))
