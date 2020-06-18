@@ -49,7 +49,7 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
-  source "${VIRTUAL_ENV}/bin/activate"
+source "${VIRTUAL_ENV}/bin/activate"  # commented out by conda initialize
 fi
 
 export NVM_DIR="$HOME/.nvm"
@@ -75,3 +75,4 @@ vterm_prompt_end() {
 }
 setopt PROMPT_SUBST
 PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
+
