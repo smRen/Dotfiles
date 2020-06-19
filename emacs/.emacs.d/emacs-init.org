@@ -1,15 +1,16 @@
-#+TITLE: Emacs Literate config
+#+TITLE: smRen's Literate Emacs config
 #+AUTHOR: smRen
 #+EMAIL: smakey18@gmail.com
-
+#+STARTUP: content
 
 * Overview
 
 Configuration file for emacs using literate programming.
 
-** General Settings
 
-*** Startup behavior
+* General Settings
+
+** Startup behavior
 
 Disable startup message and remove initial scratch message
 
@@ -24,7 +25,7 @@ Start window maximized (Can also be set by operating system like KDE!)
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
-*** Program behavior
+** Program behavior
 
 Restart emacs
 
@@ -57,9 +58,9 @@ Change intro message
 #+end_src
 
 
-** User Interface
+* User Interface
 
-*** Themes
+** Themes
 
 Color scheme
 
@@ -90,7 +91,35 @@ Modeline
 	  (evil   . (telephone-line-airline-position-segment))))
 #+end_src
 
-*** Quality of life
+** Icons
+
+All-the-icons
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons
+    :ensure t)
+#+end_src
+
+Icons for ivy mode
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons-ivy-rich
+    :ensure t
+    :init (all-the-icons-ivy-rich-mode 1))
+
+  (use-package ivy-rich
+    :ensure t
+    :init (ivy-rich-mode 1))
+#+end_src
+
+** Quality of life
+
+Page break lines
+
+#+begin_src emacs-lisp
+  (use-package page-break-lines
+    :ensure t)
+#+end_src
 
 Show matching parenthesis
 
@@ -98,13 +127,16 @@ Show matching parenthesis
   (show-paren-mode 1)
 #+end_src
 
-Underline current line
+Underline current line but disable inside terminal
 
 #+begin_src emacs-lisp
   (global-hl-line-mode 1)
   (set-face-background 'highlight nil)
   (set-face-foreground 'highlight nil)
   (set-face-underline-p 'highlight t)
+  (add-hook 'vterm-mode-hook (lambda ()
+			      (setq global-hl-line-mode
+						  nil)))
 #+end_src
 
 #+RESULTS:
@@ -143,11 +175,43 @@ Enable line number globally but disable in terminal modes
   (global-display-line-numbers-mode)
 #+end_src
 
+** Org bullets
+
+Better looking org mode bullet points
+
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+
+** Dashboard
+
+Dashboard intro
+
+#+begin_src emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :config
+    (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+    (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
+    (setq dashboard-center-content t)
+    (setq dashboard-show-shortcuts nil)
+    (setq dashboard-items '((recents  . 5)
+			  (projects . 5)
+			  (agenda . 5)))
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-init-info t)
+    (setq dashboard-set-file-icons t)
+    (setq show-week-agenda-p t)
+    (dashboard-setup-startup-hook))
+#+end_src
 
 
-** Navigation
+* Navigation
 
-*** Evil mode
+** Evil mode
 
 Vim keybindings
 
@@ -180,7 +244,32 @@ Vim commentary
     (evil-commentary-mode))
 #+end_src
 
-*** Other keybind settings
+Vim keybindings in Org mode
+
+#+begin_src emacs-lisp
+  (use-package evil-org
+    :ensure t
+    :after org
+    :config
+    (add-hook 'org-mode-hook 'evil-org-mode)
+    (add-hook 'evil-org-mode-hook
+	      (lambda ()
+		(evil-org-set-key-theme)))
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys))
+#+end_src
+
+** Org mode
+
+Org shortcuts
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c l") 'org-store-link)
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c c") 'org-capture)
+#+end_src
+
+** Other keybind settings
 
 Rebind universal argument from Emacs C-u to M-u
 
@@ -213,7 +302,7 @@ Show keys briefly
     (which-key-mode))
 #+end_src
 
-*** Text jumps
+** Text jumps
 
 Jump to character or object
 
@@ -225,7 +314,7 @@ Jump to character or object
     ("C-;" . avy-goto-char))
 #+end_src
 
-*** File/Project jumps
+** File/Project jumps
 
 Fuzzy finder for bunch of stuff
 
@@ -267,14 +356,19 @@ Project manager
     :config
     (setq projectile-completion-system 'ivy)
     (setq projectile-project-search-path '("~/Projects/"))
-    (projectile-mode 1)
-    :bind ("C-c p" . projectile-command-map))
+    (projectile-mode 1))
+
+  (use-package counsel-projectile
+    :ensure t
+    :config
+    (counsel-projectile-mode)
+    :bind
+    ("C-c p" . projectile-command-map))
 #+end_src
 
 
-** Programming
-
-*** Language Server Protocol
+* Programming
+** Language Server Protocol
 
 LSP-mode with its dependencies
 Has some performance optimizations
@@ -324,4 +418,23 @@ Web-mode for html/css/js
     (setq web-mode-enable-css-colorization t)
     (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode)))
+#+end_src
+
+** Terminal
+
+Terminal for emacs
+
+#+begin_src emacs-lisp
+  (use-package vterm
+    :ensure t
+    :defer t)
+#+end_src
+** Git
+
+Magit 
+
+#+begin_src emacs-lisp
+  (use-package magit
+    :ensure t
+    :defer t)
 #+end_src

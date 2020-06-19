@@ -39,7 +39,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(telephone-line restart-emacs helpful helpful-key helpful-keybind evil-collection avy evil ayu-theme use-package))
+   '(counsel-projectile org-bullets telephone-line restart-emacs helpful helpful-key helpful-keybind evil-collection avy evil ayu-theme use-package))
  '(safe-local-variable-values '((lsp . t) (lsp-mode . t))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
