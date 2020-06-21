@@ -33,17 +33,3 @@
 (require 'org)
 (setq vc-follow-symlinks t)
 (org-babel-load-file (expand-file-name "~/.emacs.d/emacs-init.org"))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(counsel-projectile org-bullets telephone-line restart-emacs helpful helpful-key helpful-keybind evil-collection avy evil ayu-theme use-package))
- '(safe-local-variable-values '((lsp . t) (lsp-mode . t))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
