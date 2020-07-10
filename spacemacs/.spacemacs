@@ -53,19 +53,20 @@ This function should only modify configuration layer settings."
            css-enable-lsp t
            html-enable-lsp t
            web-fmt-tool 'web-beautify
-           web-mode-markup-indent-offset 2
-           web-mode-css-indent-offset 2 ;; For inline css
-           web-mode-code-indent-offset 2 ;; For inline JS
+           ;; web-mode-markup-indent-offset 2
+           ;; web-mode-css-indent-offset 2 ;; For inline css
+           ;; web-mode-code-indent-offset 2 ;; For inline JS
            web-mode-enable-auto-pairing t
            web-mode-enable-css-colorization t)
      (javascript :variables
                  javascript-backend 'lsp
                  javascript-lsp-linter nil
                  javascript-fmt-tool 'prettier
-                 javascript-import-tool 'import-js
-                 js2-indent-level 2)
+                 javascript-import-tool 'import-js)
+                 ;; js2-indent-level 2)
      games
      ;; better-defaults
+     conda
      emoji
      emacs-lisp
      themes-megapack
@@ -85,7 +86,9 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      syntax-checking
      ;; version-control
-     treemacs
+     (treemacs :variables
+               treemacs-use-scope-type 'Perspectives
+               treemacs-use-filewatch-mode t)
      (python :variables
              python-formatter 'black
              python-backend 'lsp
@@ -103,6 +106,8 @@ This function should only modify configuration layer settings."
    dotspacemacs-additional-packages '(
                                       poetry
                                       highlight-indent-guides
+                                      ox-json
+                                      ox-slimhtml
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -259,7 +264,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font or prioritized list of fonts.
    dotspacemacs-default-font '("Hack"
-                               :size 10.0
+                               :size 14.0
                                :weight normal
                                :width normal)
 
@@ -362,7 +367,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
@@ -529,6 +534,8 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (require 'ox-json)
+  (require 'ox-slimhtml)
   (setq lsp-ui-doc-enable nil)
   (add-to-list 'auto-mode-alist '("\\.jinja\\'" . web-mode))
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
@@ -552,6 +559,8 @@ This function is called at the very end of Spacemacs initialization."
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(beacon-color "#d54e53")
+ '(custom-safe-themes
+   '("3577ee091e1d318c49889574a31175970472f6f182a9789f1a3e9e4513641d86" default))
  '(evil-want-Y-yank-to-eol nil)
  '(fci-rule-color "#f9cec3")
  '(flycheck-color-mode-line-face-to-color 'mode-line-buffer-id)
@@ -584,7 +593,7 @@ This function is called at the very end of Spacemacs initialization."
  '(jdee-db-spec-breakpoint-face-colors (cons "#16161c" "#6a6a6a"))
  '(objed-cursor-color "#e95678")
  '(package-selected-packages
-   '(highlight-indent-guides yaml-mode jinja2-mode company-ansible ansible-doc ansible toml-mode racer flycheck-rust cargo rust-mode xterm-color vterm terminal-here shell-pop multi-term eshell-z eshell-prompt-extras esh-help pdf-tools tablist typit mmt sudoku pacmacs 2048-game emojify emoji-cheat-sheet-plus helm helm-core company-emoji wgrep smex lsp-ivy ivy-yasnippet ivy-xref ivy-purpose ivy-hydra counsel-projectile company-box treemacs-magit smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-brain mmm-mode markdown-toc magit-svn magit-section magit-gitflow magit-popup lsp-ui htmlize helm-org-rifle helm-org helm-lsp helm-gitignore helm-git-grep gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flycheck-pos-tip pos-tip evil-org evil-magit magit git-commit with-editor transient company-statistics yasnippet-snippets helm-company helm-c-yasnippet fuzzy auto-yasnippet yasnippet ac-ispell auto-complete yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode lsp-treemacs bui lsp-mode markdown-mode dash-functional cython-mode counsel-gtags counsel swiper ivy company-anaconda company blacken anaconda-mode pythonic reverse-theme ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless move-text macrostep lorem-ipsum link-hint ir-black-theme indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav editorconfig dumb-jump dotenv-mode diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line))
+   '(conda edit-indirect highlight-indent-guides yaml-mode jinja2-mode company-ansible ansible-doc ansible toml-mode racer flycheck-rust cargo rust-mode xterm-color vterm terminal-here shell-pop multi-term eshell-z eshell-prompt-extras esh-help pdf-tools tablist typit mmt sudoku pacmacs 2048-game emojify emoji-cheat-sheet-plus helm helm-core company-emoji wgrep smex lsp-ivy ivy-yasnippet ivy-xref ivy-purpose ivy-hydra counsel-projectile company-box treemacs-magit smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-brain mmm-mode markdown-toc magit-svn magit-section magit-gitflow magit-popup lsp-ui htmlize helm-org-rifle helm-org helm-lsp helm-gitignore helm-git-grep gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flycheck-pos-tip pos-tip evil-org evil-magit magit git-commit with-editor transient company-statistics yasnippet-snippets helm-company helm-c-yasnippet fuzzy auto-yasnippet yasnippet ac-ispell auto-complete yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode lsp-treemacs bui lsp-mode markdown-mode dash-functional cython-mode counsel-gtags counsel swiper ivy company-anaconda company blacken anaconda-mode pythonic reverse-theme ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless move-text macrostep lorem-ipsum link-hint ir-black-theme indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav editorconfig dumb-jump dotenv-mode diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(rustic-ansi-faces
    ["#1c1e26" "#e95678" "#09f7a0" "#fab795" "#21bfc2" "#6c6f93" "#59e3e3" "#c7c9cb"])
