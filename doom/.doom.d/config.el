@@ -66,3 +66,6 @@
 
 ;; Ejs filetype to web mode
 (add-to-list 'auto-mode-alist '("\\.ejs\\'" . web-mode))
+
+;; Reduce lsp annoyaning popups
+(setq lsp-ui-doc-enable nil)

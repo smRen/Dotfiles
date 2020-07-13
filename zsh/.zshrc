@@ -29,17 +29,23 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
+# Aliases
+alias emacs="emacsclient -t"
+alias e="emacs"
 
 path+=('/home/smakey18/.pyenv/bin')
 path+=('/home/smakey18/Applications/')
 path+=('/home/smakey18/.emacs.d/bin/')
+path+=('/home/smakey18/.poetry/bin')
+path+=('/snap/bin/')
 export PATH
 export PIPENV_VENV_IN_PROJECT=1
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
+export TERM=xterm-256color
 #source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/fzf/fzf-extras.zsh
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+#source /usr/share/fzf/fzf-extras.zsh
+#source /usr/share/fzf/key-bindings.zsh
+#source /usr/share/fzf/completion.zsh
 # source /usr/share/nvm/init-nvm.sh
 # source /usr/share/fzf/fzf-extras.zsh
 # source /usr/share/fzf/key-bindings.zsh
@@ -76,3 +82,5 @@ vterm_prompt_end() {
 setopt PROMPT_SUBST
 PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

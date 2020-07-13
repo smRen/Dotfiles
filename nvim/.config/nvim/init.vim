@@ -77,7 +77,7 @@ let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_setColors = 0
 
 "" General Config
-let g:python3_host_prog = "/home/smakey18/.pyenv/versions/neovim/bin/python" 
+" let g:python3_host_prog = "/home/smakey18/.pyenv/versions/neovim/bin/python" 
 filetype plugin indent on                   " File specific settings (like number of spaces in tabs) 
 syntax enable                               " Nice looking colors
 set nohls                                   " No search highlight
