@@ -53,7 +53,7 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-
+(server-start)
 ;; For python MS python lsp
 (after! lsp-python-ms
   (set-lsp-priority! 'mspyls 1))
