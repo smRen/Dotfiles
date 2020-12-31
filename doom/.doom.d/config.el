@@ -53,19 +53,10 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-(server-start)
 ;; For python MS python lsp
-(after! lsp-python-ms
-  (set-lsp-priority! 'mspyls 1))
-
-;; Ipython and jupyter configs
-(setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
-(setq +python-jupyter-repl-args '("--simple-prompt"))
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Ejs filetype to web mode
-(add-to-list 'auto-mode-alist '("\\.ejs\\'" . web-mode))
 
 ;; Reduce lsp annoyaning popups
-(setq lsp-ui-doc-enable nil)
