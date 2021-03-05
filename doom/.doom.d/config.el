@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-palenight)
+(setq doom-theme 'doom-one)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -53,10 +53,10 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-;; For python MS python lsp
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; Ejs filetype to web mode
-
-;; Reduce lsp annoyaning popups
+(use-package js-mode
+  :init
+  (setq js-indent-level 2)
+  (setq js2-basic-offset 2))
