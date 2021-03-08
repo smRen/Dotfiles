@@ -20,14 +20,19 @@
 
     ;; Place backup files in different folder
     (setq backup-directory-alist
-	      `(("." . ,(concat user-emacs-directory "backups"))))
+	  `(("." . ,(concat user-emacs-directory "backups"))))
 
     ;; Shell variables
     (use-package exec-path-from-shell
       :ensure t
       :config
       (when (daemonp)
-      (exec-path-from-shell-initialize)))
+	(exec-path-from-shell-initialize)))
+
+    ;; Terminal cursor
+    (unless (display-graphic-p)
+      (require 'evil-terminal-cursor-changer)
+      (evil-terminal-cursor-changer-activate))
   #+end_src
 
   #+RESULTS:
@@ -149,6 +154,16 @@
 	    evil-esc-delay 0
 	    evil-want-keybinding nil)
       :config (evil-mode))
+
+    (use-package evil-terminal-cursor-changer
+      :ensure t
+      :init
+      (setq evil-motion-state-cursor 'box)  ; █
+      (setq evil-visual-state-cursor 'box)  ; █
+      (setq evil-normal-state-cursor 'box)  ; █
+      (setq evil-insert-state-cursor 'bar)  ; ⎸
+      (setq evil-emacs-state-cursor  'hbar) ; _
+      )
 
     (use-package evil-collection
       :ensure t
