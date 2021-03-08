@@ -1,3 +1,3 @@
 #!/bin/sh
 
-/usr/bin/imwheel -b "4 5"
+/usr/bin/imwheel -b "45"

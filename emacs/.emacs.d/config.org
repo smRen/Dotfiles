@@ -67,7 +67,7 @@
     (setq org-edit-src-tab-acts-natively t)
 
     ;; Edit source code in current window
-    (setq org-src-window-setup 'split-window-below)
+    (setq org-src-window-setup 'current-window)
   #+end_src
 
   #+RESULTS:
@@ -75,12 +75,6 @@
 
 * UI
   #+begin_src emacs-lisp
-    ;; Line scrolling
-    ;; (setq scroll-conservatively 101
-    ;;       scroll-preserve-screen-position 1)
-    ;; (require 'view)
-    ;; (global-set-key (kbd "C-v") 'View-scroll-half-page-forward)
-    ;; (global-set-key (kbd "M-v") 'View-scroll-half-page-backward)
     (setq scroll-conservatively 101)
 
     ;; Show matching parenthesis
@@ -89,7 +83,7 @@
     ;; Disable toolbar, menubar, and scrollbar
     (menu-bar-mode -1)
     (tool-bar-mode -1)
-    (toggle-scroll-bar -1)
+    (scroll-bar-mode -1)
     ;; Display line numbers
     (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
@@ -112,31 +106,6 @@
       (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
       (ivy-rich-mode))
 
-    ;; EMOJIS
-    (use-package emojify
-      :ensure t
-      :hook (after-init . global-emojify-mode))
-
-
-    ;; Company emoji
-    (use-package company-emoji
-      :ensure t
-      :config
-      (add-to-list 'company-backends 'company-emoji)
-	(defun --set-emoji-font (frame)
-	"Adjust the font settings of FRAME so Emacs can display emoji properly."
-	(if (eq system-type 'darwin)
-	    ;; For NS/Cocoa
-	    (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") frame 'prepend)
-	    ;; For Linux
-	    (set-fontset-font t 'symbol (font-spec :family "Symbola") frame 'prepend)))
-
-	;; For when Emacs is started in GUI mode:
-	(--set-emoji-font nil)
-	;; Hook for when a frame is created with emacsclient
-	;; see https://www.gnu.org/software/emacs/manual/html_node/elisp/Creating-Frames.html
-	(add-hook 'after-make-frame-functions '--set-emoji-font)
-      )
   #+end_src
 
   #+RESULTS:
@@ -174,10 +143,8 @@
     (use-package evil
       :ensure t
       :init
-      (define-key global-map "\M-u" nil)
-      (define-key global-map "\M-u" 'universal-argument)
-      (add-hook 'evil-insert-state-entry-hook (lambda () (send-string-to-terminal "\033[5 q")))
-      (add-hook 'evil-normal-state-entry-hook (lambda () (send-string-to-terminal "\033[0 q")))
+      ;; (add-hook 'evil-insert-state-entry-hook (lambda () (send-string-to-terminal "\033[5 q")))
+      ;; (add-hook 'evil-normal-state-entry-hook (lambda () (send-string-to-terminal "\033[0 q")))
       (setq evil-want-C-u-scroll t
 	    evil-esc-delay 0
 	    evil-want-keybinding nil)
@@ -231,14 +198,16 @@
     (use-package lsp-mode
       :ensure t
       :init
-      (setq gc-cons-threshold 100000000
+      (setq lsp-keymap-prefix "C-c l"
+	    gc-cons-threshold 100000000
 	    read-process-output-max (* 1024 1024)
 	    lsp-idle-delay 0.500
 	    lsp-log-io nil) ;; 1mb
-      :hook (
-	     (js-mode . lsp-deferred)
-	     (python-mode . lsp-deferred)
-	     (lsp-mode . lsp-enable-which-key-integration))
+      :init
+      (add-hook 'js-mode-hook 'lsp)
+      (add-hook 'html-mode-hook 'lsp)
+      (add-hook 'css-mode-hook 'lsp)
+      (add-hook 'lsp-mode-hook 'lsp-enable-which-key-integration)
       :commands (lsp lsp-deferred))
 
     ;; Lsp Ui for checking
@@ -281,10 +250,23 @@
        "f" 'avy-goto-char-2
 
        ;; Code stuff
-       "l" '(:ignore t :which-key "LSP")
-       "lr" 'lsp-workspace-restart
-       "lg" 'lsp-ui-doc-glance
-       "lf" 'format-all-buffer))
+       "l" '(:ignore t :which-key "Code stuff")
+       "lf" 'format-all-buffer
+       "ls" 'yas-insert-snippet
+       "li" 'auto-insert
+
+       ;; Universal argument
+       "u" 'universal-argument
+
+       ;; Restart Emacs
+       "R" 'restart-emacs
+
+       ;; Magit
+       "g" 'magit
+
+       ;; Projectile
+       "p" 'projectile-command-map))
+
 
 
     (use-package vterm
@@ -295,8 +277,17 @@
 
     (use-package python
       :ensure t
-      :config
-      (setq python-indent-guess-indent-offset-verbose nil))
+      :init
+      (setq python-indent-guess-indent-offset-verbose nil)
+      (add-hook 'python-mode-hook (lambda ()
+				    (poetry-venv-workon)
+				    (lsp))))
+
+    (use-package poetry
+      :ensure t
+      :init
+      (setq poetry-tracking-stratery 'switch-buffer))
+
 
     (use-package format-all
       :ensure t
@@ -316,21 +307,67 @@
     (use-package json-mode
       :ensure t)
 
+    (use-package projectile
+      :ensure t
+      :config
+      (setq projectile-project-search-path '("~/Projects/")
+	    projectile-completion-system 'ivy)
+      (projectile-mode))
+
+    (use-package emmet-mode
+      :ensure t
+      :init
+      (add-hook 'sgml-mode-hook 'emmet-mode)
+      (add-hook 'css-mode-hook 'emmet-mode))
+
+    (use-package magit
+      :ensure t)
+
+    (use-package restart-emacs
+      :ensure t)
+
+    (use-package hydra
+      :ensure t)
+
+    (use-package realgud
+      :ensure t)
+
+    (use-package zen-mode
+      :ensure t)
+    ;; (use-package dap-mode
+    ;;   :ensure t
+    ;;   :init
+    ;;   (add-hook 'dap-stopped-hook (lambda () (call-interactively 'dap-hydra)))
+    ;;   :config
+    ;;   (require 'dap-python))
+
     ;; (use-package web-mode
     ;;   :ensure t
     ;;   :config
-    ;;   (setq web-mode-markup-indent-offset 2)
-    ;;   (setq web-mode-css-indent-offset 2)
-    ;;   (setq web-mode-code-indent-offset 2)
-    ;;   (setq web-mode-enable-css-colorization t)
+    ;;   (setq web-mode-markup-indent-offset 2
+    ;; 	web-mode-css-indent-offset 2
+    ;; 	web-mode-code-indent-offset 2
+    ;; 	web-mode-enable-auto-pairing t
+    ;; 	web-mode-enable-css-colorization t
+    ;; 	web-mode-enable-comment-interpolation t
+    ;; 	web-mode-enable-current-column-highlight t)
+    ;;   (setq web-mode-ac-sources-alist
+    ;; 	'(("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
+    ;; 	  ("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
+    ;; 	  ("css" . (ac-source-css-property ac-source-emmet-css-snippets))))
     ;;   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
     ;;   (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode)))
+
+    ;; (use-package perspective
+    ;;   :ensure t
+    ;;   :config
+    ;;   (persp-mode))
   #+end_src
 
   #+RESULTS:
-  : t
 
 * Custom functions
+  
   #+BEGIN_SRC emacs-lisp
     ;; Function for shutdown emacs server instance
     (defun server-shutdown ()
@@ -342,3 +379,4 @@
 
   #+RESULTS:
   : server-shutdown
+  
