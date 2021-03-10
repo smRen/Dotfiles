@@ -1,0 +1,404 @@
+#+TITLE: smRen's Literate Emacs config
+#+AUTHOR: smRen
+#+EMAIL: smakey18@gmail.com
+#+STARTUP: content
+
+* General settings
+  Random stuff
+  #+begin_src emacs-lisp
+    ;; Stop alarms
+    (setq ring-bell-function 'ignore)
+
+    ;; Make C-x C-b go to choose buffer
+    (global-set-key (kbd "C-x C-b") 'switch-to-buffer)
+
+    ;; Disable lockfile
+    (setq create-lockfiles nil)
+
+    ;; Banish customize and don't load
+    (setq custom-file (expand-file-name (concat user-emacs-directory "custom.el")))
+
+    ;; Place backup files in different folder
+    (setq backup-directory-alist
+	  `(("." . ,(concat user-emacs-directory "backups"))))
+
+    ;; Shell variables
+    (use-package exec-path-from-shell
+      :ensure t
+      :config
+      (when (daemonp)
+	(exec-path-from-shell-initialize)))
+
+    ;;Terminal cursor
+    (unless (display-graphic-p)
+      (require 'evil-terminal-cursor-changer)
+      (evil-terminal-cursor-changer-activate))
+  #+end_src
+
+  #+RESULTS:
+  : t
+
+  + Stop getting prompts about killing a buffer with a live process
+  #+begin_src emacs-lisp
+    (setq kill-buffer-query-functions
+	  (remq 'process-kill-buffer-query-function
+		kill-buffer-query-functions))
+  #+end_src
+
+  #+RESULTS:
+
+  + y or n instead of yes or no
+  #+begin_src emacs-lisp
+    (fset 'yes-or-no-p 'y-or-n-p)
+  #+end_src
+
+  #+RESULTS:
+  : y-or-n-p
+
+  + Change intro message
+  #+begin_src emacs-lisp
+    (defun display-startup-echo-area-message ()
+  (message "Welcome elite hacker"))
+  #+end_src
+
+  #+RESULTS:
+  : display-startup-echo-area-message
+
+  Org configs
+  #+begin_src emacs-lisp
+    ;; Don't ask for confirmation to eval code block
+    (setq org-confirm-babel-evaluate nil)
+
+    (setq org-edit-src-tab-acts-natively t)
+
+    ;; Edit source code in current window
+    (setq org-src-window-setup 'current-window)
+  #+end_src
+
+  #+RESULTS:
+  : split-window-below
+
+* UI
+  #+begin_src emacs-lisp
+    (setq scroll-conservatively 101)
+
+    ;; Show matching parenthesis
+    (show-paren-mode 1)
+
+    ;; Disable toolbar, menubar, and scrollbar
+    (menu-bar-mode -1)
+    (tool-bar-mode -1)
+    (scroll-bar-mode -1)
+    ;; Display line numbers
+    (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
+    (use-package counsel
+      :ensure t
+      :after ivy
+      :config (counsel-mode))
+
+    (use-package ivy
+      :ensure t
+      :config
+      (global-set-key (kbd "C-x C-r") 'counsel-recentf)
+      (global-set-key (kbd "C-x C-d") 'counsel-dired)
+      (global-set-key (kbd "C-c t") 'counsel-load-theme)
+      (ivy-mode))
+
+    (use-package ivy-rich
+      :ensure t
+      :config
+      (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+      (ivy-rich-mode))
+
+  #+end_src
+
+  #+RESULTS:
+  : t
+
+* Themes
+  #+begin_src emacs-lisp
+    ;;(load-theme 'wombat)
+    (use-package ayu-theme
+      :ensure t
+      :config (load-theme 'ayu-dark t))
+
+
+    (use-package minions
+      :ensure t
+      :config (minions-mode))
+
+    (use-package mood-line
+      :ensure t
+      :config (mood-line-mode))
+  #+end_src
+
+  #+RESULTS:
+  : t
+  
+* Utility Packages
+  #+begin_src emacs-lisp
+    ;; Show key hints
+    (use-package which-key
+      :ensure t
+      :init
+      :config (which-key-mode))
+
+    ;; Evil (VIM) mode
+    (use-package evil
+      :ensure t
+      :init
+      (setq evil-want-C-u-scroll t
+	    evil-esc-delay 0
+	    evil-want-keybinding nil)
+      :config
+      (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+      (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
+      (evil-mode))
+
+    (use-package evil-terminal-cursor-changer
+      :ensure t
+      :init
+      (setq evil-motion-state-cursor 'box)  ; █
+      (setq evil-visual-state-cursor 'box)  ; █
+      (setq evil-normal-state-cursor 'box)  ; █
+      (setq evil-insert-state-cursor 'bar)  ; ⎸
+      (setq evil-emacs-state-cursor  'hbar) ; _
+      )
+
+    (use-package evil-collection
+      :ensure t
+      :after evil
+      :init
+      (evil-collection-init))
+
+    (use-package evil-surround
+      :ensure t
+      :config
+      (global-evil-surround-mode))
+
+    (use-package evil-matchit
+      :ensure t
+      :config
+      (global-evil-matchit-mode 1))
+
+    (use-package evil-commentary
+      :ensure t
+      :config
+      (evil-commentary-mode))
+
+
+    ;; Company completion
+    (use-package company
+      :ensure t
+      :config
+      (define-key company-active-map (kbd "C-n") 'company-select-next)
+      (define-key company-active-map (kbd "C-p") 'company-select-previous)
+      (setq company-idle-delay 0
+	    company-minimum-prefix-length 1
+	    company-selection-wrap-around t
+	    company-echo-delay 0)
+      (global-company-mode))
+
+    ;; Flycheck
+    (use-package flycheck
+      :ensure t
+      :init
+      (defun disable-fylcheck-in-org-src-block ()
+	(setq-local flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+      (add-hook 'org-src-mode-hook 'disable-fylcheck-in-org-src-block)
+      :config
+      (global-flycheck-mode))
+
+    ;; LSP mode
+    (use-package lsp-mode
+      :ensure t
+      :init
+      (setq lsp-keymap-prefix "C-c l"
+	    gc-cons-threshold 100000000
+	    read-process-output-max (* 1024 1024)
+	    lsp-idle-delay 0.500
+	    lsp-log-io nil) ;; 1mb
+      :init
+      (add-hook 'js-mode-hook 'lsp)
+      (add-hook 'html-mode-hook 'lsp)
+      (add-hook 'css-mode-hook 'lsp)
+      (add-hook 'lsp-mode-hook 'lsp-enable-which-key-integration)
+      :commands (lsp lsp-deferred))
+
+    ;; Lsp Ui for checking
+    (use-package lsp-ui
+      :ensure t
+      :config
+      (setq lsp-completion-show-detail t
+	    lsp-ui-doc-enable nil))
+
+    (use-package lsp-ivy
+      :ensure t
+      :commands lsp-ivy-workspace-symbol)
+
+    (use-package lsp-pyright
+      :ensure t)
+
+    (use-package yasnippet
+      :ensure t
+      :config
+      (yas-reload-all)
+      (add-hook 'prog-mode-hook #'yas-minor-mode))
+
+    (use-package yasnippet-snippets
+      :ensure t)
+
+    (use-package general
+      :ensure t
+      :config
+      (general-define-key
+       :states '(normal visual insert emacs)
+       :prefix "SPC"
+       :non-normal-prefix "C-SPC"
+
+       ;; Apps
+       "a" '(:ignore t :which-key "Applications")
+       "ad" 'dired
+       "av" 'vterm-other-window
+
+       ;; Avy
+       "f" 'avy-goto-char-2
+
+       ;; Code stuff
+       "l" '(:ignore t :which-key "Code stuff")
+       "lf" 'format-all-buffer
+       "ls" 'yas-insert-snippet
+       "li" 'auto-insert
+
+       ;; Universal argument
+       "u" 'universal-argument
+
+       ;; Restart Emacs
+       "R" 'restart-emacs
+
+       ;; Magit
+       "g" 'magit
+
+       ;; Projectile
+       "p" 'projectile-command-map))
+
+
+
+    (use-package vterm
+      :ensure t)
+
+    (use-package avy
+      :ensure t)
+
+    (use-package python
+      :ensure t
+      :init
+      (setq python-indent-guess-indent-offset-verbose nil)
+      (add-hook 'python-mode-hook (lambda ()
+				    (poetry-venv-workon)
+				    (lsp))))
+
+    (use-package poetry
+      :ensure t
+      :init
+      (setq poetry-tracking-stratery 'switch-buffer))
+
+
+    (use-package format-all
+      :ensure t
+      :init
+      (add-hook 'prog-mode-hook 'format-all-mode)
+      (add-hook 'format-all-mode-hook 'format-all-ensure-formatter))
+
+    (use-package tree-sitter
+      :ensure t
+      :init
+      (global-tree-sitter-mode)
+      (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+    (use-package tree-sitter-langs
+      :ensure t)
+
+    (use-package json-mode
+      :ensure t)
+
+    (use-package projectile
+      :ensure t
+      :config
+      (setq projectile-project-search-path '("~/Projects/")
+	    projectile-completion-system 'ivy)
+      (projectile-mode))
+
+    (use-package emmet-mode
+      :ensure t
+      :init
+      (add-hook 'sgml-mode-hook 'emmet-mode)
+      (add-hook 'css-mode-hook 'emmet-mode))
+
+    (use-package magit
+      :ensure t)
+
+    (use-package restart-emacs
+      :ensure t)
+
+    (use-package hydra
+      :ensure t)
+
+    (use-package realgud
+      :ensure t)
+
+    (use-package writeroom-mode
+      :ensure t)
+
+    (use-package ivy-prescient
+      :ensure t
+      :after counsel
+      :config
+      (ivy-prescient-mode))
+
+    ;; (use-package dap-mode
+    ;;   :ensure t
+    ;;   :init
+    ;;   (add-hook 'dap-stopped-hook (lambda () (call-interactively 'dap-hydra)))
+    ;;   :config
+    ;;   (require 'dap-python))
+
+    ;; (use-package web-mode
+    ;;   :ensure t
+    ;;   :config
+    ;;   (setq web-mode-markup-indent-offset 2
+    ;; 	web-mode-css-indent-offset 2
+    ;; 	web-mode-code-indent-offset 2
+    ;; 	web-mode-enable-auto-pairing t
+    ;; 	web-mode-enable-css-colorization t
+    ;; 	web-mode-enable-comment-interpolation t
+    ;; 	web-mode-enable-current-column-highlight t)
+    ;;   (setq web-mode-ac-sources-alist
+    ;; 	'(("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
+    ;; 	  ("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
+    ;; 	  ("css" . (ac-source-css-property ac-source-emmet-css-snippets))))
+    ;;   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+    ;;   (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode)))
+
+    ;; (use-package perspective
+    ;;   :ensure t
+    ;;   :config
+  #+end_src
+
+  #+RESULTS:
+
+* Custom functions
+  
+  #+BEGIN_SRC emacs-lisp
+    ;; Function for shutdown emacs server instance
+    (defun server-shutdown ()
+      "Save buffers, Quit, and Shutdown (kill) server"
+      (interactive)
+      (save-some-buffers)
+      (Kill-emacs))
+  #+END_SRC
+
+  #+RESULTS:
+  : server-shutdown
+  

@@ -3,7 +3,4 @@ nvim/.config/nvim/undodir/
 nvim/.config/nvim/.netrwhist
 .git
 .cache/
-emacs/.emacs.d/
-emacs/.emacs.d/*
-!emacs/.emacs.d/config.org
-!emacs/.emacs.d/init.el
+/emacs/.emacs.d/
