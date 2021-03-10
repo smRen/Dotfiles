@@ -1,4 +1,4 @@
-# Needed settings to allow Emacs Tramp mode
+#p iNeeded settings to allow Emacs Tramp mode
 if [[ "$TERM" == "dumb" ]]; then
    unsetopt zle
    unsetopt prompt_cr

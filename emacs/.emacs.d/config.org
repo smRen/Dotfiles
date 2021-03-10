@@ -15,8 +15,9 @@
     ;; Disable lockfile
     (setq create-lockfiles nil)
 
-    ;; Banish customize and don't load
+    ;; Move customize
     (setq custom-file (expand-file-name (concat user-emacs-directory "custom.el")))
+    (load custom-file)
 
     ;; Place backup files in different folder
     (setq backup-directory-alist
@@ -27,59 +28,51 @@
       :ensure t
       :config
       (when (daemonp)
-	(exec-path-from-shell-initialize)))
+	(exec-path-from-shell-initialize))
+      (when (memq window-system '(mac ns x))
+	(exec-path-from-shell-initialize))
+      )
 
     ;;Terminal cursor
     (unless (display-graphic-p)
       (require 'evil-terminal-cursor-changer)
       (evil-terminal-cursor-changer-activate))
-  #+end_src
 
-  #+RESULTS:
-  : t
-
-  + Stop getting prompts about killing a buffer with a live process
-  #+begin_src emacs-lisp
+    ;;Stop getting prompts about killing a buffer with a live process
     (setq kill-buffer-query-functions
 	  (remq 'process-kill-buffer-query-function
 		kill-buffer-query-functions))
-  #+end_src
 
-  #+RESULTS:
-
-  + y or n instead of yes or no
-  #+begin_src emacs-lisp
+    ;;y or n instead of yes or no
     (fset 'yes-or-no-p 'y-or-n-p)
-  #+end_src
 
-  #+RESULTS:
-  : y-or-n-p
-
-  + Change intro message
-  #+begin_src emacs-lisp
+    ;; Intro message
     (defun display-startup-echo-area-message ()
-  (message "Welcome elite hacker"))
-  #+end_src
+      (message "Welcome elite hacker"))
 
-  #+RESULTS:
-  : display-startup-echo-area-message
+    ;; Disable initial screen
+    (setq inhibit-startup-screen t)
 
-  Org configs
-  #+begin_src emacs-lisp
-    ;; Don't ask for confirmation to eval code block
+    ;; Make maximized
+    (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+    ;; Org configs
     (setq org-confirm-babel-evaluate nil)
-
     (setq org-edit-src-tab-acts-natively t)
-
     ;; Edit source code in current window
     (setq org-src-window-setup 'current-window)
-  #+end_src
 
-  #+RESULTS:
-  : split-window-below
+    (use-package org-bullets
+      :ensure t
+      :config
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+  #+end_src
 
 * UI
   #+begin_src emacs-lisp
+    ;; Font
+    (set-frame-font "Hack-13" nil t)
+
     (setq scroll-conservatively 101)
 
     ;; Show matching parenthesis
@@ -111,6 +104,8 @@
       (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
       (ivy-rich-mode))
 
+    ;; emoji
+    (set-fontset-font t 'symbol "Apple Color Emoji")
   #+end_src
 
   #+RESULTS:
@@ -123,14 +118,14 @@
       :ensure t
       :config (load-theme 'ayu-dark t))
 
-
-    (use-package minions
+    (use-package doom-modeline
       :ensure t
-      :config (minions-mode))
+      :hook (after-init . doom-modeline-mode))
 
-    (use-package mood-line
+    (use-package company-box
       :ensure t
-      :config (mood-line-mode))
+      :hook (company-mode . company-box-mode))
+
   #+end_src
 
   #+RESULTS:
@@ -223,6 +218,8 @@
       (add-hook 'js-mode-hook 'lsp)
       (add-hook 'html-mode-hook 'lsp)
       (add-hook 'css-mode-hook 'lsp)
+      (add-hook 'c-mode-hook 'lsp)
+      (add-hook 'sh-mode 'lsp)
       (add-hook 'lsp-mode-hook 'lsp-enable-which-key-integration)
       :commands (lsp lsp-deferred))
 
@@ -348,14 +345,22 @@
     (use-package realgud
       :ensure t)
 
-    (use-package writeroom-mode
-      :ensure t)
-
     (use-package ivy-prescient
       :ensure t
       :after counsel
       :config
       (ivy-prescient-mode))
+
+    (use-package all-the-icons
+      :ensure t)
+
+    (use-package all-the-icons-ivy-rich
+      :ensure t
+      :init (all-the-icons-ivy-rich-mode))
+
+    (use-package ivy-rich
+      :ensure t
+      :init (ivy-rich-mode))
 
     ;; (use-package dap-mode
     ;;   :ensure t
