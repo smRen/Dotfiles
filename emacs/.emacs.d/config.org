@@ -15,10 +15,6 @@
     ;; Disable lockfile
     (setq create-lockfiles nil)
 
-    ;; Move customize
-    (setq custom-file (expand-file-name (concat user-emacs-directory "custom.el")))
-    (load custom-file)
-
     ;; Place backup files in different folder
     (setq backup-directory-alist
 	  `(("." . ,(concat user-emacs-directory "backups"))))
@@ -57,10 +53,15 @@
     (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
     ;; Org configs
-    (setq org-confirm-babel-evaluate nil)
-    (setq org-edit-src-tab-acts-natively t)
-    ;; Edit source code in current window
-    (setq org-src-window-setup 'current-window)
+    (global-set-key (kbd "C-c l") 'org-store-link)
+    (global-set-key (kbd "C-c a") 'org-agenda)
+    (global-set-key (kbd "C-c c") 'org-capture)
+    (use-package org
+      :ensure t)
+      ;; :config
+      ;; (setq org-confirm-babel-evaluate nil
+      ;; 	org-edit-src-tab-acts-natively t
+      ;; 	org-src-window-setup 'current-window))
 
     (use-package org-bullets
       :ensure t
@@ -68,11 +69,12 @@
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
   #+end_src
 
+  #+RESULTS:
+  : t
+
 * UI
   #+begin_src emacs-lisp
-    ;; Font
-    (set-frame-font "Hack-13" nil t)
-
+    ;; Scroll
     (setq scroll-conservatively 101)
 
     ;; Show matching parenthesis
@@ -104,12 +106,30 @@
       (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
       (ivy-rich-mode))
 
-    ;; emoji
-    (set-fontset-font t 'symbol "Apple Color Emoji")
+    ;; Emoji char
+    ;; Depends on os type
+    (cond ((string-equal system-type "darwin")
+	   (set-fontset-font t 'symbol "Apple Color Emoji")
+	   (message "Mac OS X"))
+	  ((string-equal system-type "gnu/linux")
+	   (set-fontset-font t 'symbol "Noto Color Emoji")
+	   (message "Linux"))
+	  ((string-equal system-type "windows-nt")
+	   (set-fontset-font t 'symbol "Segoe UI Emoji")
+	   (message "Windows")))
+
+    ;; Font and font size
+    ;; Depends on monitor resolution
+    (if (equal '(0 0 1920 1080) (frame-monitor-geometry))
+	(progn
+	  (set-frame-font "Hack-10" nil t)
+	  (message "1080p monitor detected"))
+      (set-frame-font "Hack-12" nil t)
+      (message "High res monitor detected"))
   #+end_src
 
   #+RESULTS:
-  : t
+  : 1080p monitor detected
 
 * Themes
   #+begin_src emacs-lisp
@@ -277,8 +297,15 @@
        ;; Magit
        "g" 'magit
 
+       ;; Search index
+       "s" '(:ignore t :which-key "Search")
+       "se" 'elisp-index-search
+       "sf" 'emacs-index-search
+
        ;; Projectile
        "p" 'projectile-command-map))
+
+
 
 
 
@@ -362,6 +389,11 @@
       :ensure t
       :init (ivy-rich-mode))
 
+    (use-package smartparens
+      :ensure t
+      :init
+      (require 'smartparens-config))
+    
     ;; (use-package dap-mode
     ;;   :ensure t
     ;;   :init
