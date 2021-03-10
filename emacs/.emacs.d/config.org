@@ -120,12 +120,12 @@
 
     ;; Font and font size
     ;; Depends on monitor resolution
-    (if (equal '(0 0 1920 1080) (frame-monitor-geometry))
-	(progn
-	  (set-frame-font "Hack-10" nil t)
-	  (message "1080p monitor detected"))
-      (set-frame-font "Hack-12" nil t)
-      (message "High res monitor detected"))
+    (cond ((equal '(0 0 1920 1080) (frame-monitor-geometry))
+	   (set-frame-font "Hack-10" nil t)
+	   (message "1080p monitor detected"))
+	  ((equal '(0 0 2736 1824) (frame-monitor-geometry))
+	   (set-frame-font "Hack-11" nil t)
+	   (message "Super High res monitor detected (Probably Surface Pro)")))
   #+end_src
 
   #+RESULTS:
