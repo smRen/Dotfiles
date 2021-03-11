@@ -104,7 +104,6 @@ export PATH="$HOME/.emacs.d/bin:$PATH"
 # Pyenv
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
