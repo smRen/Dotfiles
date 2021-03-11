@@ -305,10 +305,6 @@
        ;; Projectile
        "p" 'projectile-command-map))
 
-
-
-
-
     (use-package vterm
       :ensure t)
 
@@ -389,7 +385,6 @@
       :ensure t
       :init (ivy-rich-mode))
 
-<<<<<<< HEAD
     (use-package mu4e
       :ensure nil
       ;; :load-path "/usr/share/emacs/site-lisp/mu4e/"
@@ -410,19 +405,20 @@
       (setq mu4e-trash-folder  "/[Gmail]/Trash")
 
       (setq mu4e-maildir-shortcuts
-	  '(("/Inbox"             . ?i)
-	    ("/[Gmail]/Sent Mail" . ?s)
-	    ("/[Gmail]/Trash"     . ?t)
-	    ("/[Gmail]/Drafts"    . ?d)
-	    ("/[Gmail]/All Mail"  . ?a))))
+	    '(("/Inbox"             . ?i)
+	      ("/[Gmail]/Sent Mail" . ?s)
+	      ("/[Gmail]/Trash"     . ?t)
+	      ("/[Gmail]/Drafts"    . ?d)
+	      ("/[Gmail]/All Mail"  . ?a))))
 
-=======
     (use-package smartparens
       :ensure t
       :init
       (require 'smartparens-config))
-    
->>>>>>> origin/master
+
+    (use-package lua-mode
+      :ensure t)
+
     ;; (use-package dap-mode
     ;;   :ensure t
     ;;   :init
