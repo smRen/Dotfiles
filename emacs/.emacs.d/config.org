@@ -4,8 +4,18 @@
 #+STARTUP: content
 
 * General settings
+  
+** Personal information
+   #+begin_src emacs-lisp
+     (setq user-full-name "Ren Odion"
+	   user-mail-address "smakey@g.ucla.edu")
+   #+end_src
+
   Random stuff
   #+begin_src emacs-lisp
+    ;; Nicer lambdas
+    (global-prettify-symbols-mode t)
+
     ;; Stop alarms
     (setq ring-bell-function 'ignore)
 
@@ -133,11 +143,6 @@
 
 * Themes
   #+begin_src emacs-lisp
-    ;;(load-theme 'wombat)
-    (use-package ayu-theme
-      :ensure t
-      :config (load-theme 'ayu-dark t))
-
     (use-package doom-modeline
       :ensure t
       :hook (after-init . doom-modeline-mode))
@@ -146,6 +151,13 @@
       :ensure t
       :hook (company-mode . company-box-mode))
 
+    (use-package doom-themes
+      :ensure t
+      :config
+      ;; Global settings (defaults)
+      (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	    doom-themes-enable-italic t) ; if nil, italics is universally disabled
+      (load-theme 'doom-old-hope t))
   #+end_src
 
   #+RESULTS:
@@ -171,15 +183,15 @@
       (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
       (evil-mode))
 
-    (use-package evil-terminal-cursor-changer
-      :ensure t
-      :init
-      (setq evil-motion-state-cursor 'box)  ; █
-      (setq evil-visual-state-cursor 'box)  ; █
-      (setq evil-normal-state-cursor 'box)  ; █
-      (setq evil-insert-state-cursor 'bar)  ; ⎸
-      (setq evil-emacs-state-cursor  'hbar) ; _
-      )
+    ;; (use-package evil-terminal-cursor-changer
+    ;;   :ensure t
+    ;;   :init
+    ;;   (setq evil-motion-state-cursor 'box)  ; █
+    ;;   (setq evil-visual-state-cursor 'box)  ; █
+    ;;   (setq evil-normal-state-cursor 'box)  ; █
+    ;;   (setq evil-insert-state-cursor 'bar)  ; ⎸
+    ;;   (setq evil-emacs-state-cursor  'hbar) ; _
+    ;;   )
 
     (use-package evil-collection
       :ensure t
@@ -307,7 +319,10 @@
 
 
 
-
+    (use-package rainbow-delimiters
+      :ensure t
+      :init
+      (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
     (use-package vterm
       :ensure t)
@@ -389,11 +404,9 @@
       :ensure t
       :init (ivy-rich-mode))
 
-    (use-package smartparens
-      :ensure t
-      :init
-      (require 'smartparens-config))
-    
+    (use-package writeroom-mode
+      :ensure t)
+
     ;; (use-package dap-mode
     ;;   :ensure t
     ;;   :init
