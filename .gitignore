@@ -3,5 +3,4 @@ nvim/.config/nvim/undodir/
 nvim/.config/nvim/.netrwhist
 .git
 .cache/
-/emacs/.emacs.d/
 .DS_STORE

@@ -177,7 +177,8 @@
       :init
       (setq evil-want-C-u-scroll t
 	    evil-esc-delay 0
-	    evil-want-keybinding nil)
+	    evil-want-keybinding nil
+	    evil-undo-system 'undo-fu)
       :config
       (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
       (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
@@ -250,6 +251,7 @@
       (add-hook 'js-mode-hook 'lsp)
       (add-hook 'html-mode-hook 'lsp)
       (add-hook 'css-mode-hook 'lsp)
+      (add-hook 'c++-mode-hook 'lsp)
       (add-hook 'c-mode-hook 'lsp)
       (add-hook 'sh-mode 'lsp)
       (add-hook 'lsp-mode-hook 'lsp-enable-which-key-integration)
@@ -261,6 +263,7 @@
       :config
       (setq lsp-completion-show-detail t
 	    lsp-ui-doc-enable nil))
+
 
     (use-package lsp-ivy
       :ensure t
@@ -314,14 +317,14 @@
        "se" 'elisp-index-search
        "sf" 'emacs-index-search
 
+       ;; Compile with make
+       "c" 'compile
+
        ;; Projectile
        "p" 'projectile-command-map))
 
-
-    (use-package rainbow-delimiters
-      :ensure t
-      :init
-      (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+    (use-package cmake-mode
+      :ensure t)
 
     (use-package vterm
       :ensure t)
@@ -435,10 +438,14 @@
     (use-package smartparens
       :ensure t
       :init
-      (require 'smartparens-config))
+      (require 'smartparens-config)
+      (smartparens-global-mode))
 
     (use-package lua-mode
-    :ensure t)
+      :ensure t)
+
+    (use-package undo-fu
+      :ensure t)
 
     ;; (use-package dap-mode
     ;;   :ensure t
@@ -472,6 +479,25 @@
   #+RESULTS:
 
 * Custom functions
+  Remote c++ lsp
+  #+begin_src emacs-lisp
+    (lsp-register-client
+	(make-lsp-client :new-connection (lsp-tramp-connection "clangd")
+			 :major-modes '(c++-mode)
+			 :remote? t
+			 :server-id 'c++-remote))
+  #+end_src
+
+  #+RESULTS:
+  : (standard-value (nil) custom-type hook custom-package-version (lsp-mode . 7.0.1) variable-documentation Hooks to run after `c++-remote' server is run. custom-requests nil)
+  
+  Customize c++
+  #+begin_src emacs-lisp
+    (setq-default c-basic-offset 4)
+  #+end_src
+
+  #+RESULTS:
+  : 4
   
   #+BEGIN_SRC emacs-lisp
     ;; Function for shutdown emacs server instance
