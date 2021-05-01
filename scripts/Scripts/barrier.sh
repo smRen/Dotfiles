@@ -1,3 +1,3 @@
-#!/usr/bin/zsh
+#!/bin/sh
 
 /usr/bin/barrier
