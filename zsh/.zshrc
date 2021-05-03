@@ -81,6 +81,3 @@ vterm_prompt_end() {
 }
 setopt PROMPT_SUBST
 PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
