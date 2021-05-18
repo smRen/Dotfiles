@@ -446,6 +446,9 @@
     (use-package sly
       :ensure t)
 
+    (use-package no-littering
+      :ensure t)
+
     ;; (use-package dap-mode
     ;;   :ensure t
     ;;   :init
