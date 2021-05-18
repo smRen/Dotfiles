@@ -27,16 +27,16 @@
 
     ;; Place backup files in different folder
     (setq backup-directory-alist
-	  `(("." . ,(concat user-emacs-directory "backups"))))
+      `(("." . ,(concat user-emacs-directory "backups"))))
 
     ;; Shell variables
     (use-package exec-path-from-shell
       :ensure t
       :config
       (when (daemonp)
-	(exec-path-from-shell-initialize))
+    (exec-path-from-shell-initialize))
       (when (memq window-system '(mac ns x))
-	(exec-path-from-shell-initialize))
+    (exec-path-from-shell-initialize))
       )
 
     ;;Terminal cursor
@@ -46,8 +46,8 @@
 
     ;;Stop getting prompts about killing a buffer with a live process
     (setq kill-buffer-query-functions
-	  (remq 'process-kill-buffer-query-function
-		kill-buffer-query-functions))
+      (remq 'process-kill-buffer-query-function
+	    kill-buffer-query-functions))
 
     ;;y or n instead of yes or no
     (fset 'yes-or-no-p 'y-or-n-p)
@@ -77,6 +77,10 @@
       :ensure t
       :config
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+
+    ;; Make js have indent of 2 spaces
+    (setq js2-basic-offset 2)
+    (setq js-indent-level 2)
   #+end_src
 
 * UI
@@ -336,7 +340,6 @@
       :init
       (setq poetry-tracking-stratery 'switch-buffer))
 
-
     (use-package format-all
       :ensure t
       :init
@@ -436,6 +439,11 @@
       :ensure t)
 
     (use-package undo-fu
+      :init
+      (setq evil-undo-system 'undo-fu)
+      :ensure t)
+
+    (use-package sly
       :ensure t)
 
     ;; (use-package dap-mode
@@ -479,9 +487,6 @@
 			 :server-id 'c++-remote))
   #+end_src
 
-  #+RESULTS:
-  : (standard-value (nil) custom-type hook custom-package-version (lsp-mode . 7.0.1) variable-documentation Hooks to run after `c++-remote' server is run. custom-requests nil)
-  
   Customize c++
   #+begin_src emacs-lisp
     (setq-default c-basic-offset 4)
