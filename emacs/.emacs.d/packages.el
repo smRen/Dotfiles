@@ -1,4 +1,3 @@
-;; Shell variables
 (use-package exec-path-from-shell
   :ensure t
   :config
@@ -59,8 +58,25 @@
 (use-package evil-collection
   :ensure t
   :after evil
+  :init
+  (setq evil-collection-company-use-tng t)
   :config
   (evil-collection-init))
+
+(use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode))
+
+(use-package evil-matchit
+    :ensure t
+    :config
+    (global-evil-matchit-mode 1))
+
+(use-package evil-commentary
+    :ensure t
+    :config
+    (evil-commentary-mode))
 
 
 (use-package company
@@ -105,7 +121,8 @@
   :ensure t
   :config
   (setq lsp-completion-show-detail t
-	lsp-ui-doc-enable nil))
+	lsp-ui-doc-enable nil
+	lsp-headerline-breadcrumb-icons-enable nil))
 
 
 (use-package lsp-ivy
