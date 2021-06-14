@@ -1,3 +1,12 @@
+;; Shell variables
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (daemonp)
+    (exec-path-from-shell-initialize))
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+
 (use-package counsel
   :ensure t
   :after ivy
@@ -172,16 +181,6 @@
   :init
   (setq python-indent-guess-indent-offset-verbose nil))
 
-(use-package format-all
-  :ensure t
-  :init
-  (add-hook 'prog-mode-hook 'format-all-mode)
-  (add-hook 'js-mode-hook 'format-all-mode)
-  (add-hook 'python-mode-hook 'format-all-mode)
-  (add-hook 'c++-mode-hook 'format-all-mode)
-  (add-hook 'c-mode-hook 'format-all-mode)
-  (add-hook 'format-all-mode-hook 'format-all-ensure-formatter))
-
 (use-package tree-sitter
   :ensure t
   :init
@@ -229,8 +228,7 @@
   :ensure t)
 
 (use-package all-the-icons-ivy-rich
-  :ensure t
-  :init (all-the-icons-ivy-rich-mode))
+  :ensure t)
 
 (use-package writeroom-mode
   :ensure t)
@@ -298,9 +296,9 @@
   :ensure t
   :config
   ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-	doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-old-hope t))
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t)
+  (load-theme 'doom-challenger-deep t))
 
 (use-package treemacs
   :ensure t)

@@ -20,6 +20,11 @@
 (setq backup-directory-alist
       `(("." . ,(concat user-emacs-directory "backups"))))
 
+;;Terminal cursor and all-the-icons
+(if (display-graphic-p)
+    (all-the-icons-ivy-rich-mode)
+  (evil-terminal-cursor-changer-activate))
+
 ;;Stop getting prompts about killing a buffer with a live process
 (setq kill-buffer-query-functions
       (remq 'process-kill-buffer-query-function
