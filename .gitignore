@@ -1,7 +1,6 @@
 nvim/.config/nvim/plugged/
 nvim/.config/nvim/undodir/
 nvim/.config/nvim/.netrwhist
-emacs/.emacs.d
 .git
 .cache/
 .DS_STORE
