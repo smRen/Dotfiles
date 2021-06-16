@@ -141,6 +141,7 @@
 (use-package yasnippet-snippets
   :ensure t)
 
+
 (use-package general
   :ensure t
   :config
@@ -150,10 +151,16 @@
    :non-normal-prefix "C-SPC"
 
    ;; Apps
-   "a" '(:ignore t :which-key "Applications")
+   "a" '(:ignore t :which-key "Misc Applications")
    "ad" 'dired
-   "av" 'vterm-other-window
    "at" 'treemacs
+
+   ;; Vterm
+   "v" '(:ignore t :which-key "Vterm")
+   "vc" 'multi-vterm
+   "vp" 'multi-vterm-prev
+   "vn" 'multi-vterm-next
+   "vt" 'multi-vterm-dedicated-toggle
 
    ;; Avy
    "f" 'avy-goto-char-2
@@ -189,6 +196,10 @@
 
 (use-package vterm
   :ensure t)
+
+(use-package multi-vterm
+  :ensure t)
+
 
 (use-package avy
   :ensure t)
