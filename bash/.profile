@@ -11,7 +11,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 
-export TERM=xterm-direct
+# Set TERM in your terminal emulator! 24 bit mode could be different on different machines
+# export TERM=xterm-direct
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
