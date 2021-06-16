@@ -4,6 +4,8 @@
 ;; Emoji
 (set-fontset-font t 'symbol "Noto Color Emoji")
 
+(set-frame-font "Hack 11" nil t)
+
 ;; Nicer lambdas
 (global-prettify-symbols-mode t)
 
