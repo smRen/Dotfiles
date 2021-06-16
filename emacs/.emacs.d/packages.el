@@ -167,7 +167,6 @@
 
    ;; Code stuff
    "l" '(:ignore t :which-key "Code stuff")
-   "lf" 'format-all-buffer
    "ls" 'yas-insert-snippet
    "li" 'auto-insert
 
@@ -234,9 +233,10 @@
   (setq emmet-expand-jsx-className? t
 	emmet-move-cursor-after-expanding t
 	emmet-move-cursor-between-quotes t)
-  (add-hook 'emmet-mode-hook (lambda () (setq emmet-indent-after-insert t
-					 emmet-indentation 2)))
+  (add-hook 'emmet-mode-hook (lambda () (setq emmet-indent-after-insert nil)))
   (add-hook 'sgml-mode-hook 'emmet-mode)
+  (add-hook 'js-jsx-mode-hook 'emmet-mode)
+  (add-hook 'js-mode-hook 'emmet-mode)
   (add-hook 'css-mode-hook 'emmet-mode))
 
 (use-package magit
@@ -296,22 +296,22 @@
   (require 'dap-gdb-lldb)
   (require 'dap-chrome))
 
-;; (use-package web-mode
-;;   :ensure t
-;;   :config
-;;   (setq web-mode-markup-indent-offset 2
-;; 	web-mode-css-indent-offset 2
-;; 	web-mode-code-indent-offset 2
-;; 	web-mode-enable-auto-pairing t
-;; 	web-mode-enable-css-colorization t
-;; 	web-mode-enable-comment-interpolation t
-;; 	web-mode-enable-current-column-highlight t)
-;;   (setq web-mode-ac-sources-alist
-;; 	'(("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
-;; 	  ("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
-;; 	  ("css" . (ac-source-css-property ac-source-emmet-css-snippets))))
-;;   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode)))
+(use-package web-mode
+  :ensure t
+  :config
+  (setq web-mode-markup-indent-offset 2
+	web-mode-css-indent-offset 2
+	web-mode-code-indent-offset 2
+	web-mode-enable-auto-pairing t
+	web-mode-enable-css-colorization t
+	web-mode-enable-comment-interpolation t
+	web-mode-enable-current-column-highlight t)
+  (setq web-mode-ac-sources-alist
+	'(("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
+	  ("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
+	  ("css" . (ac-source-css-property ac-source-emmet-css-snippets))))
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode)))
 
 ;; (use-package perspective
 ;;   :ensure t
