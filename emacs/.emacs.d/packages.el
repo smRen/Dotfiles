@@ -231,6 +231,11 @@
 (use-package emmet-mode
   :ensure t
   :init
+  (setq emmet-expand-jsx-className? t
+	emmet-move-cursor-after-expanding t
+	emmet-move-cursor-between-quotes t)
+  (add-hook 'emmet-mode-hook (lambda () (setq emmet-indent-after-insert t
+					 emmet-indentation 2)))
   (add-hook 'sgml-mode-hook 'emmet-mode)
   (add-hook 'css-mode-hook 'emmet-mode))
 
