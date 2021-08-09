@@ -1,0 +1,19 @@
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+
+tmpfs /tmp tmpfs defaults,noatime,mode=1777 0 0
+# /dev/sdb2
+UUID=7401b616-a60b-4cf7-a5db-a05d47e8bc80	/         	btrfs     	rw,relatime,ssd,space_cache,subvolid=5,subvol=/	0 0
+
+# /dev/sdb1
+UUID=9133-EB42      	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+UUID=bf34047b-a0af-43f1-808d-8e89c8a61d6f	/home	btrfs	subvol=@home	0	0
+smakeyserver:/mnt/user/Videos   /home/smakey18/Videos/  nfs  _netdev,noauto,x-systemd.automount,x-systemd.mount-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0
+smakeyserver:/mnt/user/Torrents   /home/smakey18/Torrents/  nfs  _netdev,noauto,x-systemd.automount,x-systemd.mount-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0
+smakeyserver:/mnt/user/Documents   /home/smakey18/Documents/  nfs  _netdev,noauto,x-systemd.automount,x-systemd.mount-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0
+smakeyserver:/mnt/user/Pictures   /home/smakey18/Pictures/  nfs  _netdev,noauto,x-systemd.automount,x-systemd.mount-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0
+smakeyserver:/mnt/user/Downloads   /home/smakey18/Downloads/  nfs  _netdev,noauto,x-systemd.automount,x-systemd.mount-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0
+
