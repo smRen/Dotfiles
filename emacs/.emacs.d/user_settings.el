@@ -1,6 +1,45 @@
 (setq user-full-name "Ren Odion"
       user-mail-address "smakey18@gmail.com")
 
+;; Ido mode
+(ido-mode 1)
+(setq ido-enable-flex-matching t
+      ido-everywhere t)
+(global-set-key
+     "\M-x"
+     (lambda ()
+       (interactive)
+       (call-interactively
+        (intern
+         (ido-completing-read
+          "M-x "
+          (all-completions "" obarray 'commandp))))))
+
+;; Recentf mode
+(recentf-mode 1)
+(setq recentf-max-menu-items 25
+      recentf-max-saved-items 25)
+
+(defun recentf-ido-find-file ()
+  "Find a recent file using Ido."
+  (interactive)
+  (let* ((file-assoc-list
+	  (mapcar (lambda (x)
+		    (cons (file-name-nondirectory x)
+			  x))
+		  recentf-list))
+	 (filename-list
+	  (remove-duplicates (mapcar #'car file-assoc-list)
+			     :test #'string=))
+	 (filename (ido-completing-read "Choose recent file: "
+					filename-list
+					nil
+					t)))
+    (when filename
+      (find-file (cdr (assoc filename
+			     file-assoc-list))))))
+(global-set-key "\C-x\ \C-r" 'recentf-ido-find-file)
+
 ;; Emoji
 (set-fontset-font t 'symbol "Noto Color Emoji")
 
@@ -15,17 +54,13 @@
 ;; Make C-x C-b go to choose buffer
 (global-set-key (kbd "C-x C-b") 'switch-to-buffer)
 
-;; Disable lockfile
-(setq create-lockfiles nil)
+;; Disable annoying backups
+(setq create-lockfiles nil
+      auto-save-default nil
+      make-backup-files nil)
 
-;; Place backup files in different folder
-(setq backup-directory-alist
-      `(("." . ,(concat user-emacs-directory "backups"))))
-
-;;Terminal cursor and all-the-icons
-(if (display-graphic-p)
-    (all-the-icons-ivy-rich-mode)
-  (evil-terminal-cursor-changer-activate))
+;;Terminal cursor
+(evil-terminal-cursor-changer-activate)
 
 ;;Stop getting prompts about killing a buffer with a live process
 (setq kill-buffer-query-functions
@@ -63,9 +98,12 @@
 ;; Display line numbers
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
+(setq vc-follow-symlinks t)
+
+
 ;; Programming
 
 ;; Javascript
 ;; Make js have indent of 2 spaces
-(setq js2-basic-offset 2)
-(setq js-indent-level 2)
+;; (setq js2-basic-offset 2)
+;; (setq js-indent-level 2)

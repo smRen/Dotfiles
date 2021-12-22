@@ -6,28 +6,6 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
-(use-package counsel
-  :ensure t
-  :after ivy
-  :config (counsel-mode))
-
-(use-package ivy
-  :ensure t
-  :init
-  (global-set-key (kbd "C-x C-r") 'counsel-recentf)
-  (global-set-key (kbd "C-x C-d") 'counsel-dired)
-  (global-set-key (kbd "C-c t") 'counsel-load-theme)
-  (setq ivy-use-virtual-buffers t
-	ivy-use-selectable-prompt t)
-  :config
-  (ivy-mode))
-
-(use-package ivy-rich
-  :ensure t
-  :config
-  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
-  (ivy-rich-mode))
-
 (use-package which-key
   :ensure t
   :init
@@ -64,19 +42,19 @@
   (evil-collection-init))
 
 (use-package evil-surround
-    :ensure t
-    :config
-    (global-evil-surround-mode))
+  :ensure t
+  :config
+  (global-evil-surround-mode))
 
 (use-package evil-matchit
-    :ensure t
-    :config
-    (global-evil-matchit-mode 1))
+  :ensure t
+  :config
+  (global-evil-matchit-mode 1))
 
 (use-package evil-commentary
-    :ensure t
-    :config
-    (evil-commentary-mode))
+  :ensure t
+  :config
+  (evil-commentary-mode))
 
 
 (use-package company
@@ -93,6 +71,9 @@
 ;; Flycheck
 (use-package flycheck
   :ensure t
+  :init
+  (setq
+   flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
   :config
   (global-flycheck-mode))
 
@@ -103,7 +84,7 @@
   (setq lsp-keymap-prefix "C-c l"
 	gc-cons-threshold 100000000
 	read-process-output-max (* 1024 1024)
-	lsp-idle-delay 0.500
+	lsp-idle-delay 0.0
 	lsp-log-io nil) ;; 1mb
   :init
   (add-hook 'js-mode-hook 'lsp)
@@ -125,82 +106,13 @@
 	lsp-headerline-breadcrumb-icons-enable nil))
 
 
-(use-package lsp-ivy
-  :ensure t
-  :commands lsp-ivy-workspace-symbol)
-
 (use-package lsp-pyright
   :ensure t)
-
-(use-package yasnippet
-  :ensure t
-  :config
-  (yas-reload-all)
-  (add-hook 'prog-mode-hook #'yas-minor-mode))
-
-(use-package yasnippet-snippets
-  :ensure t)
-
-
-(use-package general
-  :ensure t
-  :config
-  (general-define-key
-   :states '(normal visual insert emacs)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-
-   ;; Apps
-   "a" '(:ignore t :which-key "Misc Applications")
-   "ad" 'dired
-   "at" 'treemacs
-
-   ;; Vterm
-   "v" '(:ignore t :which-key "Vterm")
-   "vc" 'multi-vterm
-   "vp" 'multi-vterm-prev
-   "vn" 'multi-vterm-next
-   "vt" 'multi-vterm-dedicated-toggle
-
-   ;; Avy
-   "f" 'avy-goto-char-2
-
-   ;; Code stuff
-   "l" '(:ignore t :which-key "Code stuff")
-   "ls" 'yas-insert-snippet
-   "li" 'auto-insert
-
-   ;; Universal argument
-   "u" 'universal-argument
-
-   ;; Restart Emacs
-   "R" 'restart-emacs
-
-   ;; Magit
-   "g" 'magit
-
-   ;; Search index
-   "s" '(:ignore t :which-key "Search")
-   "se" 'elisp-index-search
-   "sf" 'emacs-index-search
-
-   ;; Compile with make
-   "c" 'compile
-
-   ;; Projectile
-   "p" 'projectile-command-map))
 
 (use-package cmake-mode
   :ensure t)
 
 (use-package vterm
-  :ensure t)
-
-(use-package multi-vterm
-  :ensure t)
-
-
-(use-package avy
   :ensure t)
 
 (use-package python
@@ -242,39 +154,6 @@
 (use-package magit
   :ensure t)
 
-(use-package restart-emacs
-  :ensure t)
-
-(use-package hydra
-  :ensure t)
-
-(use-package realgud
-  :ensure t)
-
-(use-package ivy-prescient
-  :ensure t
-  :after counsel
-  :config
-  (ivy-prescient-mode))
-
-(use-package all-the-icons
-  :ensure t)
-
-(use-package all-the-icons-ivy-rich
-  :ensure t)
-
-(use-package writeroom-mode
-  :ensure t)
-
-(use-package smartparens
-  :ensure t
-  :init
-  (require 'smartparens-config)
-  (smartparens-global-mode))
-
-(use-package lua-mode
-  :ensure t)
-
 (use-package undo-fu
   :init
   (setq evil-undo-system 'undo-fu)
@@ -282,19 +161,6 @@
 
 (use-package sly
   :ensure t)
-
-(use-package no-littering
-  :ensure t)
-
-(use-package dap-mode
-  :ensure t
-  :init
-  (setq dap-auto-configure-features '(sessions locals controls tooltip))
-  (add-hook 'dap-stopped-hook (lambda () (call-interactively 'dap-hydra)))
-  :config
-  (require 'dap-python)
-  (require 'dap-gdb-lldb)
-  (require 'dap-chrome))
 
 (use-package web-mode
   :ensure t
@@ -313,18 +179,6 @@
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode)))
 
-;; (use-package perspective
-;;   :ensure t
-;;   :config
-
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
-
-(use-package company-box
-  :ensure t
-  :hook (company-mode . company-box-mode))
-
 (use-package doom-themes
   :ensure t
   :config
@@ -333,22 +187,26 @@
 	doom-themes-enable-italic t)
   (load-theme 'doom-challenger-deep t))
 
-(use-package treemacs
-  :ensure t)
-
-(use-package treemacs-evil
-  :after (treemacs evil)
-  :ensure t)
-
-(use-package treemacs-projectile
-  :after (treemacs projectile)
-  :ensure t)
-
-(use-package treemacs-icons-dired
-  :after (treemacs dired)
+(use-package format-all
   :ensure t
-  :config (treemacs-icons-dired-mode))
+  :init
+  (setq format-all-formatters '(("JSX" prettier)
+				("JavaScript" prettier)
+				("Shell" (shfmt "-i" "2"))))
+  (add-hook 'prog-mode-hook
+	    (lambda ()
+	      (local-set-key (kbd "C-c f") 'format-all-buffer))))
 
-(use-package treemacs-magit
-  :after (treemacs magit)
-  :ensure t)
+(use-package writeroom-mode
+  :ensure t
+  :config
+  (global-set-key "\C-c\ w" 'writeroom-mode))
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
+(use-package smartparens
+  :ensure t
+  :config
+  (smartparens-global-mode))
