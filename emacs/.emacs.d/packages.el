@@ -208,5 +208,6 @@
 
 (use-package smartparens
   :ensure t
-  :config
-  (smartparens-global-mode))
+  :init
+  (require 'smartparens-config)
+  (add-hook 'prog-mode-hook #'smartparens-mode))
