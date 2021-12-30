@@ -113,16 +113,18 @@
 	    lsp-idle-delay 0.0
 	    lsp-log-io nil)
   :init
-  (add-hook 'js-mode-hook 'lsp)
-  (add-hook 'html-mode-hook 'lsp)
-  (add-hook 'css-mode-hook 'lsp)
-  (add-hook 'c++-mode-hook 'lsp)
-  (add-hook 'c-mode-hook 'lsp)
+  ;; (add-hook 'js-mode-hook 'lsp)
+  ;; (add-hook 'html-mode-hook 'lsp)
+  ;; (add-hook 'css-mode-hook 'lsp)
+  ;; (add-hook 'c++-mode-hook 'lsp)
+  ;; (add-hook 'c-mode-hook 'lsp)
+  ;; (add-hook 'sh-mode 'lsp)
+  (dolist (hook '(js-mode-hook html-mode-hook css-mode-hook c++-mode-hook c-mode-hook sh-mode-hook))
+    (add-hook hook 'lsp-deferred))
   (add-hook 'python-mode-hook (lambda ()
 				                (setq lsp-pyright-venv-path ".venv"
 				                      lsp-pyright-python-executable-cmd ".venv/bin/python")
-				                (lsp)))
-  (add-hook 'sh-mode 'lsp)
+				                (lsp-deferred)))
   (add-hook 'lsp-mode-hook (lambda ()
 			                 (define-key lsp-mode-map (kbd "<leader>l") lsp-command-map)
 			                 (define-key lsp-mode-map (kbd "<leader>lw") 'lsp-ivy-workspace-symbol)
@@ -185,10 +187,8 @@
 	    emmet-move-cursor-after-expanding t
 	    emmet-move-cursor-between-quotes t)
   (add-hook 'emmet-mode-hook (lambda () (setq emmet-indent-after-insert nil)))
-  (add-hook 'sgml-mode-hook 'emmet-mode)
-  (add-hook 'js-jsx-mode-hook 'emmet-mode)
-  (add-hook 'js-mode-hook 'emmet-mode)
-  (add-hook 'css-mode-hook 'emmet-mode))
+  (dolist (hook '(html-mode-hook js-jsx-mode-hook js-mode-hook css-mode-hook))
+    (add-hook hook 'emmet-mode)))
 
 (use-package magit
   :ensure t)
@@ -200,23 +200,6 @@
 
 (use-package sly
   :ensure t)
-
-(use-package web-mode
-  :ensure t
-  :config
-  (setq web-mode-markup-indent-offset 2
-	    web-mode-css-indent-offset 2
-	    web-mode-code-indent-offset 2
-	    web-mode-enable-auto-pairing t
-	    web-mode-enable-css-colorization t
-	    web-mode-enable-comment-interpolation t
-	    web-mode-enable-current-column-highlight t)
-  (setq web-mode-ac-sources-alist
-	    '(("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
-	      ("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
-	      ("css" . (ac-source-css-property ac-source-emmet-css-snippets))))
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode)))
 
 (use-package doom-themes
   :ensure t
@@ -230,6 +213,7 @@
   :ensure t
   :init
   (setq format-all-formatters '(("JSX" prettier)
+                                ("HTML" prettier)
 				                ("Python" black)
 				                ("JavaScript" prettier)
 				                ("Shell" (shfmt "-i" "2"))))
