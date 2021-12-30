@@ -107,6 +107,7 @@
   lsp-ui-imenu-auto-refresh
   lsp-ui-doc-show-with-cursor
   lsp-ui-doc-show-with-mouse
+  lsp-headerline-breadcrumb-mode
   :init
   (setq gc-cons-threshold 100000000
 	    read-process-output-max (* 1024 1024)
@@ -132,6 +133,7 @@
   :config
   (setq lsp-completion-show-detail t
 		lsp-ui-doc-enable t
+        lsp-headerline-breadcrumb-enable t
 		lsp-headerline-breadcrumb-icons-enable t
         lsp-ui-imenu-auto-refresh t
         lsp-ui-doc-show-with-cursor t
@@ -256,6 +258,18 @@
     map)
   "Avy related bindings.")
 
+(defalias 'treemacs-commands
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "t") 'treemacs-display-current-project-exclusively)
+    (define-key map (kbd "s") 'lsp-treemacs-symbols)
+    map)
+  "Treemacs related bindings.")
+
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1))
+
 (use-package avy
   :ensure t
   :config
@@ -279,6 +293,9 @@
     (kbd "C-x C-r") 'counsel-recentf)
   (evil-define-key '(normal visual) 'global
     (kbd "<leader>b") 'buffer-commands
+    (kbd "<leader>t") 'treemacs-commands
+    (kbd "<localleader>n") 'centaur-tabs-forward
+    (kbd "<localleader>p") 'centaur-tabs-backward
     (kbd "<leader>a") 'avy-commands)
   :config
   (counsel-mode t))
@@ -314,12 +331,15 @@
 
 (use-package centaur-tabs
   :ensure t
+  :commands
+  centaur-tabs-headline-match
   :init
   (setq centaur-tabs-style "wave"
         centaur-tabs-set-icons t
         centaur-tabs-height 32
         centaur-tabs-set-bar 'under
         x-underline-at-descent-line t)
+  (centaur-tabs-headline-match)
   (add-hook 'vterm-mode-hook 'centaur-tabs-local-mode)
   (add-hook 'dired-mode-hook 'centaur-tabs-local-mode)
   :config
@@ -330,6 +350,29 @@
 
 (use-package rg
   :ensure t)
+
+(use-package treemacs
+  :ensure t
+  :commands
+  treemacs-follow-mode
+  treemacs-filewatch-mode
+  treemacs-fringe-indicator-mode
+  :config
+  (setq treemacs-filewatch-mode t
+        treemacs-follow-mode t
+        treemacs-fringe-indicator-mode 'always
+        treemacs-silent-refresh t))
+
+(use-package treemacs-projectile
+  :ensure t)
+
+(use-package treemacs-evil
+  :ensure t)
+
+(use-package lsp-treemacs
+  :ensure t
+  :config
+  (lsp-treemacs-sync-mode t))
 
 ;; (use-package perspective
 ;;   :ensure t

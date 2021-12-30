@@ -9,6 +9,9 @@
 ;; Preserve history
 (savehist-mode t)
 
+;; Recent files
+(recentf-mode t)
+
 ;; Emoji
 (set-fontset-font t 'symbol "Noto Color Emoji")
 
