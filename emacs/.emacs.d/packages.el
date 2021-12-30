@@ -21,6 +21,9 @@
 
 (use-package evil
   :ensure t
+  :commands
+  evil-set-leader
+  evil-define-key*
   :init
   (setq evil-want-C-u-scroll t
 	    evil-esc-delay nil
@@ -48,6 +51,8 @@
 
 (use-package evil-collection
   :ensure t
+  :defines
+  evil-collection-company-use-tng
   :after evil
   :init
   (setq evil-collection-company-use-tng t)
@@ -93,6 +98,15 @@
 ;; LSP mode
 (use-package lsp-mode
   :ensure t
+  :commands
+  lsp-enable-which-key-integration
+  :defines
+  lsp-completion-show-detail
+  lsp-ui-doc-enable
+  lsp-headerline-breadcrumb-icons-enable
+  lsp-ui-imenu-auto-refresh
+  lsp-ui-doc-show-with-cursor
+  lsp-ui-doc-show-with-mouse
   :init
   (setq gc-cons-threshold 100000000
 	    read-process-output-max (* 1024 1024)
@@ -110,15 +124,16 @@
 				                (lsp)))
   (add-hook 'sh-mode 'lsp)
   (add-hook 'lsp-mode-hook (lambda ()
-			                 (setq lsp-completion-show-detail t
-				                   lsp-ui-doc-enable t
-				                   lsp-headerline-breadcrumb-icons-enable t
-                                   lsp-ui-imenu-auto-refresh t
-                                   lsp-ui-doc-show-with-cursor t
-                                   lsp-ui-doc-show-with-mouse t)
 			                 (define-key lsp-mode-map (kbd "<leader>l") lsp-command-map)
 			                 (define-key lsp-mode-map (kbd "<leader>lw") 'lsp-ivy-workspace-symbol)
 			                 (lsp-enable-which-key-integration)))
+  :config
+  (setq lsp-completion-show-detail t
+		lsp-ui-doc-enable t
+		lsp-headerline-breadcrumb-icons-enable t
+        lsp-ui-imenu-auto-refresh t
+        lsp-ui-doc-show-with-cursor t
+        lsp-ui-doc-show-with-mouse t)
   :commands (lsp lsp-deferred))
 
 
@@ -153,12 +168,15 @@
 
 (use-package projectile
   :ensure t
-  :config
+  :init
   (setq projectile-project-search-path '("~/Projects/"))
+  :config
   (projectile-mode t ))
 
 (use-package emmet-mode
   :ensure t
+  :defines
+  emmet-expand-jsx-className?
   :init
   (setq emmet-expand-jsx-className? t
 	    emmet-move-cursor-after-expanding t
@@ -240,7 +258,6 @@
     (define-key map (kbd "n") 'next-buffer)
     (define-key map (kbd "p") 'previous-buffer)
     (define-key map (kbd "k") 'kill-buffer)
-    (define-key map (kbd "l") 'ivy-switch-buffer)
     map)
   "Buffer related bindings.")
 
@@ -265,13 +282,17 @@
   (setq ivy-re-builders-alist '((swiper . ivy--regex-plus)
                                 (t . ivy--regex-fuzzy)))
   (evil-define-key '(normal visual) 'global
+    (kbd "C-s") 'swiper
+    (kbd "C-x f") 'counsel-find-file
+    (kbd "C-x b") 'ivy-switch-buffer
+    (kbd "C-x C-b") 'ivy-switch-buffer
+    (kbd "C-x d") 'counsel-dired
+    (kbd "C-x C-d") 'counsel-dired
+    (kbd "C-x r") 'counsel-recentf
+    (kbd "C-x C-r") 'counsel-recentf)
+  (evil-define-key '(normal visual) 'global
     (kbd "<leader>b") 'buffer-commands
-    (kbd "<leader>a") 'avy-commands
-    (kbd "<leader>s") 'swiper
-    (kbd "<leader>x") 'counsel-M-x
-    (kbd "<leader>d") 'counsel-dired
-    (kbd "<leader>r") 'counsel-recentf
-    (kbd "<leader>f") 'counsel-find-file)
+    (kbd "<leader>a") 'avy-commands)
   :config
   (counsel-mode t))
 
@@ -292,6 +313,8 @@
 
 (use-package ivy-rich
   :ensure t
+  :commands
+  ivy-format-function-line
   :init
   (setq ivy-rich-path-style 'abbrev)
   (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
@@ -307,6 +330,7 @@
   :init
   (setq centaur-tabs-style "wave"
         centaur-tabs-set-icons t
+        centaur-tabs-height 32
         centaur-tabs-set-bar 'under
         x-underline-at-descent-line t)
   :config
