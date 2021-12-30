@@ -11,5 +11,8 @@
     (add-to-list 'exec-path "/usr/local/bin/")
     (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin")))
 
+;; Stop CL deprecation warning
+(setq byte-compile-warnings '(not obsolete))
+
 (provide 'early-init)
 ;;; early-init.el ends here
