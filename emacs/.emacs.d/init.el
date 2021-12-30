@@ -11,7 +11,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(dolist (filename '("packages.el" "user_settings.el"))
+(dolist (filename '("packages.el" "user-settings.el"))
   (load-file (expand-file-name filename user-emacs-directory)))
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
