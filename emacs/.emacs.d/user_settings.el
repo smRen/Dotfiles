@@ -1,9 +1,14 @@
+;;; package --- Summary
+;;; Commentary:
+;;; User settings"
+
+;;; Code:
 (setq user-full-name "Ren Odion"
       user-mail-address "smakey18@gmail.com")
 
 ;; Minibuffer stuff
 (fido-vertical-mode 1)
-(setq completion-styles '(initials partial-completion flex) 
+(setq completion-styles '(initials partial-completion flex)
       completion-cycle-threshold 10)
 (savehist-mode 1)
 (recentf-mode 1)
@@ -41,8 +46,8 @@
 ;;y or n instead of yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; Intro message
 (defun display-startup-echo-area-message ()
+  "Initial message"
   (message "Welcome elite hacker"))
 
 ;; Disable initial screen
@@ -74,3 +79,5 @@
 ;; Make js have indent of 2 spaces
 ;; (setq js2-basic-offset 2)
 ;; (setq js-indent-level 2)
+
+;;; user_settings.el ends here

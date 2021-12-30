@@ -1,3 +1,8 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Downloaded Packages"
+
+;;; Code:
 (defalias 'buffer-commands
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "n") 'next-buffer)
@@ -246,3 +251,5 @@
 ;;   ("C-x C-b" . persp-list-buffers)   ; or use a nicer switcher, see below
 ;;   :config
 ;;   (persp-mode 1))
+
+;;; packages.el ends here
