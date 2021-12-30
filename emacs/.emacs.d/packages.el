@@ -3,14 +3,6 @@
 ;;; Downloaded Packages"
 
 ;;; Code:
-(defalias 'buffer-commands
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "n") 'next-buffer)
-    (define-key map (kbd "p") 'previous-buffer)
-    (define-key map (kbd "k") 'kill-current-buffer)
-    (define-key map (kbd "l") 'switch-to-buffer)
-    map)
-  "Buffer related bindings.")
 
 (defun horizontal-term ()
   "Makes a 15 line height terminal window"
@@ -31,9 +23,9 @@
   :ensure t
   :init
   (setq evil-want-C-u-scroll t
-	evil-esc-delay nil
-	evil-want-keybinding nil
-	evil-undo-system 'undo-fu)
+	    evil-esc-delay nil
+	    evil-want-keybinding nil
+	    evil-undo-system 'undo-fu)
   :config
   (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
   (evil-set-leader '(normal visual) (kbd "SPC")) ;; leader
@@ -42,7 +34,6 @@
     (kbd "C-u") 'evil-scroll-up
     (kbd "<leader>v") 'terminal-commands
     (kbd "<leader>p") 'projectile-command-map
-    (kbd "<leader>b") 'buffer-commands
     (kbd "<leader>w") 'writeroom-mode)
   (evil-mode t))
 
@@ -50,10 +41,10 @@
   :ensure t
   :init
   (setq evil-motion-state-cursor 'box
-	evil-visual-state-cursor 'box
-	evil-normal-state-cursor 'box
-	evil-insert-state-cursor 'bar
-	evil-emacs-state-cursor  'hbar))
+	    evil-visual-state-cursor 'box
+	    evil-normal-state-cursor 'box
+	    evil-insert-state-cursor 'bar
+	    evil-emacs-state-cursor  'hbar))
 
 (use-package evil-collection
   :ensure t
@@ -85,9 +76,9 @@
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
   (setq company-idle-delay 0
-	company-minimum-prefix-length 1
-	company-selection-wrap-around t
-	company-echo-delay 0)
+	    company-minimum-prefix-length 1
+	    company-selection-wrap-around t
+	    company-echo-delay 0)
   (global-company-mode))
 
 ;; Flycheck
@@ -104,9 +95,9 @@
   :ensure t
   :init
   (setq gc-cons-threshold 100000000
-	read-process-output-max (* 1024 1024)
-	lsp-idle-delay 0.0
-	lsp-log-io nil)
+	    read-process-output-max (* 1024 1024)
+	    lsp-idle-delay 0.0
+	    lsp-log-io nil)
   :init
   (add-hook 'js-mode-hook 'lsp)
   (add-hook 'html-mode-hook 'lsp)
@@ -114,16 +105,20 @@
   (add-hook 'c++-mode-hook 'lsp)
   (add-hook 'c-mode-hook 'lsp)
   (add-hook 'python-mode-hook (lambda ()
-				(setq lsp-pyright-venv-path ".venv"
-				      lsp-pyright-python-executable-cmd ".venv/bin/python")
-				(lsp)))
+				                (setq lsp-pyright-venv-path ".venv"
+				                      lsp-pyright-python-executable-cmd ".venv/bin/python")
+				                (lsp)))
   (add-hook 'sh-mode 'lsp)
   (add-hook 'lsp-mode-hook (lambda ()
-			     (setq lsp-completion-show-detail t
-				   lsp-ui-doc-enable nil
-				   lsp-headerline-breadcrumb-icons-enable nil)
-			     (define-key lsp-mode-map (kbd "<leader>l") lsp-command-map)
-			     (lsp-enable-which-key-integration)))
+			                 (setq lsp-completion-show-detail t
+				                   lsp-ui-doc-enable t
+				                   lsp-headerline-breadcrumb-icons-enable t
+                                   lsp-ui-imenu-auto-refresh t
+                                   lsp-ui-doc-show-with-cursor t
+                                   lsp-ui-doc-show-with-mouse t)
+			                 (define-key lsp-mode-map (kbd "<leader>l") lsp-command-map)
+			                 (define-key lsp-mode-map (kbd "<leader>lw") 'lsp-ivy-workspace-symbol)
+			                 (lsp-enable-which-key-integration)))
   :commands (lsp lsp-deferred))
 
 
@@ -166,8 +161,8 @@
   :ensure t
   :init
   (setq emmet-expand-jsx-className? t
-	emmet-move-cursor-after-expanding t
-	emmet-move-cursor-between-quotes t)
+	    emmet-move-cursor-after-expanding t
+	    emmet-move-cursor-between-quotes t)
   (add-hook 'emmet-mode-hook (lambda () (setq emmet-indent-after-insert nil)))
   (add-hook 'sgml-mode-hook 'emmet-mode)
   (add-hook 'js-jsx-mode-hook 'emmet-mode)
@@ -189,16 +184,16 @@
   :ensure t
   :config
   (setq web-mode-markup-indent-offset 2
-	web-mode-css-indent-offset 2
-	web-mode-code-indent-offset 2
-	web-mode-enable-auto-pairing t
-	web-mode-enable-css-colorization t
-	web-mode-enable-comment-interpolation t
-	web-mode-enable-current-column-highlight t)
+	    web-mode-css-indent-offset 2
+	    web-mode-code-indent-offset 2
+	    web-mode-enable-auto-pairing t
+	    web-mode-enable-css-colorization t
+	    web-mode-enable-comment-interpolation t
+	    web-mode-enable-current-column-highlight t)
   (setq web-mode-ac-sources-alist
-	'(("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
-	  ("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
-	  ("css" . (ac-source-css-property ac-source-emmet-css-snippets))))
+	    '(("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
+	      ("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
+	      ("css" . (ac-source-css-property ac-source-emmet-css-snippets))))
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode)))
 
@@ -207,19 +202,19 @@
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t
-	doom-themes-enable-italic t)
+	    doom-themes-enable-italic t)
   (load-theme 'doom-challenger-deep t))
 
 (use-package format-all
   :ensure t
   :init
   (setq format-all-formatters '(("JSX" prettier)
-				("Python" black)
-				("JavaScript" prettier)
-				("Shell" (shfmt "-i" "2"))))
+				                ("Python" black)
+				                ("JavaScript" prettier)
+				                ("Shell" (shfmt "-i" "2"))))
   (add-hook 'prog-mode-hook
-	    (lambda ()
-	      (local-set-key (kbd "<leader>f") 'format-all-buffer))))
+	        (lambda ()
+	          (local-set-key (kbd "<leader>=") 'format-all-buffer))))
 
 (use-package writeroom-mode
   :ensure t)
@@ -240,10 +235,60 @@
   :config
   (which-key-mode t))
 
-;; (use-package selectrum
-;;   :ensure t
-;;   :config
-;;   (selectrum-mode t))
+(defalias 'buffer-commands
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "n") 'next-buffer)
+    (define-key map (kbd "p") 'previous-buffer)
+    (define-key map (kbd "k") 'kill-buffer)
+    (define-key map (kbd "l") 'ivy-switch-buffer)
+    map)
+  "Buffer related bindings.")
+
+(use-package counsel
+  :ensure t
+  :init
+  (setq ivy-use-virtual-buffers t
+        enable-recursive-minibuffers t)
+  (setq ivy-re-builders-alist '((swiper . ivy--regex-plus)
+                                (t . ivy--regex-fuzzy)))
+  (evil-define-key '(normal visual) 'global
+    (kbd "<leader>b") 'buffer-commands
+    (kbd "<leader>s") 'swiper
+    (kbd "<leader>x") 'counsel-M-x
+    (kbd "<leader>d") 'counsel-dired
+    (kbd "<leader>r") 'counsel-recentf
+    (kbd "<leader>f") 'counsel-find-file)
+  :config
+  (counsel-mode t))
+
+(use-package counsel-projectile
+  :ensure t
+  :config
+  (counsel-projectile-mode t))
+
+(use-package ivy-prescient
+  :ensure t
+  :init
+  (ivy-prescient-mode t))
+
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init
+  (all-the-icons-ivy-rich-mode t))
+
+(use-package ivy-rich
+  :ensure t
+  :init
+  (setq ivy-rich-path-style 'abbrev)
+  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+  :config
+  (ivy-rich-mode t)
+  (ivy-rich-project-root-cache-mode t))
+
+(use-package lsp-ivy
+  :ensure t)
+
+
 
 ;; (use-package perspective
 ;;   :ensure t
