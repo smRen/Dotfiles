@@ -6,17 +6,8 @@
 (setq user-full-name "Ren Odion"
       user-mail-address "smakey18@gmail.com")
 
-;; Minibuffer stuff
-;; (fido-vertical-mode t)
-;; (setq completion-styles '(initials partial-completion flex)
-;;       completion-cycle-threshold 10)
-;; (recentf-mode t)
-
 ;; Preserve history
 (savehist-mode t)
-
-;; Tabs
-(global-tab-line-mode t)
 
 ;; Emoji
 (set-fontset-font t 'symbol "Noto Color Emoji")

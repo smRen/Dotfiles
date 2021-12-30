@@ -244,6 +244,19 @@
     map)
   "Buffer related bindings.")
 
+(defalias 'avy-commands
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "v") 'avy-goto-char-timer)
+    (define-key map (kbd "f") 'avy-goto-char)
+    (define-key map (kbd "r") 'avy-goto-word-1)
+    map)
+  "Avy related bindings.")
+
+(use-package avy
+  :ensure t
+  :config
+  (avy-setup-default))
+
 (use-package counsel
   :ensure t
   :init
@@ -253,6 +266,7 @@
                                 (t . ivy--regex-fuzzy)))
   (evil-define-key '(normal visual) 'global
     (kbd "<leader>b") 'buffer-commands
+    (kbd "<leader>a") 'avy-commands
     (kbd "<leader>s") 'swiper
     (kbd "<leader>x") 'counsel-M-x
     (kbd "<leader>d") 'counsel-dired
@@ -288,7 +302,15 @@
 (use-package lsp-ivy
   :ensure t)
 
-
+(use-package centaur-tabs
+  :ensure t
+  :init
+  (setq centaur-tabs-style "wave"
+        centaur-tabs-set-icons t
+        centaur-tabs-set-bar 'under
+        x-underline-at-descent-line t)
+  :config
+  (centaur-tabs-mode t))
 
 ;; (use-package perspective
 ;;   :ensure t
