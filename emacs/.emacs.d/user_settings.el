@@ -6,6 +6,7 @@
 (setq completion-styles '(initials partial-completion flex) 
       completion-cycle-threshold 10)
 (savehist-mode 1)
+(recentf-mode 1)
 
 ;; Tabs
 (global-tab-line-mode t)
@@ -50,10 +51,6 @@
 ;; Make maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; Org configs
-(global-set-key (kbd "C-c l") 'org-store-link)
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c c") 'org-capture)
 
 ;; Scroll
 (setq scroll-conservatively 101)
