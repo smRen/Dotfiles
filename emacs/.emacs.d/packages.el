@@ -1,15 +1,8 @@
-(use-package exec-path-from-shell
-  :ensure t
-  :config
-  (when (daemonp)
-    (exec-path-from-shell-initialize))
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
-
 (use-package which-key
   :ensure t
   :init
-  :config (which-key-mode))
+  :config
+  (which-key-mode t))
 
 (use-package evil
   :ensure t
@@ -21,7 +14,7 @@
   :config
   (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
   (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
-  (evil-mode))
+  (evil-mode t))
 
 (use-package evil-terminal-cursor-changer
   :ensure t
@@ -49,7 +42,7 @@
 (use-package evil-matchit
   :ensure t
   :config
-  (global-evil-matchit-mode 1))
+  (global-evil-matchit-mode t))
 
 (use-package evil-commentary
   :ensure t
@@ -113,7 +106,10 @@
   :ensure t)
 
 (use-package vterm
-  :ensure t)
+  :ensure t
+  :config
+  (global-set-key (kbd "C-c v") 'vterm))
+  
 
 (use-package python
   :ensure t
@@ -135,8 +131,8 @@
 (use-package projectile
   :ensure t
   :config
-  (setq projectile-project-search-path '("~/Projects/")
-	projectile-completion-system 'ivy)
+  (setq projectile-project-search-path '("~/Projects/"))
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode))
 
 (use-package emmet-mode
@@ -204,10 +200,22 @@
 
 (use-package doom-modeline
   :ensure t
-  :init (doom-modeline-mode 1))
+  :init (doom-modeline-mode t))
 
 (use-package smartparens
   :ensure t
   :init
   (require 'smartparens-config)
   (add-hook 'prog-mode-hook #'smartparens-mode))
+
+;; (use-package selectrum
+;;   :ensure t
+;;   :config
+;;   (selectrum-mode t))
+
+;; (use-package perspective
+;;   :ensure t
+;;   :bind
+;;   ("C-x C-b" . persp-list-buffers)   ; or use a nicer switcher, see below
+;;   :config
+;;   (persp-mode 1))
