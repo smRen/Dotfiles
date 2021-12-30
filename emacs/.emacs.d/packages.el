@@ -336,6 +336,8 @@
         centaur-tabs-height 32
         centaur-tabs-set-bar 'under
         x-underline-at-descent-line t)
+  (add-hook 'vterm-mode-hook 'centaur-tabs-local-mode)
+  (add-hook 'dired-mode-hook 'centaur-tabs-local-mode)
   :config
   (centaur-tabs-mode t))
 
@@ -344,6 +346,7 @@
 
 (use-package rg
   :ensure t)
+
 ;; (use-package perspective
 ;;   :ensure t
 ;;   :bind
