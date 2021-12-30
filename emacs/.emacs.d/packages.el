@@ -169,7 +169,10 @@
 (use-package projectile
   :ensure t
   :init
-  (setq projectile-project-search-path '("~/Projects/"))
+  (setq projectile-project-search-path '("~/Projects/")
+        projectile-indexing-method 'alien
+        projectile-enable-caching t
+        projectile-file-exists-remote-cache-expire nil)
   :config
   (projectile-mode t ))
 
@@ -336,6 +339,11 @@
   :config
   (centaur-tabs-mode t))
 
+(use-package ag
+  :ensure t)
+
+(use-package rg
+  :ensure t)
 ;; (use-package perspective
 ;;   :ensure t
 ;;   :bind
