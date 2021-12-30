@@ -1,50 +1,20 @@
 (setq user-full-name "Ren Odion"
       user-mail-address "smakey18@gmail.com")
 
-;; Ido mode
-(ido-mode 1)
-(setq ido-enable-flex-matching t
-      ido-everywhere t)
-(global-set-key
-     "\M-x"
-     (lambda ()
-       (interactive)
-       (call-interactively
-        (intern
-         (ido-completing-read
-          "M-x "
-          (all-completions "" obarray 'commandp))))))
+;; Minibuffer stuff
+(fido-vertical-mode 1)
+(setq completion-styles '(initials partial-completion flex) 
+      completion-cycle-threshold 10)
+(savehist-mode 1)
 
-;; Recentf mode
-(recentf-mode 1)
-(setq recentf-max-menu-items 25
-      recentf-max-saved-items 25)
-
-(defun recentf-ido-find-file ()
-  "Find a recent file using Ido."
-  (interactive)
-  (let* ((file-assoc-list
-	  (mapcar (lambda (x)
-		    (cons (file-name-nondirectory x)
-			  x))
-		  recentf-list))
-	 (filename-list
-	  (remove-duplicates (mapcar #'car file-assoc-list)
-			     :test #'string=))
-	 (filename (ido-completing-read "Choose recent file: "
-					filename-list
-					nil
-					t)))
-    (when filename
-      (find-file (cdr (assoc filename
-			     file-assoc-list))))))
-(global-set-key "\C-x\ \C-r" 'recentf-ido-find-file)
+;; Tabs
+(global-tab-line-mode t)
 
 ;; Emoji
 (set-fontset-font t 'symbol "Noto Color Emoji")
 
 (add-to-list 'default-frame-alist
-             '(font . "Hack-11"))
+             '(font . "Hack-13"))
 ;; Nicer lambdas
 (global-prettify-symbols-mode t)
 
@@ -98,8 +68,8 @@
 ;; Display line numbers
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
+;; Stop annoying message about following symlinks
 (setq vc-follow-symlinks t)
-
 
 ;; Programming
 
