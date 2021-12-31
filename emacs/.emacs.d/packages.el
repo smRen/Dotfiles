@@ -187,6 +187,11 @@
   :config
   (projectile-mode t ))
 
+;; NOTE: Example .dir-locals file for projectile
+;; ((c++-mode . ((projectile-project-run-cmd . "./build/gcc-ninja-debug-cxx/main")
+;;               (projectile-project-compile-cmd . "cmake --build ./build/gcc-ninja-debug-cxx")
+;;               (projectile-project-configure-cmd . "cmake -S . -B ./build --preset=gcc-ninja-debug-cxx"))))
+
 (use-package emmet-mode
   :ensure t
   :defines
