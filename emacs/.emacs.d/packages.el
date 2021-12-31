@@ -89,8 +89,15 @@
 ;; Flycheck
 (use-package flycheck
   :ensure t
-  :config
-  (global-flycheck-mode))
+  :commands
+  flycheck-add-next-checker
+  :init
+  (add-hook 'flycheck-mode-hook (lambda ()
+                                  (let ((current-mode major-mode))
+                                    (cond ((eq current-mode 'js-mode)
+                                           (flycheck-add-next-checker 'lsp 'javascript-eslint))
+                                          ((eq current-mode 'c++-mode)
+                                           (flycheck-add-next-checker 'lsp 'c/c++-cppcheck)))))))
 
 (use-package lsp-pyright
   :ensure t)
