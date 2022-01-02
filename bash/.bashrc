@@ -27,6 +27,9 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# Extended pattern matching
+shopt -s extglob
+
 # Forward search
 stty -ixon
 
