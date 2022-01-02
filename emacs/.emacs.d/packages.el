@@ -89,15 +89,14 @@
 ;; Flycheck
 (use-package flycheck
   :ensure t
-  :commands
-  flycheck-add-next-checker
   :init
   (add-hook 'flycheck-mode-hook (lambda ()
                                   (let ((current-mode major-mode))
-                                    (cond ((eq current-mode 'js-mode)
-                                           (flycheck-add-next-checker 'lsp 'javascript-eslint))
-                                          ((eq current-mode 'c++-mode)
-                                           (flycheck-add-next-checker 'lsp 'c/c++-cppcheck)))))))
+                                    (cond ((eq current-mode 'c++-mode)
+                                           (flycheck-add-next-checker 'lsp 'c/c++-cppcheck))
+                                          ((eq current-mode 'js-mode)
+                                           (flycheck-add-next-checker 'lsp 'javascript-eslint)))))))
+
 
 (use-package lsp-pyright
   :ensure t)
@@ -107,6 +106,7 @@
   :ensure t
   :commands
   lsp-enable-which-key-integration
+  flycheck-add-next-checker
   :defines
   lsp-completion-show-detail
   lsp-ui-doc-enable
@@ -119,33 +119,40 @@
   (setq gc-cons-threshold 100000000
 	    read-process-output-max (* 1024 1024)
 	    lsp-idle-delay 0.0
-	    lsp-log-io nil)
-  :init
-  ;; (add-hook 'js-mode-hook 'lsp)
-  ;; (add-hook 'html-mode-hook 'lsp)
-  ;; (add-hook 'css-mode-hook 'lsp)
-  ;; (add-hook 'c++-mode-hook 'lsp)
-  ;; (add-hook 'c-mode-hook 'lsp)
-  ;; (add-hook 'sh-mode 'lsp)
-  (dolist (hook '(js-mode-hook html-mode-hook css-mode-hook c++-mode-hook c-mode-hook sh-mode-hook))
-    (add-hook hook 'lsp-deferred))
+	    lsp-log-io nil
+        lsp-completion-show-detail t
+		lsp-ui-doc-enable t
+        lsp-headerline-breadcrumb-enable t
+		lsp-headerline-breadcrumb-icons-enable t
+        lsp-ui-doc-use-childframe nil
+        lsp-ui-doc-use-webkit t
+        lsp-ui-imenu-auto-refresh t
+        lsp-ui-doc-show-with-cursor t
+        lsp-ui-doc-show-with-mouse t)
+  (dolist (hook '(js-mode-hook c++-mode-hook html-mode-hook css-mode-hook c-mode-hook sh-mode-hook))
+    (add-hook hook 'lsp))
   (add-hook 'python-mode-hook (lambda ()
 				                (setq lsp-pyright-venv-path ".venv"
 				                      lsp-pyright-python-executable-cmd ".venv/bin/python")
-				                (lsp-deferred)))
+				                (lsp)))
   (add-hook 'lsp-mode-hook (lambda ()
 			                 (define-key lsp-mode-map (kbd "<leader>l") lsp-command-map)
 			                 (define-key lsp-mode-map (kbd "<leader>lw") 'lsp-ivy-workspace-symbol)
 			                 (lsp-enable-which-key-integration)))
-  :config
-  (setq lsp-completion-show-detail t
-		lsp-ui-doc-enable t
-        lsp-headerline-breadcrumb-enable t
-		lsp-headerline-breadcrumb-icons-enable t
-        lsp-ui-imenu-auto-refresh t
-        lsp-ui-doc-show-with-cursor t
-        lsp-ui-doc-show-with-mouse t)
   :commands (lsp lsp-deferred))
+
+(use-package dap-mode
+  :ensure t
+  :init
+  (require 'dap-cpptools)
+  (add-hook 'dap-stopped-hook
+          (lambda (arg) (call-interactively #'dap-hydra)))
+  (dap-auto-configure-mode 1)
+  (dap-ui-mode 1)
+  (dap-tooltip-mode 1)
+  (tooltip-mode 1)
+  (dap-ui-controls-mode 1)
+  (dap-mode 1))
 
 
 
@@ -385,6 +392,9 @@
   :ensure t
   :config
   (lsp-treemacs-sync-mode t))
+
+(use-package hydra
+  :ensure t)
 
 ;; (use-package perspective
 ;;   :ensure t
