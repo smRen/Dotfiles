@@ -15,8 +15,14 @@
 ;; Emoji
 (set-fontset-font t 'symbol "Noto Color Emoji")
 
-(add-to-list 'default-frame-alist
-             '(font . "Hack-13"))
+(let ((font-size 13) ;; Default font size of 13
+      (height (display-pixel-height))
+      (width (display-pixel-width)))
+  (if (and (>= height 1440) (>= width 2560))
+      (setq font-size 10))
+  (add-to-list 'default-frame-alist
+               `(font . ,(format "Hack-%d" font-size))))
+
 ;; Nicer lambdas
 (global-prettify-symbols-mode t)
 
