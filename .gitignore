@@ -13,4 +13,4 @@ nvim/.config/nvim/.netrwhist
 /emacs/.emacs.d/eln-cache/
 /emacs/.emacs.d/auto-save-list/
 *.cache
-/emacs/.emacs.d/custom.el
+/emacs/.config/emacs/custom.el
