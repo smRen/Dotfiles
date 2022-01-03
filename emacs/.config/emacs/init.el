@@ -12,8 +12,8 @@
   '(evil
     evil-terminal-cursor-changer
     evil-collection
-    ;; evil-surround
-    ;; evil-commentary
+    evil-surround
+    evil-commentary
     ;; company
     ;; lsp-mode
     ;; lsp-pyright
@@ -48,7 +48,7 @@
   (message "Installed the following packages:\n%s" not-installed-packages))
 
 ;; Load settings
-(dolist (filename '("package-settings.el" "user-settings.el"))
+(dolist (filename '("user-settings.el" "package-settings.el"))
   (load-file (expand-file-name filename user-emacs-directory)))
 
 ;; Move customizations to its own file

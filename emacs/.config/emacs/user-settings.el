@@ -3,6 +3,11 @@
 ;;; User settings"
 
 ;;; Code:
+
+(defun display-startup-echo-area-message ()
+  "Initial message"
+  (message "Welcome elite hacker"))
+
 (setq user-full-name "Ren Odion"
       user-mail-address "smakey18@gmail.com")
 
@@ -32,14 +37,6 @@
 ;; Make C-x C-b go to choose buffer
 (global-set-key (kbd "C-x C-b") 'switch-to-buffer)
 
-;; Disable annoying backups
-(setq create-lockfiles nil
-      auto-save-default nil
-      make-backup-files nil)
-
-;;Terminal cursor
-(evil-terminal-cursor-changer-activate)
-
 ;;Stop getting prompts about killing a buffer with a live process
 (setq kill-buffer-query-functions
       (remq 'process-kill-buffer-query-function
@@ -47,10 +44,6 @@
 
 ;;y or n instead of yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
-
-(defun display-startup-echo-area-message ()
-  "Initial message"
-  (message "Welcome elite hacker"))
 
 ;; Disable initial screen
 (setq inhibit-startup-screen t)

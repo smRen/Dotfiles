@@ -14,5 +14,11 @@
 ;; Stop CL deprecation warning
 (setq byte-compile-warnings '(not obsolete))
 
+;; Disable annoying backups
+(setq create-lockfiles nil
+      auto-save-default nil
+      make-backup-files nil)
+
+
 (provide 'early-init)
 ;;; early-init.el ends here
