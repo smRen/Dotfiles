@@ -1,16 +1,23 @@
-nvim/.config/nvim/plugged/
-nvim/.config/nvim/undodir/
-nvim/.config/nvim/.netrwhist
+# Neovim
+nvim/.config/nvim/*
+!nvim/.config/nvim/init.vim
+!nvim/.config/nvim/init.vim.old
+!nvim/.config/nvim/coc-settings.json
+!nvim/.config/nvim/ftplugin
+
+# Emacs
+emacs/.config/emacs/*
+!emacs/.config/emacs/early-init.el
+!emacs/.config/emacs/init.el
+!emacs/.config/emacs/package-settings.el
+!emacs/.config/emacs/user-settings.el
+
+# User systemd
+systemd/.config/systemd/user/*
+!systemd/.config/systemd/user/emacs.service
+
+# Miscellaneous
 .git
 .cache/
 .DS_STORE
-/emacs/.emacs.d/.lsp-session-v1
-/emacs/.emacs.d/transient/
-/emacs/.emacs.d/recentf
-/emacs/.emacs.d/projectile-bookmarks.eld
-/emacs/.emacs.d/history
-/emacs/.emacs.d/elpa/
-/emacs/.emacs.d/eln-cache/
-/emacs/.emacs.d/auto-save-list/
 *.cache
-/emacs/.config/emacs/custom.el
