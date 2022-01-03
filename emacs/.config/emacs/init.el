@@ -14,38 +14,32 @@
     evil-collection
     evil-surround
     evil-commentary
-    ;; company
-    ;; lsp-mode
-    ;; lsp-pyright
-    ;; flycheck
+    company
+    lsp-mode
+    lsp-pyright
+    flycheck
+    rg
+    ag
     ;; dap-mode
-    ;; lsp-ui
-    ;; cmake-mode
-    ;; vterm
-    ;; json-mode
-    ;; emmet-mode
-    ;; magit
-    ;; sly
-    ;; doom-themes
-    ;; format-all
-    ;; writeroom-mode
-    ;; doom-modeline
-    ;; smartparens
-    ;; which-key
-    ;; hydra)
-  )
+    projectile
+    cmake-mode
+    vterm
+    json-mode
+    emmet-mode
+    magit
+    sly
+    doom-themes
+    doom-modeline
+    format-all
+    writeroom-mode
+    smartparens
+    hydra)
   "List of third party packages")
 
-(defun smren/get-not-installed-packages (package-list)
-  "Get packages that are not installed from third-party-package-list"
-  (seq-filter (lambda (package) (not (package-installed-p package))) package-list))
-
 ;; Install packages
-(when-let ((not-installed-packages (smren/get-not-installed-packages smren/third-party-package-list)))
-  (package-refresh-contents)
-  (dolist (package-name not-installed-packages)
-    (package-install package-name))
-  (message "Installed the following packages:\n%s" not-installed-packages))
+(dolist (package smren/third-party-package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 ;; Load settings
 (dolist (filename '("user-settings.el" "package-settings.el"))
@@ -56,7 +50,7 @@
   (when (not (file-exists-p custom-file-name))
     (format "%s doesn't exist...creating one" custom-file-name)
     (if (with-temp-buffer (write-file custom-file-name))
-	(message "Custom.el created")))
+	    (message "Custom.el created")))
   (setq custom-file custom-file-name))
 (load custom-file)
 

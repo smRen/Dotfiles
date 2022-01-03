@@ -17,6 +17,13 @@
 ;; Recent files
 (recentf-mode t)
 
+;; Completion for emacs commands
+(ido-mode 1)
+(ido-everywhere)
+(fido-mode 1)
+(setq ido-enable-flex-matching t
+      ido-auto-merge-work-directories-length -1)
+
 ;; Emoji
 (set-fontset-font t 'symbol "Noto Color Emoji")
 
