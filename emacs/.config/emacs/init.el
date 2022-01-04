@@ -21,6 +21,11 @@
     rg
     ag
     ;; dap-mode
+    ivy
+    counsel
+    ivy-rich
+    ivy-prescient
+    lsp-ivy
     projectile
     cmake-mode
     vterm

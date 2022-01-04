@@ -63,12 +63,14 @@
 (add-hook 'prog-mode-hook #'smartparens-mode)
 
 ;; Lsp mode
+(smren/require-pack '(lsp-mode))
 (setq gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024)
       lsp-idle-delay 0.1
       lsp-headerline-breadcrumb-icons-enable nil
       lsp-keymap-prefix "C-c l"
       lsp-enable-snippet nil)
+(define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
 
 (dolist (mode-hook '(js-mode-hook
                      c++-mode-hook
@@ -111,5 +113,19 @@
                      html-mode-hook
                      css-mode-hook))
   (add-hook mode-hook 'emmet-mode))
+
+;; Completion system
+(ivy-mode 1)
+(counsel-mode 1)
+(ivy-rich-mode t)
+(ivy-rich-project-root-cache-mode 1)
+(ivy-prescient-mode 1)
+
+(setq ivy-rich-path-style 'abbrev
+      ivy-use-virtual-buffers t
+      enable-recursive-minibuffers t
+      ivy-re-builders-alist '((swiper . ivy--regex-plus)
+                              (t . ivy--regex-fuzzy)))
+(global-set-key (kbd "C-s") #'swiper)
 
 ;;; package-settings.el ends here
