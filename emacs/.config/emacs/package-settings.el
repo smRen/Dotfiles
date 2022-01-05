@@ -46,6 +46,9 @@
 (load-theme 'doom-challenger-deep t)
 (doom-modeline-mode 1)
 
+;; Magit
+(smren/require-pack '(magit))
+(global-set-key (kbd "C-c g") #'magit)
 
 ;; Format all
 (smren/require-pack '(format-all))
