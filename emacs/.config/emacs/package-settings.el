@@ -184,7 +184,7 @@ Otherwise return nil"
   (interactive "sEnter command to run in Vterm shell:")
   (smren/vterm-execute-cmd-in-project command))
 
-(defalias 'make-commands
+(defalias 'smren/personal-commands
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C") 'smren/run-make-configure-in-project)
     (define-key map (kbd "c") 'smren/run-make-build-in-project)
@@ -195,6 +195,6 @@ Otherwise return nil"
     map)
   "Make related bindings")
 
-(global-set-key (kbd "C-c m") 'make-commands)
+(global-set-key (kbd "C-c m") 'smren/personal-commands)
 
 ;;; package-settings.el ends here
