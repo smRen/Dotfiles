@@ -181,7 +181,7 @@ Otherwise return nil"
 
 (defun smren/run-custom-command-in-project (command)
   "Prompt for running a custon command at projectile root"
-  (interactive "sEnter command:")
+  (interactive "sEnter command to run in Vterm shell:")
   (smren/vterm-execute-cmd-in-project command))
 
 (defalias 'make-commands
