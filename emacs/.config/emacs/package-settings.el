@@ -128,4 +128,67 @@
                               (t . ivy--regex-fuzzy)))
 (global-set-key (kbd "C-s") #'swiper)
 
+;; Execute commands in vterm
+(smren/require-pack '(vterm))
+
+(defun smren/get-project-vterm-buffer ()
+  "Return the vterm buffer of current project in buffer list.
+Otherwise return nil"
+  (interactive)
+  (car (member (format "*vterm %s*" (projectile-project-name))
+               (mapcar #'buffer-name (buffer-list)))))
+
+(defun smren/vterm-execute-cmd-in-project (command)
+  "Execute shell command in current project"
+  (let ((cur-buf (current-buffer))
+        (vterm-buf (smren/get-project-vterm-buffer)))
+    (unless vterm-buf
+      (projectile-run-vterm)
+      (setq vterm-buf (smren/get-project-vterm-buffer)))
+    (display-buffer vterm-buf t)
+    (switch-to-buffer-other-window vterm-buf)
+    (vterm--goto-line -1)
+    (message "Executing shell command: %s" command)
+    (vterm-send-string command)
+    (vterm-send-return)
+    (switch-to-buffer-other-window cur-buf)))
+
+;; Make keymaps
+(defun smren/run-make-configure-in-project ()
+  "Run the make configure in current projectile root"
+  (interactive)
+  (smren/vterm-execute-cmd-in-project "make configure"))
+
+(defun smren/run-make-build-in-project ()
+  "Run the make build in current projectile root"
+  (interactive)
+  (smren/vterm-execute-cmd-in-project "make build"))
+
+(defun smren/run-make-test-in-project ()
+  "Run the make test in current projectile root"
+  (interactive)
+  (smren/vterm-execute-cmd-in-project "make test"))
+
+(defun smren/run-make-run-in-project ()
+  "Run the make run in current projectile root"
+  (interactive)
+  (smren/vterm-execute-cmd-in-project "make run"))
+
+(defun smren/run-make-clean-in-project ()
+  "Run the make clean in current projectile root"
+  (interactive)
+  (smren/vterm-execute-cmd-in-project "make clean"))
+
+(defalias 'make-commands
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C") 'smren/run-make-configure-in-project)
+    (define-key map (kbd "c") 'smren/run-make-build-in-project)
+    (define-key map (kbd "P") 'smren/run-make-test-in-project)
+    (define-key map (kbd "u") 'smren/run-make-run-in-project)
+    (define-key map (kbd "k") 'smren/run-make-clean-in-project)
+    map)
+  "Make related bindings")
+
+(global-set-key (kbd "C-c m") 'make-commands)
+
 ;;; package-settings.el ends here
