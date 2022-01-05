@@ -179,6 +179,11 @@ Otherwise return nil"
   (interactive)
   (smren/vterm-execute-cmd-in-project "make clean"))
 
+(defun smren/run-custom-command-in-project (command)
+  "Prompt for running a custon command at projectile root"
+  (interactive "sEnter command:")
+  (smren/vterm-execute-cmd-in-project command))
+
 (defalias 'make-commands
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C") 'smren/run-make-configure-in-project)
@@ -186,6 +191,7 @@ Otherwise return nil"
     (define-key map (kbd "P") 'smren/run-make-test-in-project)
     (define-key map (kbd "u") 'smren/run-make-run-in-project)
     (define-key map (kbd "k") 'smren/run-make-clean-in-project)
+    (define-key map (kbd "&") 'smren/run-custom-command-in-project)
     map)
   "Make related bindings")
 
