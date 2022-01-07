@@ -200,4 +200,14 @@ Otherwise return nil"
 
 (global-set-key (kbd "C-c m") 'smren/personal-commands)
 
+;; Writeroom mode
+(global-set-key (kbd "C-c w") #'writeroom-mode)
+
+;; Org-mode
+(setq org-export-backends '(ascii html icalendar latex md odt))
+
+;; PDF viewer
+(smren/require-pack '(pdf-tools))
+(setq pdf-view-display-size 'fit-height)
+
 ;;; package-settings.el ends here

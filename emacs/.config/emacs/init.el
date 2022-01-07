@@ -38,6 +38,8 @@
     format-all
     writeroom-mode
     smartparens
+    org-contrib
+    pdf-tools
     hydra)
   "List of third party packages")
 
