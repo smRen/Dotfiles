@@ -8,8 +8,9 @@
     (setenv "SHELL" "/usr/local/bin/bash")
     (setq shell-file-name "/usr/local/bin/bash"
           insert-directory-program "/usr/local/bin/gls")
-    (add-to-list 'exec-path "/usr/local/bin/")
-    (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin")))
+    (dolist (path '("/usr/local/bin" "/Library/TeX/texbin"))
+      (push path exec-path))
+    (setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin:/usr/local/bin")))
 
 ;; Stop CL deprecation warning
 (setq byte-compile-warnings '(not obsolete))
