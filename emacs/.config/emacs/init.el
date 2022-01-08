@@ -10,6 +10,7 @@
 ;; Third party packages
 (defvar smren/third-party-package-list
   '(evil
+    pdf-tools
     evil-terminal-cursor-changer
     evil-collection
     evil-surround
@@ -20,7 +21,7 @@
     flycheck
     rg
     ag
-    ;; dap-mode
+    dap-mode
     ivy
     counsel
     ivy-rich
@@ -39,14 +40,15 @@
     writeroom-mode
     smartparens
     org-contrib
-    pdf-tools
     hydra)
   "List of third party packages")
 
 ;; Install packages
-(dolist (package smren/third-party-package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
+(let ((not-installed-packages (seq-remove #'package-installed-p smren/third-party-package-list)))
+  (when not-installed-packages
+    (package-refresh-contents)
+    (mapc #'package-install not-installed-packages)
+    (message "Installed the following packages: %s" not-installed-packages)))
 
 ;; Load settings
 (dolist (filename '("user-settings.el" "package-settings.el"))
