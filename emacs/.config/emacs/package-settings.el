@@ -209,8 +209,8 @@ Otherwise return nil"
 ;; PDF viewer
 (smren/require-pack '(pdf-tools))
 (setq-default pdf-view-display-size 1
-      pdf-view-use-scaling t
-      pdf-annot-activate-created-annotations t)
+              pdf-view-use-scaling t
+              pdf-annot-activate-created-annotations t)
 
 (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
 (add-hook 'pdf-view-mode-hook (lambda ()
@@ -218,6 +218,5 @@ Otherwise return nil"
                                 (pdf-isearch-minor-mode 1)))
 (add-hook 'pdf-annot-list-mode-hook 'pdf-annot-list-follow-minor-mode)
 (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
-
 
 ;;; package-settings.el ends here
