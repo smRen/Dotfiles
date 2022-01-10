@@ -54,7 +54,7 @@
 (smren/require-pack '(format-all))
 (setq-default format-all-formatters '(("JSX" prettier)
                                       ("HTML" prettier)
-                                      ("C++" (clang-format "-style={IndentWidth: 4}"))
+                                      ("C++" (clang-format "-style={BasedOnStyle: Mozilla}"))
                                       ("Python" black)
                                       ("JavaScript" prettier)
                                       ("Shell" (shfmt "-i" "2")))
