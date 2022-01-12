@@ -54,7 +54,7 @@
 (smren/require-pack '(format-all))
 (setq-default format-all-formatters '(("JSX" prettier)
                                       ("HTML" prettier)
-                                      ("C++" (clang-format "-style={IndentWidth: 4}"))
+                                      ("C++" (clang-format "-style={BasedOnStyle: Google, IndentWidth: 4, TabWidth: 4, AccessModifierOffset: -4}"))
                                       ("Python" black)
                                       ("JavaScript" prettier)
                                       ("Shell" (shfmt "-i" "2")))
@@ -199,5 +199,24 @@ Otherwise return nil"
   "Make related bindings")
 
 (global-set-key (kbd "C-c m") 'smren/personal-commands)
+
+;; Writeroom mode
+(global-set-key (kbd "C-c w") #'writeroom-mode)
+
+;; Org-mode
+(setq org-export-backends '(ascii html icalendar latex md odt))
+
+;; PDF viewer
+(smren/require-pack '(pdf-tools))
+(setq-default pdf-view-display-size 1
+              pdf-view-use-scaling t
+              pdf-annot-activate-created-annotations t)
+
+(add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
+(add-hook 'pdf-view-mode-hook (lambda ()
+                                (pdf-annot-minor-mode 1)
+                                (pdf-isearch-minor-mode 1)))
+(add-hook 'pdf-annot-list-mode-hook 'pdf-annot-list-follow-minor-mode)
+(define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
 
 ;;; package-settings.el ends here
