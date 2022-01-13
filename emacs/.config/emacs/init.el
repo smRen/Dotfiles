@@ -39,6 +39,7 @@
     format-all
     writeroom-mode
     smartparens
+    matlab-mode
     hydra)
   "List of third party packages")
 
