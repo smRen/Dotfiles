@@ -29,7 +29,7 @@
     lsp-ivy
     projectile
     cmake-mode
-    vterm
+    ;;vterm
     json-mode
     emmet-mode
     magit
