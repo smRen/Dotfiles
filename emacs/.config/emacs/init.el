@@ -39,7 +39,6 @@
     format-all
     writeroom-mode
     smartparens
-    org-contrib
     hydra)
   "List of third party packages")
 
