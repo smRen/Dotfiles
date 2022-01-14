@@ -94,4 +94,7 @@
       js-indent-level 2
       css-indent-offset 2)
 
+;; Set .m files to matlab mode
+(add-to-list 'auto-mode-alist '("\\.m" . matlab-mode))
+
 ;;; user_settings.el ends here
