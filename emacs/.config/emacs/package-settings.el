@@ -12,14 +12,14 @@
 ;; Evil settings
 (setq evil-want-C-u-scroll t
       evil-want-integration t
+      evil-undo-system 'undo-fu
       evil-want-keybinding nil
       evil-motion-state-cursor 'box
       evil-visual-state-cursor 'box
       evil-normal-state-cursor 'box
       evil-insert-state-cursor 'bar
       evil-emacs-state-cursor  'hbar
-      evil-collection-company-use-tng t
-      evil-undo-system 'undo-redo)
+      evil-collection-company-use-tng t)
 
 (smren/require-pack '(evil evil-collection))
 (evil-collection-init)

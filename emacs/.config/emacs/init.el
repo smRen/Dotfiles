@@ -9,7 +9,9 @@
 
 ;; Third party packages
 (defvar smren/third-party-package-list
-  '(evil
+  '(magit
+    undo-fu
+    evil
     pdf-tools
     evil-terminal-cursor-changer
     evil-collection
@@ -32,7 +34,6 @@
     vterm
     json-mode
     emmet-mode
-    magit
     sly
     doom-themes
     doom-modeline
