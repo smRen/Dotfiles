@@ -1,5 +1,5 @@
 # Konsole terminal specific settings
-if [[ $HOSTNAME == "archserver" || $HOSTNAME == "archsp4" ]]; then
+if [[ $HOSTNAME == "archserver" || $HOSTNAME == "archsp4" || $HOSTNAME == "arch" ]]; then
     konsole_str="TERM=konsole-direct "
 else
     konsole_str=""
