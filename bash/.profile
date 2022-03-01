@@ -28,8 +28,10 @@ eval "$(pyenv init -)"
 eval "$(pyenv init --path)"
 
 # Capslock as ctrl and esc on kubuntu pc
+# Start emacs daemon
 # imwheel setting
 if [ $HOSTNAME = "kubuntu" ] ; then
+    /snap/bin/emacs -nw --daemon
     /usr/bin/setxkbmap -option 'caps:ctrl_modifier' && xcape -e 'Caps_Lock=Escape'
     /usr/bin/imwheel -b "4 5"
 fi
