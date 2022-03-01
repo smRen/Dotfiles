@@ -32,6 +32,7 @@
     projectile
     cmake-mode
     vterm
+    yaml-mode
     json-mode
     emmet-mode
     sly
