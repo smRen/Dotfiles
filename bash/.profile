@@ -18,4 +18,18 @@ fi
 
 # set PATH to include local bin
 PATH="/usr/local/bin/:$PATH"
+
+
+# pyenv bin
+if [ -d "$HOME/.pyenv/bin" ] ; then
+    PATH="$HOME/.pyenv/bin:$PATH"
+fi
+eval "$(pyenv init -)"
 eval "$(pyenv init --path)"
+
+# Capslock as ctrl and esc on kubuntu pc
+# imwheel setting
+if [ $HOSTNAME = "kubuntu" ] ; then
+    setxkbmap -option 'caps:ctrl_modifier' && xcape -e 'Caps_Lock=Escape' -t 100
+    imwheel -b "4 5"
+fi

@@ -1,5 +1,5 @@
 # Konsole terminal specific settings
-if [[ $HOSTNAME == *"arch"* ]]; then
+if [ $HOSTNAME = *"arch"* ] || [ $HOSTNAME = "kubuntu" ]; then
     konsole_str="TERM=konsole-direct "
 else
     konsole_str=""
