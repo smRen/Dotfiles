@@ -1,8 +1,5 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 
-env:
-  TERM: xterm-direct
-
 items:
   - colors:
       name: 3024 (dark)
