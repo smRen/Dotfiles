@@ -213,10 +213,20 @@ Otherwise return nil"
               pdf-annot-activate-created-annotations t)
 
 (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
-(add-hook 'pdf-view-mode-hook (lambda ()
-                                (pdf-annot-minor-mode 1)
-                                (pdf-isearch-minor-mode 1)))
-(add-hook 'pdf-annot-list-mode-hook 'pdf-annot-list-follow-minor-mode)
+(add-hook 'pdf-view-mode-hook
+          (lambda ()
+            (pdf-annot-minor-mode 1)
+            (pdf-isearch-minor-mode 1)
+            (set (make-local-variable 'evil-normal-state-cursor) (list nil))))
+
+;; (add-hook 'pdf-view-mode-hook (lambda ()
+;;                                 (pdf-annot-minor-mode 1)
+;;                                 (pdf-isearch-minor-mode 1)
+;;                                 (set (make-local-variable
+;;                                       'evil-evilified-state-cursor)
+;;                                      (list nil))
+;;                                 (set (make-local-variable 'evil-emacs-state-cursor) (list nil))))
+;; (add-hook 'pdf-annot-list-mode-hook 'pdf-annot-list-follow-minor-mode)
 (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
 
 ;;; package-settings.el ends here
