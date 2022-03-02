@@ -113,6 +113,11 @@ alias ec="emacsclient -nw"
 export EDITOR="emacsclient -nw"
 export VISUAL=$EDITOR
 
+# For kubuntu snap tmux
+if [ $HOSTNAME = "kubuntu" ]; then
+    alias tmux="/snap/bin/tmux-non-dead.tmux"
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
