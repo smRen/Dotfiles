@@ -108,8 +108,8 @@ alias l='ls -CF'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Emacs aliases
-alias e="TERM=xterm-direct emacs -nw"
-alias ec="TERM=xterm-direct emacsclient -nw"
+alias e="emacs -nw"
+alias ec="emacsclient -nw"
 export EDITOR="emacsclient -nw"
 export VISUAL=$EDITOR
 

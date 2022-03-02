@@ -74,6 +74,9 @@ colors:
     white: '#63686d'
 theme: Breeze
 
+env:
+  TERM: xterm-direct
+
 # Import additional configuration files
 #
 # Imports are loaded in order, skipping all missing files, with the importing
