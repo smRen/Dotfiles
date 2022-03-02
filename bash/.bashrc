@@ -110,6 +110,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # Emacs aliases
 alias e="emacs -nw"
 alias ec="emacsclient -nw"
+export EDITOR="emacsclient -nw"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
