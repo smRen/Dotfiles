@@ -4,4 +4,4 @@
 [init]
 	defaultBranch = main
 [core]
-	editor = vi
+	editor = emacsclient -nw
