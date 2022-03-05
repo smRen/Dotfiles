@@ -75,7 +75,7 @@ colors:
 theme: Breeze
 
 font:
-  size: 9
+  size: 11
 
 env:
   TERM: xterm-direct
