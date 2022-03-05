@@ -74,8 +74,9 @@ colors:
     white: '#63686d'
 theme: Breeze
 
-env:
-  TERM: xterm-direct
+font:
+  size: 9
+
 
 # Import additional configuration files
 #
