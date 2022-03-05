@@ -1,0 +1,18 @@
+swipe:
+  4:
+    left: 
+      workspace: 'next'
+    right: 
+      workspace: 'prev'
+    up:
+      sendkey: "LEFTMETA+TAB"
+  3:
+    left:
+      sendkey: "LEFTALT+RIGHT"
+    right:
+      sendkey: "LEFTALT+LEFT"
+    up:
+      sendkey: "LEFTMETA+TAB"
+
+threshold:
+  swipe: 0.2
