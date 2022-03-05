@@ -25,3 +25,13 @@ if [ -d "$HOME/.pyenv/bin" ] ; then
 fi
 eval "$(pyenv init -)"
 eval "$(pyenv init --path)"
+
+# Emacs aliases
+alias e="emacs -nw"
+alias ec="emacsclient -nw"
+export EDITOR="emacsclient -nw"
+export VISUAL=$EDITOR
+
+if [[ "$HOSTNAME" = kubuntu* ]]; then
+    alias tmux="/snap/bin/tmux-non-dead.tmux"
+fi

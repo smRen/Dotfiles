@@ -77,6 +77,8 @@ theme: Breeze
 font:
   size: 9
 
+env:
+  TERM: xterm-direct
 
 # Import additional configuration files
 #
