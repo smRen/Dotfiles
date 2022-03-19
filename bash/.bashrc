@@ -118,6 +118,10 @@ if [[ "$HOSTNAME" = kubuntu* ]]; then
     alias tmux="/snap/bin/tmux-non-dead.tmux"
 fi
 
+# Some environment variables that shouldve been default
+export MOZ_USE_XINPUT2=1 # smooth trackpad scrolling firefox
+export MOZ_DISABLE_RDD_SANDBOX=1 # needed for gpu decode of videos on firefox. Disable later
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
