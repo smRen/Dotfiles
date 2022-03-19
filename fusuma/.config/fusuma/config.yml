@@ -16,3 +16,6 @@ swipe:
 
 threshold:
   swipe: 0.2
+
+interval:
+  swipe: 1.2
