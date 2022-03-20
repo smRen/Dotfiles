@@ -42,6 +42,7 @@
     writeroom-mode
     smartparens
     matlab-mode
+    which-key
     hydra)
   "List of third party packages")
 

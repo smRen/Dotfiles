@@ -92,10 +92,6 @@
               (cond ((eq current-mode 'js-mode) (flycheck-add-next-checker 'lsp 'javascript-eslint))
                     ((memq current-mode '(c++-mode c-mode)) (flycheck-add-next-checker 'lsp 'c/c++-cppcheck))))))
 
-;; Lsp pyright
-(setq lsp-pyright-venv-path ".venv"
-      lsp-pyright-python-executable-cmd ".venv/bin/python")
-
 ;; Projectile
 (smren/require-pack '(ag rg))
 (setq projectile-project-search-path '("~/Projects")
@@ -133,6 +129,10 @@
 
 ;; Execute commands in vterm
 (smren/require-pack '(vterm))
+
+;; Keybinding hints
+(smren/require-pack '(which-key))
+(which-key-mode)
 
 (defun smren/get-project-vterm-buffer ()
   "Return the vterm buffer of current project in buffer list.
