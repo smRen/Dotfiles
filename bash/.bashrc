@@ -141,6 +141,8 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+. /usr/share/fzf/key-bindings.bash
+. /usr/share/fzf/completion.bash
 
 # Emacs Vterm settings
 vterm_printf(){
