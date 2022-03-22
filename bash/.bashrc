@@ -141,8 +141,17 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-. /usr/share/fzf/key-bindings.bash
-. /usr/share/fzf/completion.bash
+
+
+
+if [[ "$HOSTNAME" = 'kubuntu' ]]; then
+    . /usr/share/doc/fzf/examples/key-bindings.bash
+    . /usr/share/doc/fzf/examples/completion.bash
+else
+    . /usr/share/fzf/key-bindings.bash
+    . /usr/share/fzf/completion.bash
+fi
+
 
 # Emacs Vterm settings
 vterm_printf(){
