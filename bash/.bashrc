@@ -8,7 +8,6 @@ case $- in
 *) return ;;
 esac
 
-
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 
@@ -171,6 +170,11 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
         vterm_printf "51;Evterm-clear-scrollback";
         tput clear;
     }
+else
+    powerline-daemon -q
+    POWERLINE_BASH_CONTINUATION=1
+    POWERLINE_BASH_SELECT=1
+    . /usr/share/powerline/bindings/bash/powerline.sh
 fi
 
 vterm_prompt_end(){
