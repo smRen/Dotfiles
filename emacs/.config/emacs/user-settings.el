@@ -27,7 +27,7 @@
 ;; Emoji
 (set-fontset-font t 'symbol "Noto Color Emoji")
 
-(let ((font-size 13) ;; Default font size of 13
+(let ((font-size 12) ;; Default font size of 13
       (height (display-pixel-height))
       (width (display-pixel-width)))
   (if (and (>= height 1440) (>= width 2560))
