@@ -141,8 +141,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
-
 if [[ "$HOSTNAME" = 'kubuntu' ]]; then
     . /usr/share/doc/fzf/examples/key-bindings.bash
     . /usr/share/doc/fzf/examples/completion.bash
@@ -151,6 +149,11 @@ else
     . /usr/share/fzf/completion.bash
 fi
 
+# if tmux is executable and not inside a tmux session, then try to attach.
+# if attachment fails, start a new session
+[ -x "$(command -v tmux)" ] \
+  && [ -z "${TMUX}" ] \
+  && { tmux attach || tmux; } >/dev/null 2>&1
 
 # Emacs Vterm settings
 vterm_printf(){
