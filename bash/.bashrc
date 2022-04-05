@@ -149,11 +149,11 @@ else
     . /usr/share/fzf/completion.bash
 fi
 
-# if tmux is executable and not inside a tmux session, then try to attach.
+# if tmux is executable, X is running, and not inside a tmux session, then try to attach.
 # if attachment fails, start a new session
-[ -x "$(command -v tmux)" ] \
-  && [ -z "${TMUX}" ] \
-  && { tmux attach || tmux; } >/dev/null 2>&1
+if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ]; then
+  [ -z "${TMUX}" ] && { tmux attach || tmux; } >/dev/null 2>&1
+fi
 
 # Emacs Vterm settings
 vterm_printf(){
