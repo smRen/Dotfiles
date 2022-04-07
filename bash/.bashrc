@@ -173,12 +173,6 @@ else
     POWERLINE_BASH_CONTINUATION=1
     POWERLINE_BASH_SELECT=1
     . /usr/share/powerline/bindings/bash/powerline.sh
-
-    # if tmux is executable, X is running, and not inside a tmux session, then try to attach.
-    # if attachment fails, start a new session
-    if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ]; then
-    [ -z "${TMUX}" ] && { tmux attach || tmux; } >/dev/null 2>&1
-    fi
 fi
 
 vterm_prompt_end(){
