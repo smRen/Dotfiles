@@ -1,9 +1,9 @@
 swipe:
   4:
-    left: 
-      workspace: 'next'
     right: 
-      workspace: 'prev'
+      sendkey: "LEFTMETA+h"
+    left: 
+      sendkey: "LEFTMETA+j"
     up:
       sendkey: "LEFTMETA+TAB"
   3:
