@@ -18,3 +18,10 @@ fi
 
 # set PATH to include local bin
 PATH="/usr/local/bin/:$PATH"
+
+# pyenv bin
+if [ -d "$HOME/.pyenv/bin" ] ; then
+    PATH="$HOME/.pyenv/bin:$PATH"
+fi
+eval "$(pyenv init -)"
+eval "$(pyenv init --path)"

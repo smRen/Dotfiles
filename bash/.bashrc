@@ -8,7 +8,6 @@ case $- in
 *) return ;;
 esac
 
-
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 
@@ -19,7 +18,7 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
+HISTSIZE=10000
 HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
@@ -73,10 +72,11 @@ else
 fi
 unset color_prompt force_color_prompt
 
+. ~/Scripts/git-prompt.sh
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm* | rxvt*)
-  PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[00m\]$(__git_ps1) \$ ' 
   ;;
 *) ;;
 
@@ -106,9 +106,20 @@ alias l='ls -CF'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Emacs
-alias e="TERM=xterm-emacs emacs -nw"
-alias ec="TERM=xterm-emacs emacsclient -nw"
+
+# Emacs aliases
+alias e="emacs -nw"
+alias ec="emacsclient -nw"
+export EDITOR="emacsclient -nw"
+export VISUAL=$EDITOR
+
+if [[ "$HOSTNAME" = kubuntu* ]]; then
+    alias tmux="/snap/bin/tmux-non-dead.tmux"
+fi
+
+# Some environment variables that shouldve been default
+export MOZ_USE_XINPUT2=1 # smooth trackpad scrolling firefox
+export MOZ_DISABLE_RDD_SANDBOX=1 # needed for gpu decode of videos on firefox. Disable later
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -130,6 +141,15 @@ if ! shopt -oq posix; then
   fi
 fi
 
+if [[ "$HOSTNAME" = 'kubuntu' ]]; then
+    . /usr/share/doc/fzf/examples/key-bindings.bash
+    . /usr/share/doc/fzf/examples/completion.bash
+else
+    . /usr/share/fzf/key-bindings.bash
+    . /usr/share/fzf/completion.bash
+fi
+
+
 # Emacs Vterm settings
 vterm_printf(){
     if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
@@ -148,6 +168,11 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
         vterm_printf "51;Evterm-clear-scrollback";
         tput clear;
     }
+else
+    powerline-daemon -q
+    POWERLINE_BASH_CONTINUATION=1
+    POWERLINE_BASH_SELECT=1
+    . /usr/share/powerline/bindings/bash/powerline.sh
 fi
 
 vterm_prompt_end(){
@@ -164,4 +189,3 @@ vterm_cmd() {
     done
     vterm_printf "51;E$vterm_elisp"
 }
-

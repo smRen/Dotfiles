@@ -11,6 +11,7 @@ emacs/.config/emacs/*
 !emacs/.config/emacs/init.el
 !emacs/.config/emacs/package-settings.el
 !emacs/.config/emacs/user-settings.el
+!emacs/.config/emacs/install.el
 
 # User systemd
 systemd/.config/systemd/user/*

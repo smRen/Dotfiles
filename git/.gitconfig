@@ -3,3 +3,5 @@
 	name = Ren Odion
 [init]
 	defaultBranch = main
+[core]
+	editor = emacsclient -nw

@@ -1,0 +1,21 @@
+swipe:
+  4:
+    right: 
+      sendkey: "LEFTMETA+h"
+    left: 
+      sendkey: "LEFTMETA+j"
+    up:
+      sendkey: "LEFTMETA+TAB"
+  3:
+    left:
+      sendkey: "LEFTALT+RIGHT"
+    right:
+      sendkey: "LEFTALT+LEFT"
+    up:
+      sendkey: "LEFTMETA+TAB"
+
+threshold:
+  swipe: 0.2
+
+interval:
+  swipe: 1.2

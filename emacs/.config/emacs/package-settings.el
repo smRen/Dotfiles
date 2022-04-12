@@ -12,14 +12,14 @@
 ;; Evil settings
 (setq evil-want-C-u-scroll t
       evil-want-integration t
+      evil-undo-system 'undo-fu
       evil-want-keybinding nil
       evil-motion-state-cursor 'box
       evil-visual-state-cursor 'box
       evil-normal-state-cursor 'box
       evil-insert-state-cursor 'bar
       evil-emacs-state-cursor  'hbar
-      evil-collection-company-use-tng t
-      evil-undo-system 'undo-redo)
+      evil-collection-company-use-tng t)
 
 (smren/require-pack '(evil evil-collection))
 (evil-collection-init)
@@ -92,10 +92,6 @@
               (cond ((eq current-mode 'js-mode) (flycheck-add-next-checker 'lsp 'javascript-eslint))
                     ((memq current-mode '(c++-mode c-mode)) (flycheck-add-next-checker 'lsp 'c/c++-cppcheck))))))
 
-;; Lsp pyright
-(setq lsp-pyright-venv-path ".venv"
-      lsp-pyright-python-executable-cmd ".venv/bin/python")
-
 ;; Projectile
 (smren/require-pack '(ag rg))
 (setq projectile-project-search-path '("~/Projects")
@@ -133,6 +129,10 @@
 
 ;; Execute commands in vterm
 (smren/require-pack '(vterm))
+
+;; Keybinding hints
+(smren/require-pack '(which-key))
+(which-key-mode)
 
 (defun smren/get-project-vterm-buffer ()
   "Return the vterm buffer of current project in buffer list.
@@ -213,10 +213,20 @@ Otherwise return nil"
               pdf-annot-activate-created-annotations t)
 
 (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
-(add-hook 'pdf-view-mode-hook (lambda ()
-                                (pdf-annot-minor-mode 1)
-                                (pdf-isearch-minor-mode 1)))
-(add-hook 'pdf-annot-list-mode-hook 'pdf-annot-list-follow-minor-mode)
+(add-hook 'pdf-view-mode-hook
+          (lambda ()
+            (pdf-annot-minor-mode 1)
+            (pdf-isearch-minor-mode 1)
+            (set (make-local-variable 'evil-normal-state-cursor) (list nil))))
+
+;; (add-hook 'pdf-view-mode-hook (lambda ()
+;;                                 (pdf-annot-minor-mode 1)
+;;                                 (pdf-isearch-minor-mode 1)
+;;                                 (set (make-local-variable
+;;                                       'evil-evilified-state-cursor)
+;;                                      (list nil))
+;;                                 (set (make-local-variable 'evil-emacs-state-cursor) (list nil))))
+;; (add-hook 'pdf-annot-list-mode-hook 'pdf-annot-list-follow-minor-mode)
 (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
 
 ;;; package-settings.el ends here

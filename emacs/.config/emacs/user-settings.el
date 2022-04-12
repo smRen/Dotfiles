@@ -27,7 +27,7 @@
 ;; Emoji
 (set-fontset-font t 'symbol "Noto Color Emoji")
 
-(let ((font-size 13) ;; Default font size of 13
+(let ((font-size 12) ;; Default font size of 13
       (height (display-pixel-height))
       (width (display-pixel-width)))
   (if (and (>= height 1440) (>= width 2560))
@@ -93,5 +93,8 @@
 (setq c-basic-offset 4
       js-indent-level 2
       css-indent-offset 2)
+
+;; Set .m files to matlab mode
+(add-to-list 'auto-mode-alist '("\\.m" . matlab-mode))
 
 ;;; user_settings.el ends here
