@@ -141,7 +141,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [[ "$HOSTNAME" = 'kubuntu' ]]; then
+if [[ "$HOSTNAME" = kubuntu* ]] || [[ "$HOSTNAME" = debian* ]]; then
     . /usr/share/doc/fzf/examples/key-bindings.bash
     . /usr/share/doc/fzf/examples/completion.bash
 else
