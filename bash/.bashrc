@@ -108,14 +108,11 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 
 # Emacs aliases
-alias e="emacs -nw"
-alias ec="emacsclient -nw"
+alias e='TERM="xterm-direct" emacs -nw'
+alias ec='TERM="xterm-direct" emacsclient -nw'
+alias sudoedit='TERM=xterm-direct sudoedit'
 export EDITOR="emacsclient -nw"
 export VISUAL=$EDITOR
-
-if [[ "$HOSTNAME" = kubuntu* ]]; then
-    alias tmux="/snap/bin/tmux-non-dead.tmux"
-fi
 
 # Some environment variables that shouldve been default
 export MOZ_USE_XINPUT2=1 # smooth trackpad scrolling firefox
@@ -143,7 +140,6 @@ fi
 
 if [[ "$HOSTNAME" = kubuntu* ]] || [[ "$HOSTNAME" = debian* ]]; then
     . /usr/share/doc/fzf/examples/key-bindings.bash
-    . /usr/share/doc/fzf/examples/completion.bash
 else
     . /usr/share/fzf/key-bindings.bash
     . /usr/share/fzf/completion.bash
