@@ -1,18 +1,18 @@
 swipe:
   4:
     right: 
-      sendkey: "LEFTMETA+h"
+      sendkey: "LEFTMETA+LEFTCTRL+LEFT"
     left: 
-      sendkey: "LEFTMETA+j"
+      sendkey: "LEFTMETA+LEFTCTRL+RIGHT"
     up:
-      sendkey: "LEFTMETA+TAB"
+      sendkey: "LEFTCTRL+F8"
   3:
     left:
       sendkey: "LEFTALT+RIGHT"
     right:
       sendkey: "LEFTALT+LEFT"
     up:
-      sendkey: "LEFTMETA+TAB"
+      sendkey: "LEFTCTRL+F9"
 
 threshold:
   swipe: 0.2
