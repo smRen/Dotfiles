@@ -111,8 +111,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias e='TERM="xterm-direct" emacs -nw'
 alias ec='TERM="xterm-direct" emacsclient -nw'
 alias sudoedit='TERM=xterm-direct sudoedit'
-export EDITOR="emacsclient -nw"
-export VISUAL=$EDITOR
 
 # Some environment variables that shouldve been default
 export MOZ_USE_XINPUT2=1 # smooth trackpad scrolling firefox
@@ -140,10 +138,13 @@ fi
 
 if [[ "$HOSTNAME" = kubuntu* ]] || [[ "$HOSTNAME" = debian* ]]; then
     . /usr/share/doc/fzf/examples/key-bindings.bash
+    export EDITOR="/snap/emacs/current/usr/bin/emacsclient -nw"
 else
     . /usr/share/fzf/key-bindings.bash
     . /usr/share/fzf/completion.bash
+    export EDITOR="/usr/bin/emacsclient -nw"
 fi
+export VISUAL=$EDITOR
 
 
 # Emacs Vterm settings
