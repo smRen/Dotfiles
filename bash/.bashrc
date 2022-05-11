@@ -131,12 +131,7 @@ alias sudoedit='TERM=xterm-direct sudoedit'
 export MOZ_USE_XINPUT2=1 # smooth trackpad scrolling firefox
 export MOZ_DISABLE_RDD_SANDBOX=1 # needed for gpu decode of videos on firefox. Disable later
 
-# if tmux is executable, X is running, and not inside a tmux session, then try to attach.
-# if attachment fails, start a new session
-if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "$INSIDE_EMACS" ]; then
-    [ -z "${TMUX}" ] && { tmux attach || tmux; } >/dev/null 2>&1
-fi
-
+[[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 
 if [ -f /usr/share/fzf/key-bindings.bash ] && [ -f /usr/share/fzf/completion.bash ]; then
   . /usr/share/fzf/key-bindings.bash
