@@ -13,6 +13,9 @@ emacs/.config/emacs/*
 !emacs/.config/emacs/user-settings.el
 !emacs/.config/emacs/install.el
 
+# Mpv
+mpv/.config/mpv/shaders
+
 # User systemd
 systemd/.config/systemd/user/*
 !systemd/.config/systemd/user/emacs.service
