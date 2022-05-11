@@ -16,8 +16,12 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# set PATH to include local bin
-PATH="/usr/local/bin/:$PATH"
+if [ -d "/var/lib/flatpak/exports/bin" ] ; then
+    PATH="/var/lib/flatpak/exports/bin:$PATH"
+fi
+
+# # set PATH to include local bin
+# PATH="/usr/local/bin/:$PATH"
 
 # pyenv bin
 if [ -d "$HOME/.pyenv/bin" ] ; then
