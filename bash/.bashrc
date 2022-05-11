@@ -106,15 +106,44 @@ alias l='ls -CF'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-
 # Emacs aliases
+#if [ ! -f /run/.containerenv ]; then
+#    alias e='TERM="xterm-direct" distrobox-enter archlocal -- " emacs -nw"'
+#    alias ec='TERM="xterm-direct" distrobox-enter archlocal -- " emacsclient -nw"'
+#else
+#    alias e='TERM="xterm-direct" emacs -nw'
+#    alias ec='TERM="xterm-direct" emacsclient -nw'
+#    export EDITOR='TERM="xterm-direct" /usr/sbin/emacsclient -nw'
+#fi
+alias mpv='io.mpv.Mpv'
 alias e='TERM="xterm-direct" emacs -nw'
 alias ec='TERM="xterm-direct" emacsclient -nw'
+
+# if [ ! -f /run/.containerenv ]; then
+#     export EDITOR="vim"
+# else
+# fi
+export EDITOR="emacsclient -nw"
+export VISUAL=$EDITOR
 alias sudoedit='TERM=xterm-direct sudoedit'
 
 # Some environment variables that shouldve been default
 export MOZ_USE_XINPUT2=1 # smooth trackpad scrolling firefox
 export MOZ_DISABLE_RDD_SANDBOX=1 # needed for gpu decode of videos on firefox. Disable later
+
+# if tmux is executable, X is running, and not inside a tmux session, then try to attach.
+# if attachment fails, start a new session
+if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "$INSIDE_EMACS" ]; then
+    [ -z "${TMUX}" ] && { tmux attach || tmux; } >/dev/null 2>&1
+fi
+
+
+if [ -f /usr/share/fzf/key-bindings.bash ] && [ -f /usr/share/fzf/completion.bash ]; then
+  . /usr/share/fzf/key-bindings.bash
+  . /usr/share/fzf/completion.bash
+elif [ -f /usr/share/doc/fzf/examples/key-bindings.bash ]; then
+  . /usr/share/doc/fzf/examples/key-bindings.bash
+fi
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -136,16 +165,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [[ "$HOSTNAME" = kubuntu* ]] || [[ "$HOSTNAME" = debian* ]]; then
-    . /usr/share/doc/fzf/examples/key-bindings.bash
-    export EDITOR="/snap/emacs/current/usr/bin/emacsclient -nw"
-else
-    . /usr/share/fzf/key-bindings.bash
-    . /usr/share/fzf/completion.bash
-    export EDITOR="/usr/bin/emacsclient -nw"
-fi
-export VISUAL=$EDITOR
-
 
 # Emacs Vterm settings
 vterm_printf(){
@@ -165,12 +184,10 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
         vterm_printf "51;Evterm-clear-scrollback";
         tput clear;
     }
-else
-    powerline-daemon -q
-    POWERLINE_BASH_CONTINUATION=1
-    POWERLINE_BASH_SELECT=1
-    . /usr/share/powerline/bindings/bash/powerline.sh
+    export TERM='xterm-direct'
 fi
+
+
 
 vterm_prompt_end(){
     vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
