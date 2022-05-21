@@ -58,6 +58,9 @@
 ;; Make maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+;; Make manual mode fill current screen and go to that buffer
+(setq Man-notify-method 'pushy)
+
 ;; Scroll
 (setq scroll-conservatively 101)
 
