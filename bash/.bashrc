@@ -2,7 +2,7 @@
 
 setup_emacs_vterm() {
   if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-    function clear() {
+    clear() {
       vterm_printf "51;Evterm-clear-scrollback"
       tput clear
     }
@@ -39,28 +39,21 @@ setup_emacs_vterm() {
 
 setup_fzf() {
   # Fancy history search
-  local FZF_KEYBINDING_BASH="/usr/share/fzf/key-bindings.bash"
+  if [ "$HOSTNAME" = "archlocal.debianthinkpad" ]; then
+    local FZF_KEYBINDING_BASH="/usr/share/fzf/key-bindings.bash"
+    local FZF_COMPLETION_BASH="/usr/share/fzf/completion.bash"
+  elif [ "$HOSTNAME" = "debianthinkpad" ]; then
+    local FZF_KEYBINDING_BASH="/usr/share/doc/fzf/examples/completion.bash"
+    local FZF_COMPLETION_BASH="/usr/share/doc/fzf/examples/key-bindings.bash"
+  fi
+
   [ -r "$FZF_KEYBINDING_BASH" ] && . "$FZF_KEYBINDING_BASH"
 
-  local FZF_COMPLETION_BASH="/usr/share/fzf/completion.bash"
   [ -r "$FZF_COMPLETION_BASH" ] && . "$FZF_COMPLETION_BASH"
 }
 
-setup_powerline() {
-  # Fancy status
-  local POWERLINE_DAEMON="/usr/bin/powerline-daemon"
-  local POWERLINE_BASH_BINDING="/usr/share/powerline/bindings/bash/powerline.sh"
-
-  if [ -x "$POWERLINE_DAEMON" ] && [ "$INSIDE_EMACS" != 'vterm' ]; then
-    powerline-daemon -q
-    POWERLINE_BASH_CONTINUATION=1
-    POWERLINE_BASH_SELECT=1
-    . "$POWERLINE_BASH_BINDING"
-  fi
-}
-
 setup_git() {
-  local GIT_COMPLETION_BASH="usr/share/git/completion/git-completion.bash"
+  local GIT_COMPLETION_BASH="/usr/share/git/completion/git-completion.bash"
   [ -r "$GIT_COMPLETION_BASH" ] && . "$GIT_COMPLETION_BASH"
 }
 
@@ -75,10 +68,25 @@ setup_aliases() {
 setup_options() {
   HISTCONTROL=ignoreboth
   HISTSIZE=10000
-  HISTFILESIZE=2000
+  HISTFILESIZE=5000
+  HISTFILE=~/.history
 
   local OPTIONS=("histappend" "checkwinsize" "extglob" "globstar")
   shopt -s "${OPTIONS[@]}"
+}
+
+setup_prompt() {
+  local BLACK=$(tput setaf 0)
+  local RED=$(tput setaf 1)
+  local GREEN=$(tput setaf 2)
+  local YELLOW=$(tput setaf 3)
+  local BLUE=$(tput setaf 4)
+  local MAGENTA=$(tput setaf 5)
+  local CYAN=$(tput setaf 6)
+  local WHITE=$(tput setaf 7)
+  local RESET=$(tput sgr0)
+  local BOLD=$(tput bold)
+  export PS1="${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} \$ ${CYAN}\W ${RESET}"
 }
 
 main() {
@@ -89,13 +97,12 @@ main() {
     cd "$HOME" || return
   fi
 
-  if [ "$HOSTNAME" = "debianthinkpad" ] || [ "$HOSTNAME" = "archlocal.debianthinkpad" ]; then
-    setup_aliases
-    setup_options
-    setup_powerline
-    setup_fzf
-    setup_emacs_vterm
-  fi
+  setup_aliases
+  setup_options
+  setup_fzf
+  setup_emacs_vterm
+  setup_git
+  setup_prompt
 }
 
 main
