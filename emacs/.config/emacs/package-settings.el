@@ -59,7 +59,7 @@
                                       ("JavaScript" prettier)
                                       ("Shell" (shfmt "-i" "2")))
               format-all-show-errors 'warning)
-(define-key prog-mode-map (kbd "C-c =") #'format-all-buffer)
+;; (define-key prog-mode-map (kbd "C-c =") #'format-all-buffer)
 
 ;; Smartparens
 (smren/require-pack '(smartparens smartparens-config))
@@ -195,6 +195,7 @@ Otherwise return nil"
     (define-key map (kbd "u") 'smren/run-make-run-in-project)
     (define-key map (kbd "k") 'smren/run-make-clean-in-project)
     (define-key map (kbd "&") 'smren/run-custom-command-in-project)
+    (define-key map (kbd "=") 'format-all-buffer)
     map)
   "Make related bindings")
 

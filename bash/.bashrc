@@ -55,6 +55,8 @@ setup_fzf() {
 setup_git() {
   local GIT_COMPLETION_BASH="/usr/share/git/completion/git-completion.bash"
   [ -r "$GIT_COMPLETION_BASH" ] && . "$GIT_COMPLETION_BASH"
+  local GIT_PROMPT="/usr/share/git/completion/git-prompt.sh"
+  [ -r "$GIT_PROMPT" ] && . "$GIT_PROMPT"
 }
 
 setup_aliases() {
@@ -86,7 +88,7 @@ setup_prompt() {
   local WHITE=$(tput setaf 7)
   local RESET=$(tput sgr0)
   local BOLD=$(tput bold)
-  export PS1="${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} \$ ${CYAN}\W ${RESET}"
+  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\W ${RESET}$(__git_ps1 ' (%s)')] \$ "
 }
 
 main() {
