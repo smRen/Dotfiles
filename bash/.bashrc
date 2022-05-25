@@ -25,7 +25,7 @@ setup_emacs_vterm() {
   }
 
   vterm_prompt_end() {
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+    vterm_printf "51;A$(whoami)@$HOSTNAME:$(pwd)"
   }
 
   vterm_cmd() {
