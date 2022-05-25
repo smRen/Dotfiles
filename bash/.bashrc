@@ -98,10 +98,7 @@ setup_prompt() {
   CYAN="\[$(tput setaf 6)\]"
   RESET="\[$(tput sgr0)\]"
   BOLD="\[$(tput bold)\]"
-  export GIT_PS1_SHOWDIRTYSTATE=1
-  export GIT_PS1_SHOWUNTRACKEDFILES=1
-  export GIT_PS1_SHOWCOLORHINTS=1
-  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}] $(__git_ps1 "( %s)") \$ "
+  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}] $(__git_ps1 "(git:%s)") \$ "
 }
 
 main() {
