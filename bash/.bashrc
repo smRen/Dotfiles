@@ -78,17 +78,18 @@ setup_options() {
 }
 
 setup_prompt() {
-  local BLACK=$(tput setaf 0)
-  local RED=$(tput setaf 1)
-  local GREEN=$(tput setaf 2)
-  local YELLOW=$(tput setaf 3)
-  local BLUE=$(tput setaf 4)
-  local MAGENTA=$(tput setaf 5)
-  local CYAN=$(tput setaf 6)
-  local WHITE=$(tput setaf 7)
-  local RESET=$(tput sgr0)
-  local BOLD=$(tput bold)
-  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\W ${RESET}$(__git_ps1 ' (%s)')] \$ "
+  local BLACK="\[$(tput setaf 0)\]"
+  local RED="\[$(tput setaf 1)\]"
+  local GREEN="\[$(tput setaf 2)\]"
+  local YELLOW="\[$(tput setaf 3)\]"
+  local BLUE="\[$(tput setaf 4)\]"
+  local MAGENTA="\[$(tput setaf 5)\]"
+  local CYAN="\[$(tput setaf 6)\]"
+  local WHITE="\[$(tput setaf 7)\]"
+  local RESET="\[$(tput sgr0)\]"
+  local BOLD="\[$(tput bold)\]"
+  local GIT_PROMPT='\[$(__git_ps1 " (%s)")\]'
+  export PS1="[$GREEN$BOLD\u$BLUE@$RED$BOLD\h$RESET $CYAN\w$RESET]$GIT_PROMPT \$ "
 }
 
 main() {
