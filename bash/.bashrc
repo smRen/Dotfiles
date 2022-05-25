@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Disable annoying sourcing warning
-# shellcheck disable=SC1090
+# Disable annoying sourcing warnings, having to declare, and unused variables
+# shellcheck disable=SC1090,SC2155,SC2034
 
 setup_emacs_vterm() {
   if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
@@ -88,29 +88,25 @@ setup_options() {
 }
 
 setup_prompt() {
-  local RED GREEN BLUE CYAN RESET PROMPT_STRING
-  #local BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE RESET BOLD
-  #BLACK="\[$(tput setaf 0)\]"
-  #YELLOW="\[$(tput setaf 3)\]"
-  #MAGENTA="\[$(tput setaf 5)\]"
-  #WHITE="\[$(tput setaf 7)\]"
+  BLACK="\[$(tput setaf 0)\]"
+  YELLOW="\[$(tput setaf 3)\]"
+  MAGENTA="\[$(tput setaf 5)\]"
+  WHITE="\[$(tput setaf 7)\]"
   RED="\[$(tput setaf 1)\]"
   GREEN="\[$(tput setaf 2)\]"
   BLUE="\[$(tput setaf 4)\]"
   CYAN="\[$(tput setaf 6)\]"
   RESET="\[$(tput sgr0)\]"
   BOLD="\[$(tput bold)\]"
-  PROMPT_STRING="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]$(__git_ps1) \$ "
-  export PS1=$PROMPT_STRING
+  export GIT_PS1_SHOWDIRTYSTATE=1
+  export GIT_PS1_SHOWUNTRACKEDFILES=1
+  export GIT_PS1_SHOWCOLORHINTS=1
+  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}] $(__git_ps1 "( %s)") \$ "
 }
 
 main() {
   # If not running interactively, don't do anything
   [[ $- != *i* ]] && return
-
-  if [ "$HOSTNAME" = "archlocal.debianthinkpad" ]; then
-    cd "$HOME" || return
-  fi
 
   setup_aliases
   setup_options
