@@ -88,8 +88,8 @@ setup_prompt() {
   local WHITE="\[$(tput setaf 7)\]"
   local RESET="\[$(tput sgr0)\]"
   local BOLD="\[$(tput bold)\]"
-  local GIT_PROMPT='\[$(__git_ps1 " (%s)")\]'
-  export PS1="[$GREEN$BOLD\u$BLUE@$RED$BOLD\h$RESET $CYAN\w$RESET]$GIT_PROMPT \$ "
+  local GIT_PROMPT='$(__git_ps1 " (%s)")'
+  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]${GIT_PROMPT} \$ "
 }
 
 main() {
