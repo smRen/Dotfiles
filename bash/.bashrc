@@ -42,7 +42,7 @@ setup_emacs_vterm() {
 
 setup_fzf() {
   # Fancy history search
-  if [ "$HOSTNAME" = "archlocal.debianthinkpad" ]; then
+  if [ "$HOSTNAME" = "archapps.debianthinkpad" ]; then
     local FZF_KEYBINDING_BASH="/usr/share/fzf/key-bindings.bash"
     local FZF_COMPLETION_BASH="/usr/share/fzf/completion.bash"
   elif [ "$HOSTNAME" = "debianthinkpad" ]; then
@@ -106,7 +106,7 @@ main() {
   [[ $- != *i* ]] && return
 
   if [ "$HOSTNAME" = 'archapps.debianthinkpad' ] && [ "$INSIDE_EMACS" != 'vterm' ]; then
-      cd "$HOME" || return
+    cd "$HOME" || return
   fi
 
   setup_aliases
