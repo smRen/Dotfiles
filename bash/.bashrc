@@ -68,13 +68,13 @@ setup_aliases() {
   [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
 
   if [ "$TERM" = "konsole-direct" ]; then
-    local EMACS_TERM="konsole-direct"
+    local EMACS_TERM="TERM=konsole-direct"
   else
-    local EMACS_TERM="xterm-direct"
+    local EMACS_TERM="TERM=xterm-direct"
   fi
 
-  alias e='$EMACS_TERM emacs -nw'
-  alias ec='$EMACS_TERM emacsclient -nw'
+  alias e="$EMACS_TERM emacs -nw"
+  alias ec="$EMACS_TERM emacsclient -nw"
 }
 
 setup_options() {
@@ -98,7 +98,7 @@ setup_prompt() {
   CYAN="\[$(tput setaf 6)\]"
   RESET="\[$(tput sgr0)\]"
   BOLD="\[$(tput bold)\]"
-  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]$(__git_ps1 "(git:%s)") \$ "
+  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}] \$(__git_ps1 \"(git:%s)\") \$ "
 }
 
 main() {
