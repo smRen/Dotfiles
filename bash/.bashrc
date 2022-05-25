@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Disable annoying sourcing warning
+# shellcheck disable=SC1090
+
 setup_emacs_vterm() {
   if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
     clear() {
@@ -63,8 +66,15 @@ setup_aliases() {
   alias ls='ls --color=auto'
   alias grep='grep --color=auto'
   [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
-  alias e='TERM=xterm-direct emacs -nw'
-  alias ec='TERM=xterm-direct emacsclient -nw'
+
+  if [ "$TERM" = "konsole-direct" ]; then
+    local EMACS_TERM="konsole-direct"
+  else
+    local EMACS_TERM="xterm-direct"
+  fi
+
+  alias e='$EMACS_TERM emacs -nw'
+  alias ec='$EMACS_TERM emacsclient -nw'
 }
 
 setup_options() {
@@ -78,18 +88,20 @@ setup_options() {
 }
 
 setup_prompt() {
-  local BLACK="\[$(tput setaf 0)\]"
-  local RED="\[$(tput setaf 1)\]"
-  local GREEN="\[$(tput setaf 2)\]"
-  local YELLOW="\[$(tput setaf 3)\]"
-  local BLUE="\[$(tput setaf 4)\]"
-  local MAGENTA="\[$(tput setaf 5)\]"
-  local CYAN="\[$(tput setaf 6)\]"
-  local WHITE="\[$(tput setaf 7)\]"
-  local RESET="\[$(tput sgr0)\]"
-  local BOLD="\[$(tput bold)\]"
-  local GIT_PROMPT='$(__git_ps1 " (%s)")'
-  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]${GIT_PROMPT} \$ "
+  local RED GREEN BLUE CYAN RESET PROMPT_STRING
+  #local BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE RESET BOLD
+  #BLACK="\[$(tput setaf 0)\]"
+  #YELLOW="\[$(tput setaf 3)\]"
+  #MAGENTA="\[$(tput setaf 5)\]"
+  #WHITE="\[$(tput setaf 7)\]"
+  RED="\[$(tput setaf 1)\]"
+  GREEN="\[$(tput setaf 2)\]"
+  BLUE="\[$(tput setaf 4)\]"
+  CYAN="\[$(tput setaf 6)\]"
+  RESET="\[$(tput sgr0)\]"
+  BOLD="\[$(tput bold)\]"
+  PROMPT_STRING="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]$(__git_ps1) \$ "
+  export PS1=$PROMPT_STRING
 }
 
 main() {
