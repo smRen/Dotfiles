@@ -105,6 +105,10 @@ main() {
   # If not running interactively, don't do anything
   [[ $- != *i* ]] && return
 
+  if [ "$HOSTNAME" = 'archapps.debianthinkpad' ] && [ "$INSIDE_EMACS" != 'vterm' ]; then
+      cd "$HOME" || return
+  fi
+
   setup_aliases
   setup_options
   setup_fzf
