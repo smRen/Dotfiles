@@ -98,7 +98,7 @@ setup_prompt() {
   CYAN="\[$(tput setaf 6)\]"
   RESET="\[$(tput sgr0)\]"
   BOLD="\[$(tput bold)\]"
-  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}] $(__git_ps1 "(git:%s)") \$ "
+  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]$(__git_ps1 "(git:%s)") \$ "
 }
 
 main() {
