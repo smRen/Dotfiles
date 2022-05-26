@@ -42,30 +42,30 @@ setup_emacs_vterm() {
 
 setup_fzf() {
   # Fancy history search
-  if [ "$HOSTNAME" = "archapps.debianthinkpad" ]; then
+  if [[ "$HOSTNAME" == *"arch"* ]]; then
     local FZF_KEYBINDING_BASH="/usr/share/fzf/key-bindings.bash"
     local FZF_COMPLETION_BASH="/usr/share/fzf/completion.bash"
-  elif [ "$HOSTNAME" = "debianthinkpad" ]; then
+  elif [[ "$HOSTNAME" == "debianthinkpad" ]]; then
     local FZF_KEYBINDING_BASH="/usr/share/doc/fzf/examples/completion.bash"
     local FZF_COMPLETION_BASH="/usr/share/doc/fzf/examples/key-bindings.bash"
   fi
 
-  [ -r "$FZF_KEYBINDING_BASH" ] && . "$FZF_KEYBINDING_BASH"
+  [[ -r "$FZF_KEYBINDING_BASH" ]] && . "$FZF_KEYBINDING_BASH"
 
-  [ -r "$FZF_COMPLETION_BASH" ] && . "$FZF_COMPLETION_BASH"
+  [[ -r "$FZF_COMPLETION_BASH" ]] && . "$FZF_COMPLETION_BASH"
 }
 
 setup_git() {
   local GIT_COMPLETION_BASH="/usr/share/git/completion/git-completion.bash"
-  [ -r "$GIT_COMPLETION_BASH" ] && . "$GIT_COMPLETION_BASH"
+  [[ -r "$GIT_COMPLETION_BASH" ]] && . "$GIT_COMPLETION_BASH"
   local GIT_PROMPT="/usr/share/git/completion/git-prompt.sh"
-  [ -r "$GIT_PROMPT" ] && . "$GIT_PROMPT"
+  [[ -r "$GIT_PROMPT" ]] && . "$GIT_PROMPT"
 }
 
 setup_aliases() {
   alias ls='ls --color=auto'
   alias grep='grep --color=auto'
-  [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
+  [[ "$TERM" == 'xterm-kitty' ]] && alias ssh='kitty +kitten ssh'
 
   # if [ "$TERM" = "konsole-direct" ]; then
   #   local EMACS_TERM='TERM=konsole-direct'
@@ -73,8 +73,8 @@ setup_aliases() {
   #   local EMACS_TERM='TERM=xterm-direct'
   # fi
 
-  alias e="emacs -nw"
-  alias ec="emacsclient -nw"
+  alias e='emacs -nw'
+  alias ec='emacsclient -nw'
 }
 
 setup_options() {
@@ -105,7 +105,7 @@ main() {
   # If not running interactively, don't do anything
   [[ $- != *i* ]] && return
 
-  if [ "$HOSTNAME" = 'archapps.debianthinkpad' ] && [ "$INSIDE_EMACS" != 'vterm' ]; then
+  if [[ "$HOSTNAME" == 'archapps.debianthinkpad' ]] && [[ "$INSIDE_EMACS" != 'vterm' ]]; then
     cd "$HOME" || return
   fi
 
