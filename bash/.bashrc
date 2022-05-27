@@ -45,7 +45,7 @@ setup_fzf() {
   if [[ "$HOSTNAME" == *"arch"* ]]; then
     local FZF_KEYBINDING_BASH="/usr/share/fzf/key-bindings.bash"
     local FZF_COMPLETION_BASH="/usr/share/fzf/completion.bash"
-  elif [[ "$HOSTNAME" == "debianthinkpad" ]]; then
+  else
     local FZF_KEYBINDING_BASH="/usr/share/doc/fzf/examples/completion.bash"
     local FZF_COMPLETION_BASH="/usr/share/doc/fzf/examples/key-bindings.bash"
   fi
@@ -58,17 +58,20 @@ setup_fzf() {
 setup_git() {
   local GIT_COMPLETION_BASH="/usr/share/git/completion/git-completion.bash"
   [[ -r "$GIT_COMPLETION_BASH" ]] && . "$GIT_COMPLETION_BASH"
-  local GIT_PROMPT="/usr/share/git/completion/git-prompt.sh"
+  local GIT_PROMPT="$HOME/Scripts/git-prompt.sh"
   [[ -r "$GIT_PROMPT" ]] && . "$GIT_PROMPT"
 }
 
-setup_aliases() {
+setup_aliases_and_editors() {
   alias ls='ls --color=auto'
   alias grep='grep --color=auto'
   [[ "$TERM" == 'xterm-kitty' ]] && alias ssh='kitty +kitten ssh'
 
   alias e='emacs -nw'
   alias ec='emacsclient -nw'
+  alias nvim='io.neovim.nvim'
+  export EDITOR="$(type -P io.neovim.nvim)"
+  export VISUAL="$EDITOR"
 }
 
 setup_options() {
@@ -92,7 +95,10 @@ setup_prompt() {
   CYAN="\[$(tput setaf 6)\]"
   RESET="\[$(tput sgr0)\]"
   BOLD="\[$(tput bold)\]"
-  export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]\$(__git_ps1 \" (git:%s)\") \$ "
+  GIT_PS1_SHOWDIRTYSTATE=1
+  GIT_PS1_SHOWCOLORHINTS=1
+  #export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]\$(__git_ps1 \" (git:%s)\") \$ "
+  export PROMPT_COMMAND='__git_ps1 "[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]" "\$ " " (${MAGENTA}${BOLD}git:%s${RESET}) "'
 }
 
 main() {
@@ -103,7 +109,7 @@ main() {
     cd "$HOME" || return
   fi
 
-  setup_aliases
+  setup_aliases_and_editors
   setup_options
   setup_fzf
   setup_emacs_vterm
