@@ -67,12 +67,6 @@ setup_aliases() {
   alias grep='grep --color=auto'
   [[ "$TERM" == 'xterm-kitty' ]] && alias ssh='kitty +kitten ssh'
 
-  # if [ "$TERM" = "konsole-direct" ]; then
-  #   local EMACS_TERM='TERM=konsole-direct'
-  # else
-  #   local EMACS_TERM='TERM=xterm-direct'
-  # fi
-
   alias e='emacs -nw'
   alias ec='emacsclient -nw'
 }
