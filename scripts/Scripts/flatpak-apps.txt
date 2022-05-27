@@ -10,6 +10,7 @@ com.moonlight_stream.Moonlight
 com.slack.Slack
 com.valvesoftware.Steam
 io.mpv.Mpv
+io.neovim.nvim
 org.chromium.Chromium
 org.darktable.Darktable
 org.fedoraproject.MediaWriter
@@ -26,5 +27,6 @@ org.octave.Octave
 org.raspberrypi.rpi-imager
 org.remmina.Remmina
 org.videolan.VLC
+org.vim.Vim
 tv.kodi.Kodi
 us.zoom.Zoom
