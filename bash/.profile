@@ -12,12 +12,16 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
+if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-if [ -d "/var/lib/flatpak/exports/bin" ] ; then
+if [ -d "/var/lib/flatpak/exports/bin" ]; then
     PATH="/var/lib/flatpak/exports/bin:$PATH"
+fi
+
+if [ -d "/home/smakey18/.local/share/flatpak/exports/bin" ]; then
+    PATH="$HOME/.local/share/flatpak/exports/bin:$PATH"
 fi
 
 # # set PATH to include local bin
