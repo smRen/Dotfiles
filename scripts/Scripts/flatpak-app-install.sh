@@ -7,10 +7,10 @@ main() {
           return 1
   fi
 
-  sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
   for APP in $FLATPAK_APPS; do
-      sudo flatpak install "$APP" --assumeyes
+      flatpak --user install "$APP" --assumeyes
   done
 
   return 0
