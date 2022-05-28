@@ -21,7 +21,7 @@ Plug 'tpope/vim-commentary'
 Plug 'honza/vim-snippets'
 
 "" Vertical Line indentation
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 
 "" Highlight same objects/words
 Plug 'RRethy/vim-illuminate'
@@ -68,10 +68,10 @@ colorscheme challenger_deep
 " set background=dark
 
 "" IndentLine stuff
-let g:indentLine_char = '┆'
-let g:indentLine_first_char = '┆'
-let g:indentLine_showFirstIndentLevel = 1
-let g:indentLine_setColors = 0
+" let g:indentLine_char = '┆'
+" let g:indentLine_first_char = '┆'
+" let g:indentLine_showFirstIndentLevel = 1
+" let g:indentLine_setColors = 0
 
 "" General Config
 " let g:python3_host_prog = "/home/smakey18/.pyenv/versions/neovim/bin/python" 
@@ -85,8 +85,8 @@ set lazyredraw
 set smarttab                                " set tabs for a shifttabs logic    
 set expandtab                               " expand tabs into spaces    
 set autoindent                              " indent when moving to the next line while writing code
-set cursorline                              " shows line under the cursor's line
-hi clear CursorLine
+"set cursorline                              " shows line under the cursor's line
+"hi clear CursorLine
 "hi CursorLine gui=underline cterm=underline
 hi link illuminatedWord Visual
 set showmatch                               " shows matching part of bracket pairs (), [], {}
