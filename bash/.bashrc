@@ -65,13 +65,22 @@ setup_git() {
 setup_aliases_and_editors() {
   alias ls='ls --color=auto'
   alias grep='grep --color=auto'
+  alias diff='diff --color=auto'
   [[ "$TERM" == 'xterm-kitty' ]] && alias ssh='kitty +kitten ssh'
 
   # Flatpak setup for editors
-  alias e='TERM=xterm-direct emacs -nw'
-  alias ec='TERM=xterm-direct emacsclient -t'
   alias vim='flatpak run --env=TERM=xterm-256color org.vim.Vim'
-  export EDITOR='TERM=xterm-direct emacsclient -t'
+  alias nvim='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
+
+  # Inside a container
+  if [[ -f "/run/.containerenv" ]]; then
+    alias e='TERM=xterm-direct emacs -nw'
+    alias ec='TERM=xterm-direct emacsclient -t'
+    export EDITOR='TERM=xterm-direct emacsclient -t'
+  else
+    export EDITOR='TERM=xterm-direct emacsclient -t'
+  fi
+
   export VISUAL="$EDITOR"
 }
 
@@ -112,7 +121,6 @@ main() {
       . /etc/bash_completion
     fi
   fi
-
 
   if [[ "$HOSTNAME" =~ archapps.* ]] && [[ "$INSIDE_EMACS" != 'vterm' ]]; then
     cd "$HOME" || return
