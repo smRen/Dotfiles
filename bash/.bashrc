@@ -43,23 +43,23 @@ setup_emacs_vterm() {
 setup_fzf() {
   # Fancy history search
   if [[ "$HOSTNAME" == *"arch"* ]]; then
-    local FZF_KEYBINDING_BASH="/usr/share/fzf/key-bindings.bash"
-    local FZF_COMPLETION_BASH="/usr/share/fzf/completion.bash"
+    local fzf_keybinding_bash="/usr/share/fzf/key-bindings.bash"
+    local fzf_completion_bash="/usr/share/fzf/completion.bash"
   else
-    local FZF_KEYBINDING_BASH="/usr/share/doc/fzf/examples/completion.bash"
-    local FZF_COMPLETION_BASH="/usr/share/doc/fzf/examples/key-bindings.bash"
+    local fzf_keybinding_bash="/usr/share/doc/fzf/examples/completion.bash"
+    local fzf_completion_bash="/usr/share/doc/fzf/examples/key-bindings.bash"
   fi
 
-  [[ -r "$FZF_KEYBINDING_BASH" ]] && . "$FZF_KEYBINDING_BASH"
+  [[ -r "$fzf_keybinding_bash" ]] && . "$fzf_keybinding_bash"
 
-  [[ -r "$FZF_COMPLETION_BASH" ]] && . "$FZF_COMPLETION_BASH"
+  [[ -r "$fzf_completion_bash" ]] && . "$fzf_completion_bash"
 }
 
 setup_git() {
-  local GIT_COMPLETION_BASH="/usr/share/git/completion/git-completion.bash"
-  [[ -r "$GIT_COMPLETION_BASH" ]] && . "$GIT_COMPLETION_BASH"
-  local GIT_PROMPT="$HOME/Scripts/git-prompt.sh"
-  [[ -r "$GIT_PROMPT" ]] && . "$GIT_PROMPT"
+  local git_completion_bash="/usr/share/git/completion/git-completion.bash"
+  [[ -r "$git_completion_bash" ]] && . "$git_completion_bash"
+  local git_prompt="$HOME/Scripts/git-prompt.sh"
+  [[ -r "$git_prompt" ]] && . "$git_prompt"
 }
 
 setup_aliases_and_editors() {
@@ -67,10 +67,11 @@ setup_aliases_and_editors() {
   alias grep='grep --color=auto'
   [[ "$TERM" == 'xterm-kitty' ]] && alias ssh='kitty +kitten ssh'
 
-  alias e='emacs -nw'
-  alias ec='emacsclient -nw'
-  alias nvim='io.neovim.nvim'
-  export EDITOR="$(type -P io.neovim.nvim)"
+  # Flatpak setup for editors
+  alias e="flatpak run org.gnu.emacs -nw"
+  alias ec="flatpak run --command=emacsclient org.gnu.emacs -t"
+  alias nvim="flatpak run io.neovim.nvim"
+  export EDITOR="flatpak run --command=emacsclient org.gnu.emacs -t"
   export VISUAL="$EDITOR"
 }
 
@@ -80,8 +81,8 @@ setup_options() {
   HISTFILESIZE=5000
   HISTFILE=~/.history
 
-  local OPTIONS=("histappend" "checkwinsize" "extglob" "globstar")
-  shopt -s "${OPTIONS[@]}"
+  local bash_options=("histappend" "checkwinsize" "extglob" "globstar")
+  shopt -s "${bash_options[@]}"
 }
 
 setup_prompt() {
