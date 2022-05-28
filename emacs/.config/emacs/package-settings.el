@@ -128,7 +128,6 @@
 (global-set-key (kbd "C-s") #'swiper)
 
 ;; Execute commands in vterm
-(add-to-list 'load-path "~/Projects/emacs-libvterm")
 (smren/require-pack '(vterm))
 
 ;; Keybinding hints
