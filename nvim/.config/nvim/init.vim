@@ -63,8 +63,8 @@ noremap <silent><esc> <esc>:noh<CR><esc>
 "" Theming
 " colorscheme gruvbox
 " colorscheme onedark
-colorscheme ayu
-let ayucolor="dark"
+colorscheme challenger_deep
+"let ayucolor="dark"
 " set background=dark
 
 "" IndentLine stuff
@@ -87,7 +87,7 @@ set expandtab                               " expand tabs into spaces
 set autoindent                              " indent when moving to the next line while writing code
 set cursorline                              " shows line under the cursor's line
 hi clear CursorLine
-hi CursorLine gui=underline cterm=underline
+"hi CursorLine gui=underline cterm=underline
 hi link illuminatedWord Visual
 set showmatch                               " shows matching part of bracket pairs (), [], {}
 "set scrolloff=3                            " let 10 lines before/after cursor during scroll
