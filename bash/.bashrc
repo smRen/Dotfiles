@@ -68,10 +68,10 @@ setup_aliases_and_editors() {
   [[ "$TERM" == 'xterm-kitty' ]] && alias ssh='kitty +kitten ssh'
 
   # Flatpak setup for editors
-  alias e="flatpak run org.gnu.emacs -nw"
-  alias ec="flatpak run --command=emacsclient org.gnu.emacs -t"
-  alias nvim="flatpak run io.neovim.nvim"
-  export EDITOR="flatpak run --command=emacsclient org.gnu.emacs -t"
+  alias e='TERM=xterm-direct emacs -nw'
+  alias ec='TERM=xterm-direct emacsclient -t'
+  alias vim='flatpak run --env=TERM=xterm-256color org.vim.Vim'
+  export EDITOR='TERM=xterm-direct emacsclient -t'
   export VISUAL="$EDITOR"
 }
 
@@ -96,8 +96,8 @@ setup_prompt() {
   CYAN="\[$(tput setaf 6)\]"
   RESET="\[$(tput sgr0)\]"
   BOLD="\[$(tput bold)\]"
-  GIT_PS1_SHOWDIRTYSTATE=1
-  GIT_PS1_SHOWCOLORHINTS=1
+  export GIT_PS1_SHOWDIRTYSTATE=1
+  export GIT_PS1_SHOWCOLORHINTS=1
   export PROMPT_COMMAND='__git_ps1 "[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]" "\$ " " (${MAGENTA}${BOLD}git:%s${RESET}) "'
 }
 
