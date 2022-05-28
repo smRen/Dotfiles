@@ -1,4 +1,3 @@
-org.freedesktop.Piper
 cc.arduino.arduinoide
 com.bitwarden.desktop
 com.calibre_ebook.calibre
@@ -11,12 +10,11 @@ com.moonlight_stream.Moonlight
 com.slack.Slack
 com.valvesoftware.Steam
 io.mpv.Mpv
-io.neovim.nvim
 org.chromium.Chromium
 org.darktable.Darktable
 org.fedoraproject.MediaWriter
+org.freedesktop.Piper
 org.gimp.GIMP
-org.gnu.emacs
 org.kde.gwenview
 org.kde.kcalc
 org.kde.kclock
