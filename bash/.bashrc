@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Disable annoying sourcing warnings, having to declare, and unused variables
-# shellcheck disable=SC1090,SC2155,SC2034
+# shellcheck disable=SC1090,SC2155,SC2034,SC1091
 
 setup_emacs_vterm() {
   if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
@@ -97,7 +97,6 @@ setup_prompt() {
   BOLD="\[$(tput bold)\]"
   GIT_PS1_SHOWDIRTYSTATE=1
   GIT_PS1_SHOWCOLORHINTS=1
-  #export PS1="[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]\$(__git_ps1 \" (git:%s)\") \$ "
   export PROMPT_COMMAND='__git_ps1 "[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]" "\$ " " (${MAGENTA}${BOLD}git:%s${RESET}) "'
 }
 
