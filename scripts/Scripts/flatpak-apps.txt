@@ -1,3 +1,4 @@
+org.freedesktop.Piper
 cc.arduino.arduinoide
 com.bitwarden.desktop
 com.calibre_ebook.calibre
