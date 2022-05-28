@@ -56,7 +56,7 @@
 (setq inhibit-startup-screen t)
 
 ;; Make maximized
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Make manual mode fill current screen and go to that buffer
 (setq Man-notify-method 'pushy)
