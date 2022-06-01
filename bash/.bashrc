@@ -71,6 +71,7 @@ setup_aliases_and_editors() {
   # Flatpak setup for editors
   alias vim='flatpak run --env=TERM=xterm-256color org.vim.Vim'
   alias nvim='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
+  alias mpv='flatpak run io.mpv.Mpv'
 
   # Inside a container
   if [[ -f "/run/.containerenv" ]] && [[ "$HOSTNAME"  =~ arch.* ]]; then
