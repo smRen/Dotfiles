@@ -73,12 +73,12 @@ setup_aliases_and_editors() {
   alias nvim='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
 
   # Inside a container
-  if [[ -f "/run/.containerenv" ]]; then
+  if [[ -f "/run/.containerenv" ]] && [[ "$HOSTNAME"  =~ arch.* ]]; then
     alias e='TERM=xterm-direct emacs -nw'
     alias ec='TERM=xterm-direct emacsclient -t'
     export EDITOR='TERM=xterm-direct emacsclient -t'
   else
-    export EDITOR='TERM=xterm-direct emacsclient -t'
+    export EDITOR='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
   fi
 
   export VISUAL="$EDITOR"
