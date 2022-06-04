@@ -66,7 +66,6 @@ setup_aliases_and_editors() {
   alias ls='ls --color=auto'
   alias grep='grep --color=auto'
   alias diff='diff --color=auto'
-  [[ "$TERM" == 'xterm-kitty' ]] && alias ssh='kitty +kitten ssh'
 
   # Flatpak setup for editors
   alias vim='flatpak run --env=TERM=xterm-256color org.vim.Vim'
