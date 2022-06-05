@@ -72,12 +72,13 @@ setup_aliases_and_editors() {
   alias vim='flatpak run --env=TERM=xterm-256color org.vim.Vim'
   alias nvim='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
   alias mpv='flatpak run io.mpv.Mpv'
+  alias sudoedit='TERM=xterm-direct sudoedit'
 
   # Inside a container
-  if [[ -f "/run/.containerenv" ]] && [[ "$HOSTNAME"  =~ arch.* ]]; then
+  if [[ -f "/run/.containerenv" || "$HOSTNAME" == 'archmain' ]]; then
     alias e='TERM=xterm-direct emacs -nw'
     alias ec='TERM=xterm-direct emacsclient -t'
-    export EDITOR='TERM=xterm-direct emacsclient -t'
+    export EDITOR='emacsclient -t'
   else
     export EDITOR='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
   fi
