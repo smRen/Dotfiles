@@ -10,10 +10,10 @@ com.moonlight_stream.Moonlight
 com.slack.Slack
 com.valvesoftware.Steam
 io.mpv.Mpv
+io.neovim.nvim
 org.chromium.Chromium
 org.darktable.Darktable
 org.fedoraproject.MediaWriter
-org.freedesktop.Piper
 org.gimp.GIMP
 org.kde.gwenview
 org.kde.kcalc
