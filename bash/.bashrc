@@ -74,7 +74,7 @@ setup_aliases_and_editors() {
   alias sudoedit='TERM=xterm-direct sudoedit'
 
   # Inside a container
-  if [[ -f "/run/.containerenv" || "$HOSTNAME" == 'archmain' ]]; then
+  if [[ -f "/run/.containerenv" || "$HOSTNAME" =~ ^arch.* ]]; then
     alias e='TERM=xterm-direct emacs -nw'
     alias ec='TERM=xterm-direct emacsclient -t'
     export EDITOR='emacsclient -t'
