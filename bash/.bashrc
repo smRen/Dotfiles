@@ -46,6 +46,7 @@ setup_fzf() {
   local fzf_completion_bash="/usr/share/fzf/completion.bash"
 
   [[ -r "$fzf_completion_bash" ]] && . "$fzf_completion_bash"
+  [[ -r "$fzf_keybinding_bash" ]] && . "$fzf_keybinding_bash"
 }
 
 setup_git() {
