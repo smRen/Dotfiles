@@ -42,15 +42,8 @@ setup_emacs_vterm() {
 
 setup_fzf() {
   # Fancy history search
-  if [[ "$HOSTNAME" == *"arch"* ]]; then
-    local fzf_keybinding_bash="/usr/share/fzf/key-bindings.bash"
-    local fzf_completion_bash="/usr/share/fzf/completion.bash"
-  else
-    local fzf_keybinding_bash="/usr/share/doc/fzf/examples/completion.bash"
-    local fzf_completion_bash="/usr/share/doc/fzf/examples/key-bindings.bash"
-  fi
-
-  [[ -r "$fzf_keybinding_bash" ]] && . "$fzf_keybinding_bash"
+  local fzf_keybinding_bash="/usr/share/fzf/key-bindings.bash"
+  local fzf_completion_bash="/usr/share/fzf/completion.bash"
 
   [[ -r "$fzf_completion_bash" ]] && . "$fzf_completion_bash"
 }
@@ -68,20 +61,13 @@ setup_aliases_and_editors() {
   alias diff='diff --color=auto'
 
   # Flatpak setup for editors
-  alias vim='flatpak run --env=TERM=xterm-256color org.vim.Vim'
-  alias nvim='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
-  alias mpv='flatpak run io.mpv.Mpv'
   alias sudoedit='TERM=xterm-direct sudoedit'
+  
+  # Emacs
+  alias e='TERM=xterm-direct emacs -nw'
+  alias ec='TERM=xterm-direct emacsclient -t'
 
-  # Inside a container
-  if [[ -f "/run/.containerenv" || "$HOSTNAME" =~ ^arch.* ]]; then
-    alias e='TERM=xterm-direct emacs -nw'
-    alias ec='TERM=xterm-direct emacsclient -t'
-    export EDITOR='emacsclient -t'
-  else
-    export EDITOR='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
-  fi
-
+  export EDITOR='emacsclient -t'
   export VISUAL="$EDITOR"
 }
 
@@ -123,7 +109,7 @@ main() {
     fi
   fi
 
-  if [[ "$HOSTNAME" =~ archapps.* ]] && [[ "$INSIDE_EMACS" != 'vterm' ]]; then
+  if [ "$INSIDE_EMACS" != 'vterm' ]; then
     cd "$HOME" || return
   fi
 
