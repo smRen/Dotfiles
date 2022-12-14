@@ -68,7 +68,7 @@ setup_aliases_and_editors() {
   alias diff='diff --color=auto'
 
   # Flatpak setup for editors
-  #alias vim='flatpak run --env=TERM=xterm-256color org.vim.Vim'
+  alias vim='flatpak run --env=TERM=xterm-256color org.vim.Vim'
   alias nvim='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
   alias mpv='flatpak run io.mpv.Mpv'
   alias sudoedit='TERM=xterm-direct sudoedit'
