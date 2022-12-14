@@ -1,167 +1,138 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+#!/usr/bin/env bash
 
-# If not running interactively, don't do anything
-case $- in
-*i*) ;;
-*) return ;;
-esac
+# Disable annoying sourcing warnings, having to declare, and unused variables
+# shellcheck disable=SC1090,SC2155,SC2034,SC1091
 
-
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-
-shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# Extended pattern matching
-shopt -s extglob
-
-# Forward search
-stty -ixon
-
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-
-shopt -s globstar
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-  debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-xterm-color | *-256color) color_prompt=yes ;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-  if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
-    color_prompt=yes
-  else
-    color_prompt=
-  fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm* | rxvt*)
-  PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-  ;;
-*) ;;
-
-esac
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  alias ls='ls --color=auto'
-  #alias dir='dir --color=auto'
-  #alias vdir='vdir --color=auto'
-
-  alias grep='grep --color=auto'
-  alias fgrep='fgrep --color=auto'
-  alias egrep='egrep --color=auto'
-fi
-
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# Emacs
-alias e="TERM=xterm-emacs emacs -nw"
-alias ec="TERM=xterm-emacs emacsclient -nw"
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
-fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
-
-# Emacs Vterm settings
-vterm_printf(){
-    if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
-        # Tell tmux to pass the escape sequences through
-        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-    elif [ "${TERM%%-*}" = "screen" ]; then
-        # GNU screen (screen, screen-256color, screen-256color-bce)
-        printf "\eP\e]%s\007\e\\" "$1"
-    else
-        printf "\e]%s\e\\" "$1"
-    fi
-}
-
-if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-    function clear(){
-        vterm_printf "51;Evterm-clear-scrollback";
-        tput clear;
+setup_emacs_vterm() {
+  if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
+    clear() {
+      vterm_printf "51;Evterm-clear-scrollback"
+      tput clear
     }
-fi
+  fi
 
-vterm_prompt_end(){
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
-}
-PS1=$PS1'\[$(vterm_prompt_end)\]'
+  # Emacs Vterm settings
+  vterm_printf() {
+    if [ -n "$TMUX" ] && { [ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ]; }; then
+      # Tell tmux to pass the escape sequences through
+      printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+    elif [ "${TERM%%-*}" = "screen" ]; then
+      # GNU screen (screen, screen-257color, screen-256color-bce)
+      printf "\eP\e]%s\007\e\\" "$1"
+    else
+      printf "\e]%s\e\\" "$1"
+    fi
+  }
 
-vterm_cmd() {
+  vterm_prompt_end() {
+    vterm_printf "51;A$(whoami)@$HOSTNAME:$(pwd)"
+  }
+
+  vterm_cmd() {
     local vterm_elisp
     vterm_elisp=""
     while [ $# -gt 0 ]; do
-        vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
-        shift
+      vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
+      shift
     done
     vterm_printf "51;E$vterm_elisp"
+  }
+
 }
 
+setup_fzf() {
+  # Fancy history search
+  if [[ "$HOSTNAME" == *"arch"* ]]; then
+    local fzf_keybinding_bash="/usr/share/fzf/key-bindings.bash"
+    local fzf_completion_bash="/usr/share/fzf/completion.bash"
+  else
+    local fzf_keybinding_bash="/usr/share/doc/fzf/examples/completion.bash"
+    local fzf_completion_bash="/usr/share/doc/fzf/examples/key-bindings.bash"
+  fi
+
+  [[ -r "$fzf_keybinding_bash" ]] && . "$fzf_keybinding_bash"
+
+  [[ -r "$fzf_completion_bash" ]] && . "$fzf_completion_bash"
+}
+
+setup_git() {
+  local git_completion_bash="/usr/share/git/completion/git-completion.bash"
+  [[ -r "$git_completion_bash" ]] && . "$git_completion_bash"
+  local git_prompt="$HOME/Scripts/git-prompt.sh"
+  [[ -r "$git_prompt" ]] && . "$git_prompt"
+}
+
+setup_aliases_and_editors() {
+  alias ls='ls --color=auto'
+  alias grep='grep --color=auto'
+  alias diff='diff --color=auto'
+
+  # Flatpak setup for editors
+  alias vim='flatpak run --env=TERM=xterm-256color org.vim.Vim'
+  alias nvim='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
+  alias mpv='flatpak run io.mpv.Mpv'
+  alias sudoedit='TERM=xterm-direct sudoedit'
+
+  # Inside a container
+  if [[ -f "/run/.containerenv" || "$HOSTNAME" =~ ^arch.* ]]; then
+    alias e='TERM=xterm-direct emacs -nw'
+    alias ec='TERM=xterm-direct emacsclient -t'
+    export EDITOR='emacsclient -t'
+  else
+    export EDITOR='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
+  fi
+
+  export VISUAL="$EDITOR"
+}
+
+setup_options() {
+  HISTCONTROL=ignoreboth
+  HISTSIZE=10000
+  HISTFILESIZE=5000
+  HISTFILE=~/.history
+
+  local bash_options=("histappend" "checkwinsize" "extglob" "globstar")
+  shopt -s "${bash_options[@]}"
+}
+
+setup_prompt() {
+  BLACK="\[$(tput setaf 0)\]"
+  YELLOW="\[$(tput setaf 3)\]"
+  MAGENTA="\[$(tput setaf 5)\]"
+  WHITE="\[$(tput setaf 7)\]"
+  RED="\[$(tput setaf 1)\]"
+  GREEN="\[$(tput setaf 2)\]"
+  BLUE="\[$(tput setaf 4)\]"
+  CYAN="\[$(tput setaf 6)\]"
+  RESET="\[$(tput sgr0)\]"
+  BOLD="\[$(tput bold)\]"
+  export GIT_PS1_SHOWDIRTYSTATE=1
+  export GIT_PS1_SHOWCOLORHINTS=1
+  export PROMPT_COMMAND='__git_ps1 "[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]" "\$ " " (${MAGENTA}${BOLD}git:%s${RESET}) "'
+}
+
+main() {
+  # If not running interactively, don't do anything
+  [[ $- != *i* ]] && return
+
+  if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+      . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+      . /etc/bash_completion
+    fi
+  fi
+
+  if [[ "$HOSTNAME" =~ archapps.* ]] && [[ "$INSIDE_EMACS" != 'vterm' ]]; then
+    cd "$HOME" || return
+  fi
+
+  setup_aliases_and_editors
+  setup_options
+  setup_fzf
+  setup_emacs_vterm
+  setup_git
+  setup_prompt
+}
+
+main

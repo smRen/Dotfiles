@@ -9,7 +9,9 @@
 
 ;; Third party packages
 (defvar smren/third-party-package-list
-  '(evil
+  '(magit
+    undo-fu
+    evil
     pdf-tools
     evil-terminal-cursor-changer
     evil-collection
@@ -30,16 +32,17 @@
     projectile
     cmake-mode
     vterm
+    yaml-mode
     json-mode
     emmet-mode
-    magit
     sly
     doom-themes
     doom-modeline
     format-all
     writeroom-mode
     smartparens
-    org-contrib
+    matlab-mode
+    which-key
     hydra)
   "List of third party packages")
 
