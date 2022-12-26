@@ -42,16 +42,10 @@ setup_emacs_vterm() {
 
 setup_fzf() {
   # Fancy history search
-  if [[ "$HOSTNAME" == *"arch"* ]]; then
-    local fzf_keybinding_bash="/usr/share/fzf/key-bindings.bash"
-    local fzf_completion_bash="/usr/share/fzf/completion.bash"
-  else
-    local fzf_keybinding_bash="/usr/share/doc/fzf/examples/completion.bash"
-    local fzf_completion_bash="/usr/share/doc/fzf/examples/key-bindings.bash"
-  fi
+  local fzf_keybinding_bash="/usr/share/doc/fzf/examples/completion.bash"
+  local fzf_completion_bash="/usr/share/doc/fzf/examples/key-bindings.bash"
 
   [[ -r "$fzf_keybinding_bash" ]] && . "$fzf_keybinding_bash"
-
   [[ -r "$fzf_completion_bash" ]] && . "$fzf_completion_bash"
 }
 
@@ -123,7 +117,7 @@ main() {
     fi
   fi
 
-  if [[ "$HOSTNAME" =~ archapps.* ]] && [[ "$INSIDE_EMACS" != 'vterm' ]]; then
+  if [[ "$INSIDE_EMACS" != 'vterm' ]]; then
     cd "$HOME" || return
   fi
 
