@@ -42,11 +42,12 @@ setup_emacs_vterm() {
 
 setup_fzf() {
   # Fancy history search
-  local fzf_keybinding_bash="/usr/share/doc/fzf/examples/completion.bash"
-  local fzf_completion_bash="/usr/share/doc/fzf/examples/key-bindings.bash"
-
-  [[ -r "$fzf_keybinding_bash" ]] && . "$fzf_keybinding_bash"
-  [[ -r "$fzf_completion_bash" ]] && . "$fzf_completion_bash"
+  if [[ "$HOSTNAME" =~ ^ubuntu.* ]]; then
+    local fzf_keybinding_bash="/usr/share/doc/fzf/examples/key-bindings.bash"
+    local fzf_completion_bash="/usr/share/bash-completion/completions/fzf"
+    [[ -r "$fzf_keybinding_bash" ]] && . "$fzf_keybinding_bash"
+    [[ -r "$fzf_completion_bash" ]] && . "$fzf_completion_bash"
+  fi
 }
 
 setup_git() {
