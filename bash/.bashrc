@@ -111,7 +111,11 @@ main() {
     fi
   fi
 
+<<<<<<< HEAD
   if [ "$INSIDE_EMACS" != 'vterm' ]; then
+=======
+  if [[ "$INSIDE_EMACS" != 'vterm' ]]; then
+>>>>>>> development
     cd "$HOME" || return
   fi
 
