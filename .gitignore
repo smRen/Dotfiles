@@ -1,9 +1,10 @@
 # Neovim
 nvim/.config/nvim/*
-!nvim/.config/nvim/init.vim
-!nvim/.config/nvim/init.vim.old
-!nvim/.config/nvim/coc-settings.json
-!nvim/.config/nvim/ftplugin
+flatpak_configs/.var/app/io.neovim.nvim/*
+!flatpak_configs/.var/app/io.neovim.nvim/init.vim
+!flatpak_configs/.var/app/io.neovim.nvim/init.vim.old
+!flatpak_configs/.var/app/io.neovim.nvim/coc-settings.json
+!flatpak_configs/.var/app/io.neovim.nvim/ftplugin
 
 # Emacs
 emacs/.config/emacs/*
@@ -15,6 +16,7 @@ emacs/.config/emacs/*
 
 # Mpv
 mpv/.config/mpv/shaders
+flatpak_configs/.var/app/io.mpv.Mpv/config/mpv/shaders
 
 # User systemd
 systemd/.config/systemd/user/*
