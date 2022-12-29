@@ -45,9 +45,13 @@ setup_fzf() {
   if [[ "$HOSTNAME" =~ ^ubuntu.* ]]; then
     local fzf_keybinding_bash="/usr/share/doc/fzf/examples/key-bindings.bash"
     local fzf_completion_bash="/usr/share/bash-completion/completions/fzf"
-    [[ -r "$fzf_keybinding_bash" ]] && . "$fzf_keybinding_bash"
-    [[ -r "$fzf_completion_bash" ]] && . "$fzf_completion_bash"
+  elif [[ "$HOSTNAME" =~ ^arch.* ]]; then
+    local fzf_keybinding_bash="/usr/share/fzf/key-bindings.bash"
+    local fzf_completion_bash="/usr/share/fzf/completion.bash"
   fi
+
+  [[ -r "$fzf_keybinding_bash" ]] && . "$fzf_keybinding_bash"
+  [[ -r "$fzf_completion_bash" ]] && . "$fzf_completion_bash"
 }
 
 setup_git() {
@@ -62,10 +66,7 @@ setup_aliases_and_editors() {
   alias grep='grep --color=auto'
   alias diff='diff --color=auto'
 
-  # Flatpak setup for editors
-  alias vim='flatpak run --env=TERM=xterm-256color org.vim.Vim'
-  alias nvim='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
-  alias mpv='flatpak run io.mpv.Mpv'
+  # Sudoedit colors
   alias sudoedit='TERM=xterm-direct sudoedit'
 
   # Inside a container
@@ -75,6 +76,9 @@ setup_aliases_and_editors() {
     export EDITOR='emacsclient -t'
   else
     export EDITOR='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
+    alias vim='flatpak run --env=TERM=xterm-256color org.vim.Vim'
+    alias nvim='flatpak run --env=SHELL=/bin/bash io.neovim.nvim'
+    alias mpv='flatpak run io.mpv.Mpv'
   fi
 
   export VISUAL="$EDITOR"
