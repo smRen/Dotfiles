@@ -29,14 +29,3 @@ org.videolan.VLC
 org.vim.Vim
 tv.kodi.Kodi
 us.zoom.Zoom
-cc.arduino.IDE2
-com.google.AndroidStudio
-com.jetbrains.IntelliJ-IDEA-Community
-com.jetbrains.PyCharm-Community
-io.qt.QtCreator
-org.kde.kdevelop
-com.microsoft.Teams
-com.sindresorhus.Caprine
-org.kde.krdc
-org.gnome.Firmware
-com.google.Chrome
