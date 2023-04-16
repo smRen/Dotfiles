@@ -65,6 +65,7 @@ setup_aliases_and_editors() {
   alias ls='ls --color=auto'
   alias grep='grep --color=auto'
   alias diff='diff --color=auto'
+  alias kssh="kitty +kitten ssh"
 
   # Sudoedit colors
   alias sudoedit='TERM=xterm-direct sudoedit'
