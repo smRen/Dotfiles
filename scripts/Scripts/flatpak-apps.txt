@@ -7,7 +7,6 @@ com.github.johnfactotum.Foliate
 com.github.tchx84.Flatseal
 com.moonlight_stream.Moonlight
 com.slack.Slack
-com.valvesoftware.Steam
 io.mpv.Mpv
 io.neovim.nvim
 org.chromium.Chromium
