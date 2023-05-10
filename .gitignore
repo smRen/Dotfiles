@@ -14,6 +14,11 @@ emacs/.config/emacs/*
 !emacs/.config/emacs/user-settings.el
 !emacs/.config/emacs/install.el
 
+#Other flatpaks
+flatpak_configs/.var/app/com.github.tchx84.Flatseal/
+flatpak_configs/.var/app/com.moonlight_stream.Moonlight/
+flatpak_configs/.var/app/us.zoom.Zoom/
+
 # Mpv
 mpv/.config/mpv/shaders
 flatpak_configs/.var/app/io.mpv.Mpv/config/mpv/shaders
