@@ -27,3 +27,4 @@ org.remmina.Remmina
 org.videolan.VLC
 tv.kodi.Kodi
 us.zoom.Zoom
+org.freedesktop.Piper
