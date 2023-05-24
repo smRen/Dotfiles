@@ -25,6 +25,5 @@ org.octave.Octave
 org.raspberrypi.rpi-imager
 org.remmina.Remmina
 org.videolan.VLC
-org.vim.Vim
 tv.kodi.Kodi
 us.zoom.Zoom
