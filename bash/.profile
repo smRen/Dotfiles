@@ -34,3 +34,4 @@ if [ -d "$HOME/.pyenv/bin" ] ; then
     eval "$(pyenv init --path)"
 fi
 
+xhost +si:localuser:$USER
