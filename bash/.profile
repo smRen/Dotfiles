@@ -16,6 +16,10 @@ if [ -d "$HOME/.local/share/flatpak/exports/bin" ]; then
     PATH="$HOME/.local/share/flatpak/exports/bin:$PATH"
 fi
 
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    export MOZ_ENABLE_WAYLAND=1
+fi
+
 # # set PATH to include local bin
 # PATH="/usr/local/bin/:$PATH"
 
