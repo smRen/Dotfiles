@@ -35,6 +35,7 @@ setup_emacs_vterm() {
       vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
       shift
     done
+
     vterm_printf "51;E$vterm_elisp"
   }
 
