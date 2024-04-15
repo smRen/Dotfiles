@@ -23,7 +23,7 @@
   ;; Show column number
   (column-number-mode +1)
 
-  ;; Always use spaces for tabs 
+  ;; Always use spaces for tabs
   (indent-tabs-mode -1)
 
   ;; Save minibuffer history
@@ -39,10 +39,17 @@
   (add-to-list 'auto-mode-alist '("CMakeLists.txt" . cmake-ts-mode))
   (add-to-list 'auto-mode-alist '("^\\.bashrc$" . bash-ts-mode))
   
-  ;; Third party packages  
+  ;; Third party packages
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   (package-initialize)
+
+  ;; Make async shell command faster
+  (setq read-process-output-max (* 64 1024 1024))
+  (setq process-adaptive-read-buffering nil)
+  (setq process-connection-type nil)
+  (let ((process-connection-type nil))
+    (async-shell-command command buffer))
 
   :hook
   ;; Enable eglot in the following modes
@@ -59,9 +66,17 @@
   (minibuffer-prompt-properties
    '(read-only t cursor-intangible t face minibuffer-prompt))
 
+  ;; Use short answers
+  (use-short-answers t)
+
   ;; Backup settings
+  (backup-directory-alist
+   `((".*" . ,(concat user-emacs-directory "backups"))))
+  (kept-old-versions 2)
+  (kept-new-versions 6)
   (vc-make-backup-files t)
   (backup-by-copying t)
+  (delete-old-versions t)
   (version-control t)
   
   ;; Disable startup screen and messages
@@ -106,9 +121,14 @@
 ;; Custom settings for C/C++
 (use-package c-ts-mode
   :custom
-  ;; Indent and code style 
+  ;; Indent and code style
   (c-ts-mode-indent-offset 4)
   (c-ts-mode-indent-style 'linux))
+
+;; Custom settings for json-ts
+(use-package json-ts-mode
+  :custom
+  (json-ts-mode-indent-offset 8))
 
 ;; ;; Default minibuffer completion
 ;; (use-package icomplete
@@ -187,6 +207,14 @@
   (lsp-idle-delay 0.1)
   (gc-cons-threshold 100000000)
   (read-process-output-max (* 1024 1024)))
+
+(use-package dap-mode
+  :ensure t
+  :hook ((dap-stopped) . (lambda (arg) (call-interactively #'dap-hydra)))
+  :config
+  (dap-auto-configure-mode +1)
+  (require 'dap-cpptools)
+  (require 'dap-node))
 
 ;; Extra lsp features
 (use-package lsp-ui
@@ -290,16 +318,22 @@
 
 (use-package flycheck
   :ensure t
-  :hook (;; Set checkers for flycheck
-	 (lsp-managed-mode . (lambda ()
-			       (flycheck-mode)
-			       (let ((current-prog-mode major-mode))
-				 (cond ((eq current-prog-mode 'c++-ts-mode)
-					(setq flycheck-checker 'c/c++-cppcheck)
-					(flycheck-add-next-checker 'c/c++-cppcheck 'lsp))
-				       ((eq current-prog-mode 'bash-ts-mode)
-					(setq flycheck-checker 'sh-shellcheck)
-					(flycheck-add-next-checker 'sh-shellcheck 'lsp))))))))
+  :config
+  (global-flycheck-mode +1))
+  ;;:hook (;; Set multiple checkers for flycheck
+	 ;; Note: Check the LSP for integration
+	 ;; May not be necessary
+	 ;; (lsp-managed-mode . (lambda ()
+	 ;; 		       (flycheck-mode)
+	 ;; 		       (let ((current-prog-mode major-mode))
+	 ;; 			 (cond ((eq current-prog-mode 'c++-ts-mode)
+	 ;; 				(setq flycheck-checker 'c/c++-cppcheck)
+	 ;; 				(flycheck-add-next-checker 'c/c++-cppcheck 'lsp))
+	 ;; 			       ;; ((eq current-prog-mode 'bash-ts-mode)
+	 ;; 			       ;; 	(setq flycheck-checker 'sh-shellcheck)
+	 ;; 			       ;; 	(flycheck-add-next-checker 'sh-shellcheck 'lsp))
+	 ;; 			       ))))
+;;	 ))
 
 (use-package consult-flycheck
   :ensure t)
@@ -337,10 +371,12 @@
   (vertico-mode)
   :custom
   (enable-recursive-minibuffers t)
+  (read-buffer-completion-ignore-case t)
   (completion-styles '(orderless flex basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 ;; Move minibuffer stuff to middle
+;; Very glitchy
 (use-package vertico-posframe
   :ensure t
   :config
@@ -377,7 +413,12 @@
   (projectile-mode +1)
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map))
+  :hook
+  (project-find-functions . project-projectile)
   :custom
+  ;; Allow compilation buffer to be editable (useful for interactive apps)
+  (projectile-comint-mode t)
+  ;; Auto search Projects folder for projects
   (projectile-project-search-path '("~/Projects")))
 
 (use-package consult-projectile
@@ -398,13 +439,22 @@
 (use-package git-modes
   :ensure t)
 
+(use-package golden-ratio-scroll-screen
+  :ensure t
+  :bind
+  (([remap scroll-down-command] . golden-ratio-scroll-screen-down)
+   ([remap scroll-up-command] . golden-ratio-scroll-screen-up)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(vertico-posframe git-modes ripgrep fancy-compilation yasnippet-snippets writeroom-mode vterm vertico treesit-auto projectile pet orderless marginalia lsp-ui eglot-booster doom-themes consult-lsp consult-flycheck company all-the-icons-completion)))
+   '(golden-ratio-scroll-screen dap-mode vertico-posframe git-modes ripgrep fancy-compilation yasnippet-snippets writeroom-mode vterm vertico treesit-auto projectile pet orderless marginalia lsp-ui eglot-booster doom-themes consult-lsp consult-flycheck company all-the-icons-completion))
+ '(safe-local-variable-values
+   '((projectile-project-run-cmd . "npm run start")
+     (projectile-project-compilation-cmd . "npm run compile"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
