@@ -48,8 +48,8 @@
   (setq read-process-output-max (* 64 1024 1024))
   (setq process-adaptive-read-buffering nil)
   (setq process-connection-type nil)
-  (let ((process-connection-type nil))
-    (async-shell-command command buffer))
+;;  (let ((process-connection-type nil))
+;;    (async-shell-command command buffer))
 
   :hook
   ;; Enable eglot in the following modes
