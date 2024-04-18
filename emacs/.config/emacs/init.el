@@ -463,9 +463,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(golden-ratio-scroll-screen dap-mode vertico-posframe git-modes ripgrep fancy-compilation yasnippet-snippets writeroom-mode vterm vertico treesit-auto projectile pet orderless marginalia lsp-ui eglot-booster doom-themes consult-lsp consult-flycheck company all-the-icons-completion))
- '(safe-local-variable-values
-   '((projectile-project-run-cmd . "npm run start")
-     (projectile-project-compilation-cmd . "npm run compile"))))
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
