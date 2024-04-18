@@ -75,8 +75,14 @@
   (minibuffer-prompt-properties
    '(read-only t cursor-intangible t face minibuffer-prompt))
 
+  ;; Emacs 28 and newer: Hide commands in M-x which do not apply to the current mode.
+  (read-extended-command-predicate #'command-completion-default-include-p)
+
   ;; Use short answers
   (use-short-answers t)
+
+  ;; Tab first then try complete
+  (tab-always-indent 'complete)
 
   ;; Backup settings
   (backup-directory-alist
@@ -140,6 +146,18 @@
   :defer t
   :custom
   (json-ts-mode-indent-offset 8))
+
+;; Use Dabbrev with Corfu!
+(use-package dabbrev
+  ;; Swap M-/ and C-M-/
+  :bind (("M-/" . dabbrev-completion)
+         ("C-M-/" . dabbrev-expand))
+  :config
+  (add-to-list 'dabbrev-ignored-buffer-regexps "\\` ")
+  ;; Since 29.1, use `dabbrev-ignored-buffer-regexps' on older.
+  (add-to-list 'dabbrev-ignored-buffer-modes 'doc-view-mode)
+  (add-to-list 'dabbrev-ignored-buffer-modes 'pdf-view-mode)
+  (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode))
 
 ;; ;; Default minibuffer completion
 ;; (use-package icomplete
@@ -255,14 +273,36 @@
 (use-package yasnippet-snippets
   :ensure t)
 
-;; Inline completion
-(use-package company
+(use-package corfu
   :ensure t
-  :config
-  (setq company-minimum-prefix-length 1
-        company-idle-delay 0.0)
-  :hook
-  (after-init . global-company-mode))
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-delay 0)
+  (corfu-auto-prefix 1)
+  (corfu-quit-no-match 'separator)
+  :hook ((prog-mode . corfu-mode)
+         (shell-mode . corfu-mode)
+         (eshell-mode . corfu-mode)
+	 (minibuffer-setup . #'corfu-enable-in-minibuffer))
+  :init
+  (defun corfu-enable-in-minibuffer ()
+  "Enable Corfu in the minibuffer."
+  (when (local-variable-p 'completion-at-point-functions)
+    ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+    (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+                corfu-popupinfo-delay nil)
+    (corfu-mode +1)))
+  (global-corfu-mode))
+
+;; ;; Inline completion
+;; (use-package company
+;;   :ensure t
+;;   :config
+;;   (setq company-minimum-prefix-length 1
+;;         company-idle-delay 0.0)
+;;   :hook
+;;   (after-init . global-company-mode))
 
 ;; Example configuration for Consult
 (use-package consult
