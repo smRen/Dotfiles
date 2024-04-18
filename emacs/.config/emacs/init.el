@@ -51,6 +51,15 @@
   ;; (let ((process-connection-type nil))
   ;;   (async-shell-command command buffer))
 
+  ;; Set fonts
+  (add-to-list 'default-frame-alist
+               '(font . "Hack-11"))
+  (set-face-attribute 'default t :font "Hack-11")
+
+  ;; Start emacs maximized
+  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
   :hook
   ;; Enable eglot in the following modes
   ;; ((c++-ts-mode bash-ts-mode) .  eglot-ensure)
