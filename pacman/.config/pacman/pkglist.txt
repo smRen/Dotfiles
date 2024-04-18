@@ -17,7 +17,6 @@ man-pages
 mlocate
 mpv
 mtr
-neovim
 rsync
 stow
 tcpdump
