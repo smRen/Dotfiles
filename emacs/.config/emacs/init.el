@@ -229,10 +229,17 @@
   (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
 
   (setq lsp-keymap-prefix "C-c l")
+
+  (defun my/lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(orderless))) ;; Configure orderless
+  
   :hook (;; Auto start in the following modes
-	 ((c++-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode) . lsp-deferred))
+	 ((c++-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode) . lsp-deferred)
+	 (lsp-completion-mode . my/lsp-mode-setup-completion))
   :commands (lsp lsp-deferred)
   :custom
+  (lsp-completion-provider :none) ;; For corfu
   (lsp-idle-delay 0.1)
   (gc-cons-threshold 100000000)
   (read-process-output-max (* 1024 1024)))
@@ -278,13 +285,9 @@
   :custom
   (corfu-cycle t)
   (corfu-auto t)
-  (corfu-auto-delay 0)
-  (corfu-auto-prefix 1)
+  (corfu-auto-delay 0.1)
+  (corfu-auto-prefix 2)
   (corfu-quit-no-match 'separator)
-  :hook ((prog-mode . corfu-mode)
-         (shell-mode . corfu-mode)
-         (eshell-mode . corfu-mode)
-	 (minibuffer-setup . #'corfu-enable-in-minibuffer))
   :init
   (defun corfu-enable-in-minibuffer ()
   "Enable Corfu in the minibuffer."
@@ -293,7 +296,11 @@
     (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
                 corfu-popupinfo-delay nil)
     (corfu-mode +1)))
-  (global-corfu-mode))
+  (global-corfu-mode)
+  :hook ((prog-mode . corfu-mode)
+         (shell-mode . corfu-mode)
+         (eshell-mode . corfu-mode)
+	 (minibuffer-setup . #'corfu-enable-in-minibuffer)))
 
 ;; ;; Inline completion
 ;; (use-package company
@@ -423,7 +430,9 @@
   :custom
   (enable-recursive-minibuffers t)
   (read-buffer-completion-ignore-case t)
-  (completion-styles '(orderless flex basic))
+  (completion-styles '(orderless partial-completion basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides nil)
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 ;; Move minibuffer stuff to middle
