@@ -48,8 +48,8 @@
   (setq read-process-output-max (* 64 1024 1024))
   (setq process-adaptive-read-buffering nil)
   (setq process-connection-type nil)
-  (let ((process-connection-type nil))
-    (async-shell-command command buffer))
+  ;; (let ((process-connection-type nil))
+  ;;   (async-shell-command command buffer))
 
   :hook
   ;; Enable eglot in the following modes
@@ -120,6 +120,7 @@
 
 ;; Custom settings for C/C++
 (use-package c-ts-mode
+  :defer t
   :custom
   ;; Indent and code style
   (c-ts-mode-indent-offset 4)
@@ -127,6 +128,7 @@
 
 ;; Custom settings for json-ts
 (use-package json-ts-mode
+  :defer t
   :custom
   (json-ts-mode-indent-offset 8))
 
