@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package emacs
   :config
   ;; Set side fringes
@@ -445,6 +446,8 @@
 ;; Completion style
 (use-package orderless
   :ensure t)
+
+
 
 ;; Annotations
 (use-package marginalia
