@@ -6,6 +6,10 @@ flatpak_configs/.var/app/io.neovim.nvim/*
 !flatpak_configs/.var/app/io.neovim.nvim/coc-settings.json
 !flatpak_configs/.var/app/io.neovim.nvim/ftplugin
 
+# Docker
+docker/.docker/*
+!docker/.docker/config.json
+
 # Emacs
 emacs/.config/emacs/*
 !emacs/.config/emacs/early-init.el
