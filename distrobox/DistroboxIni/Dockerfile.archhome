@@ -1,19 +1,20 @@
 FROM quay.io/toolbx/arch-toolbox:latest
 
-# Parallel arch downloads
+# Parallel arch downloads and colored output
 RUN sed -i "s/ParallelDownloads = 5/ParallelDownloads = 20/" /etc/pacman.conf \
+	&& sed -i "s/#Color/Color/" /etc/pacman.conf \
 	# Initialize pacman
 	&& pacman-key --init \
 	&& pacman-key --populate archlinux \
 	&& pacman -Sy \
 	&& pacman -S --noconfirm \
 	# System packages
-	archlinux-keyring dbus systemd libvterm openssh intel-media-driver libva-utils intel-gpu-tools slirp4netns \
+	archlinux-keyring dbus systemd libvterm openssh intel-media-driver libva-utils intel-gpu-tools \
+	# Container packages
+	podman slirp4netns podman-compose podman-docker \
+	# flatpak
+	flatpak \
 	# Development packages
 	base-devel cmake git python nodejs npm \
 	# Gui and terminal tools
-	emacs-wayland neovim chromium firefox htop tmux podman kitty stow mpv gwenview okular unrar unzip dolphin kio-admin konsole kdegraphics-thumbnailers kde-cli-tools ffmpegthumbs
-    # Setup rootless podman for arch
-#    && usermod --add-subuids 100000-165535 --add-subgids 100000-165535
-
-
+	emacs-wayland neovim chromium firefox htop tmux podman kitty stow mpv gwenview okular unrar unzip dolphin kio-admin konsole kdegraphics-thumbnailers kde-cli-tools ffmpegthumbs noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-hack
