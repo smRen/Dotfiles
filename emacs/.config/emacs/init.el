@@ -39,6 +39,8 @@
   ;; Associate certain files to correct ts-mode
   (add-to-list 'auto-mode-alist '("CMakeLists.txt" . cmake-ts-mode))
   (add-to-list 'auto-mode-alist '("^\\.bashrc$" . bash-ts-mode))
+  (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-ts-mode))
+  (add-to-list 'auto-mode-alist '("Containerfile" . dockerfile-ts-mode))
   
   ;; Third party packages
   (require 'package)
@@ -236,7 +238,7 @@
           '(orderless))) ;; Configure orderless
   
   :hook (;; Auto start in the following modes
-	 ((c++-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode) . lsp-deferred)
+	 ((c++-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode dockerfile-ts-mode) . lsp-deferred)
 	 (lsp-completion-mode . my/lsp-mode-setup-completion))
   :commands (lsp lsp-deferred)
   :custom
