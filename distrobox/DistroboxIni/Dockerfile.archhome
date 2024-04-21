@@ -1,6 +1,8 @@
 FROM quay.io/toolbx/arch-toolbox:latest
 
-RUN pacman-key --init \
+RUN sed -i "s/ParallelDownloads = 5/ParallelDownloads = 20/" /etc/pacman.conf \
+	&& pacman-key --init \
+	&& pacman-key --populate archlinux \
 	&& pacman -Sy \
 	&& pacman -S --noconfirm archlinux-keyring dbus base-devel systemd cmake libvterm openssh git emacs-wayland vim chromium firefox htop tmux docker kitty stow mpv intel-media-driver libva-utils intel-gpu-tools gwenview python nodejs npm okular unrar unzip dolphin kio-admin konsole kdegraphics-thumbnailers kde-cli-tools ffmpegthumbs
 
