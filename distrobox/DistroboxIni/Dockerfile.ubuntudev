@@ -1,0 +1,10 @@
+FROM quay.io/toolbx/ubuntu-toolbox:23.10
+
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	# System packages
+	systemd libvterm-dev build-essential unzip unrar ssh wget python nodejs podman podman-compose podman-docker slirp4netns \
+	# Gui and terminal
+	emacs-pgtk vim htop kitty firefox fonts-hack noto-fonts noto-fonts-emoji noto-fonts-cjk \
+	# Emacs packages
+	elpa-doom-themes
