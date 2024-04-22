@@ -1,10 +1,7 @@
 FROM quay.io/toolbx-images/debian-toolbox:12
 
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-	software-properties-common \
-	&& apt-add-repository contrib -y \
-	&& apt-add-repository non-free -y \
+RUN sed -i "s/^Components: main$/Components: main contrib non-free non-free-firmware/g" /etc/apt/sources.list.d/debian.sources  \
 	# System packages
 	&& apt-get update \
 	&& DEBIAN_FRONTEND=noninteractive apt-get install -y \
