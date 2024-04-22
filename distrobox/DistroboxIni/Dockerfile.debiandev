@@ -3,7 +3,7 @@ FROM quay.io/toolbx-images/debian-toolbox:12
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	# System packages
-	systemd intel-media-va-driver-non-free libva-utils intel-gpu-tools build-essential unzip unrar ssh wget python3 nodejs podman podman-compose podman-docker slirp4netns \
+	systemd intel-media-va-driver-non-free libva-utils intel-gpu-tools build-essential stow git unzip unrar ssh wget python3 nodejs podman podman-compose podman-docker slirp4netns \
 	# Gui and terminal
 	emacs-pgtk vim htop kitty chromium-browser firefox fonts-hack fonts-noto fonts-noto-cjk fonts-noto-color-emoji \
 	# Emacs packages
