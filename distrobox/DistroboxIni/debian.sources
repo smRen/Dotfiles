@@ -1,6 +1,6 @@
 Types: deb deb-src
 URIs: http://deb.debian.org/debian
-Suites: bookworm bookworm-updates
+Suites: bookworm bookworm-updates bookworm-backports
 Components: main contrib non-free non-free-firmware
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
 
