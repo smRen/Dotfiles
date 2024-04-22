@@ -5,8 +5,8 @@ RUN sed -i "s/^Components: main$/Components: main contrib non-free non-free-firm
 	# System packages
 	&& apt-get update \
 	&& DEBIAN_FRONTEND=noninteractive apt-get install -y \
-	systemd intel-media-va-driver-non-free libva-utils intel-gpu-tools build-essential stow git unzip unrar ssh wget python3 nodejs podman podman-compose podman-docker slirp4netns \
+	systemd intel-media-va-driver-non-free vainfo intel-gpu-tools build-essential stow git unzip unrar ssh wget python3 nodejs podman podman-compose podman-docker slirp4netns \
 	# Gui and terminal
-	emacs-pgtk vim htop kitty chromium firefox-esr fonts-hack fonts-noto fonts-noto-cjk fonts-noto-color-emoji \
+	emacs-gtk vim htop kitty chromium firefox-esr fonts-hack fonts-noto fonts-noto-cjk fonts-noto-color-emoji \
 	# Emacs packages
 	emacs-libvterm elpa-vterm elpa-doom-themes
