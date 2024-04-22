@@ -5,6 +5,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	# System packages
 	systemd libvterm-dev build-essential unzip unrar ssh wget python3 nodejs podman podman-compose podman-docker slirp4netns \
 	# Gui and terminal
-	emacs-pgtk vim htop kitty chromium firefox fonts-hack fonts-noto fonts-noto-cjk fonts-noto-color-emoji \
+	emacs-pgtk vim htop kitty chromium-browser firefox fonts-hack fonts-noto fonts-noto-cjk fonts-noto-color-emoji \
 	# Emacs packages
 	elpa-doom-themes
