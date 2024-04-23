@@ -9,7 +9,7 @@ RUN sed -i "s/ParallelDownloads = 5/ParallelDownloads = 20/" /etc/pacman.conf \
 	&& pacman -Sy \
 	&& pacman -S --noconfirm \
 	# System packages
-	archlinux-keyring dbus systemd libvterm openssh intel-media-driver libva-utils intel-gpu-tools \
+	archlinux-keyring dbus systemd libvterm openssh intel-media-driver libva-utils intel-gpu-tools nvidia libva-nvidia-driver \
 	# Container packages
 	podman slirp4netns podman-compose podman-docker \
 	# flatpak
