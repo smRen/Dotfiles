@@ -4,9 +4,6 @@
   ;; Set side fringes
   (set-fringe-mode 30)
   
-  ;; Enable line numbers everywhere
-  ;; (global-display-line-numbers-mode +1)
-  
   ;; Disable menu bar, tool bar, and scroll bar
   (menu-bar-mode -1)
   (tool-bar-mode -1)
