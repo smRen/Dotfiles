@@ -41,20 +41,6 @@ setup_emacs_vterm() {
 
 }
 
-setup_fzf() {
-    # Fancy history search
-    if [[ "$HOSTNAME" =~ ^ubuntu.* ]]; then
-	local fzf_keybinding_bash="/usr/share/doc/fzf/examples/key-bindings.bash"
-	local fzf_completion_bash="/usr/share/bash-completion/completions/fzf"
-    elif [[ "$HOSTNAME" =~ ^arch.* ]]; then
-	local fzf_keybinding_bash="/usr/share/fzf/key-bindings.bash"
-	local fzf_completion_bash="/usr/share/fzf/completion.bash"
-    fi
-
-    [[ -r "$fzf_keybinding_bash" ]] && . "$fzf_keybinding_bash"
-    [[ -r "$fzf_completion_bash" ]] && . "$fzf_completion_bash"
-}
-
 setup_git() {
     local git_completion_bash="/usr/share/git/completion/git-completion.bash"
     [[ -r "$git_completion_bash" ]] && . "$git_completion_bash"
