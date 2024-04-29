@@ -105,7 +105,6 @@ main() {
 
     setup_aliases_and_editors
     setup_options
-    setup_fzf
     setup_emacs_vterm
     setup_git
     setup_prompt
