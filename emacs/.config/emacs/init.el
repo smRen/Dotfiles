@@ -35,7 +35,7 @@
 
   ;; Associate certain files to correct ts-mode
   (add-to-list 'auto-mode-alist '("CMakeLists.txt" . cmake-ts-mode))
-  (add-to-list 'auto-mode-alist '("^\\.bashrc$" . bash-ts-mode))
+  (add-to-list 'auto-mode-alist '(".bashrc" . bash-ts-mode))
   (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-ts-mode))
   (add-to-list 'auto-mode-alist '("Containerfile" . dockerfile-ts-mode))
   
