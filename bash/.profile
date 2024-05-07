@@ -15,10 +15,6 @@ if [ -d "$HOME/.local/share/flatpak/exports/bin" ]; then
     PATH="$HOME/.local/share/flatpak/exports/bin:$PATH"
 fi
 
-if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-    export MOZ_ENABLE_WAYLAND=1
-fi
-
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
@@ -27,4 +23,3 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-xhost +si:localuser:$USER
