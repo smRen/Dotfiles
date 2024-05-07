@@ -5,8 +5,6 @@
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
 	. /usr/share/bash-completion/bash_completion
-    else
-	echo "Install bash completion"
     fi
 
     if [ -f "$HOME/Scripts/git-prompt.sh" ]; then
@@ -50,8 +48,6 @@ if [ -x "$(command -v emacs)" ]; then
     export EDITOR='emacsclient -t'
     export VISUAL="$EDITOR"
     export COLORTERM='truecolor'
-else
-    echo "Install emacs"
 fi
 
 # For Emacs Vterm
