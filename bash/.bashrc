@@ -41,13 +41,6 @@ setup_emacs_vterm() {
 
 }
 
-setup_git() {
-    local git_completion_bash="/usr/share/git/completion/git-completion.bash"
-    [[ -r "$git_completion_bash" ]] && . "$git_completion_bash"
-    local git_prompt="$HOME/Scripts/git-prompt.sh"
-    [[ -r "$git_prompt" ]] && . "$git_prompt"
-}
-
 setup_aliases_and_editors() {
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
@@ -106,7 +99,6 @@ main() {
     setup_aliases_and_editors
     setup_options
     setup_emacs_vterm
-    setup_git
     setup_prompt
 }
 
