@@ -28,5 +28,6 @@ org.videolan.VLC
 org.gnu.emacs
 tv.kodi.Kodi
 us.zoom.Zoom
+com.valvesoftware.Steam
 org.freedesktop.Piper
 org.freedesktop.Sdk.Extension.node20
