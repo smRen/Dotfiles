@@ -45,13 +45,16 @@ setup_aliases_and_editors() {
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
     alias diff='diff --color=auto'
-    alias kssh="kitty +kitten ssh"
 
-    alias e='emacs -nw'
-    alias ec='emacsclient -t'
-    export EDITOR='emacsclient -t'
-    export VISUAL="$EDITOR"
-    export COLORTERM='truecolor'
+    if [ -x "$(command -v emacs)" ]; then
+	alias e='emacs -nw'
+	alias ec='emacsclient -t'
+	export EDITOR='emacsclient -t'
+	export VISUAL="$EDITOR"
+	export COLORTERM='truecolor'
+    else
+	echo "Install emacs"
+    fi
 }
 
 setup_options() {
