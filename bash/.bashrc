@@ -38,8 +38,7 @@ HISTCONTROL=ignoreboth
 HISTSIZE=10000
 HISTFILESIZE=5000
 HISTFILE=~/.history
-local bash_options=("histappend" "checkwinsize" "extglob" "globstar")
-shopt -s "${bash_options[@]}"
+shopt -s "histappend" "checkwinsize" "extglob" "globstar"
 
 # Aliases
 alias ls='ls --color=auto'
