@@ -60,6 +60,10 @@
   (add-to-list 'initial-frame-alist '(fullscreen . maximized))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+  ;; Custom settings in its own file
+  (setq custom-file (concat user-emacs-directory "custom.el"))
+  (load custom-file 'noerror)
+  
   :hook
   ;; Enable eglot in the following modes
   ;; ((c++-ts-mode bash-ts-mode) .  eglot-ensure)
@@ -506,18 +510,3 @@
   :bind
   (([remap scroll-down-command] . golden-ratio-scroll-screen-down)
    ([remap scroll-up-command] . golden-ratio-scroll-screen-up)))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(golden-ratio-scroll-screen dap-mode vertico-posframe git-modes ripgrep fancy-compilation yasnippet-snippets writeroom-mode vterm vertico treesit-auto projectile pet orderless marginalia lsp-ui eglot-booster doom-themes consult-lsp consult-flycheck company all-the-icons-completion))
- )
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
