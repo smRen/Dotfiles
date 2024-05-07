@@ -9,8 +9,8 @@ if ! shopt -oq posix; then
 	echo "Install bash completion"
     fi
 
-    if [ -f /usr/share/git/completion/git-prompt.sh ]; then
-	. /usr/share/git/completion/git-prompt.sh
+    if [ -f "$HOME/Scripts/git-prompt.sh" ]; then
+	. "$HOME/Scripts/git-prompt.sh"
     fi
 fi
 
