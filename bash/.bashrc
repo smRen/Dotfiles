@@ -93,6 +93,10 @@ main() {
 	else
 	    echo "Install bash completion"
 	fi
+
+	if [ -f /usr/share/git/completion/git-prompt.sh ]; then
+	    . /usr/share/git/completion/git-prompt.sh
+	fi
     fi
 
     if [[ "$INSIDE_EMACS" != 'vterm' ]]; then
