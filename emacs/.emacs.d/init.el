@@ -123,7 +123,9 @@
   ;; (completions-format 'one-column)
   ;; (completion-auto-select 'second-tab)
   ;; (completions-detailed t)
-  )
+  :bind
+  ;; Use hippie expand
+  ([remap dabbrev-completion] . hippie-expand))
 
 (use-package ansi-color
   :config
