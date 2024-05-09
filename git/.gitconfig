@@ -6,3 +6,5 @@
 	defaultBranch = main
 [commit]
 	gpgSign = true
+[maintenance]
+	repo = /home/smakey18/Projects/Dotfiles
