@@ -1,0 +1,19 @@
+FROM quay.io/toolbx/arch-toolbox:latest
+
+# Parallel arch downloads and colored output
+RUN pacman-key --init \
+	&& pacman-key --populate archlinux \
+	&& pacman -Sy \
+	&& pacman -S --noconfirm \
+	# System packages
+	archlinux-keyring libvterm intel-media-driver libva-utils intel-gpu-tools nvidia libva-nvidia-driver \
+	# Virtualization
+	virt-manager \
+	# Container packages
+	podman slirp4netns podman-compose podman-docker \
+	# flatpak
+	flatpak \
+	# Development packages
+	cmake ninja nodejs npm \
+	# Gui and terminal tools
+	emacs-wayland neovim chromium firefox htop tmux podman kitty stow mpv unrar noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-hack
