@@ -308,14 +308,14 @@
 ;;          (eshell-mode . corfu-mode)
 ;; 	 (minibuffer-setup . #'corfu-enable-in-minibuffer)))
 
-;; ;; Inline completion
-;; (use-package company
-;;   :ensure t
-;;   :config
-;;   (setq company-minimum-prefix-length 1
-;;         company-idle-delay 0.0)
-;;   :hook
-;;   (after-init . global-company-mode))
+;; Inline completion
+(use-package company
+  :ensure t
+  :config
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.0)
+  :hook
+  (after-init . global-company-mode))
 
 ;; Example configuration for Consult
 (use-package consult
