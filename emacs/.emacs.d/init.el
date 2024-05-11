@@ -516,3 +516,9 @@
   :bind
   (([remap scroll-down-command] . golden-ratio-scroll-screen-down)
    ([remap scroll-up-command] . golden-ratio-scroll-screen-up)))
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-vcs-max-length 30))
