@@ -129,6 +129,7 @@
 
 ;; Add color to compilation buffer
 (use-package ansi-color
+  :commands (ansi-color-apply-on-region)
   :config
   (defun my/ansi-colorize-buffer ()
     (let ((buffer-read-only nil))
@@ -201,6 +202,7 @@
 ;; LSP Mode
 (use-package lsp-mode
   :ensure t
+  :commands (lsp-booster--advice-final-command lsp-booster--advice-json-parse)
   :init
   ;; For LSP Booster
   (defun lsp-booster--advice-json-parse (old-fn &rest args)
@@ -275,6 +277,7 @@
 ;; Snippets
 (use-package yasnippet
   :ensure t
+  :commands (yas-reload-all)
   :config
   (yas-reload-all)
   :hook
@@ -418,6 +421,7 @@
 ;; ;; Automated treesitter
 (use-package treesit-auto
   :ensure t
+  :commands (global-treesit-auto-mode treesit-auto-add-to-auto-mode-alist)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode)
