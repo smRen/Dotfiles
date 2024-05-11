@@ -464,8 +464,6 @@
 (use-package orderless
   :ensure t)
 
-
-
 ;; Annotations
 (use-package marginalia
   :ensure t
@@ -528,16 +526,10 @@
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-vcs-max-length 30))
+  :custom
+  (doom-modeline-vcs-max-length 30))
 
 (use-package nerd-icons
-  :ensure t
-  ;; :custom
-  ;; The Nerd Font you want to use in GUI
-  ;; "Symbols Nerd Font Mono" is the default and is recommended
-  ;; but you can use any other Nerd Font if you want
-  ;; (nerd-icons-font-family "Symbols Nerd Font Mono")
-  )
+  :ensure t)
 
 ;;; init.el ends here
