@@ -183,8 +183,6 @@
 ;;               ("C-n" . icomplete-forward-completions)
 ;;               ("C-p" . icomplete-backward-completions)))
 
-;;;;;;; Third party packages ;;;;;;;
-
 ;; ;; Color theme
 (use-package doom-themes
   :ensure t
