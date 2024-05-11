@@ -154,16 +154,16 @@
   (json-ts-mode-indent-offset 8))
 
 ;; Use Dabbrev with Corfu!
-(use-package dabbrev
-  ;; Swap M-/ and C-M-/
-  :bind (("M-/" . dabbrev-completion)
-         ("C-M-/" . dabbrev-expand))
-  :config
-  (add-to-list 'dabbrev-ignored-buffer-regexps "\\` ")
-  ;; Since 29.1, use `dabbrev-ignored-buffer-regexps' on older.
-  (add-to-list 'dabbrev-ignored-buffer-modes 'doc-view-mode)
-  (add-to-list 'dabbrev-ignored-buffer-modes 'pdf-view-mode)
-  (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode))
+;; (use-package dabbrev
+;;   ;; Swap M-/ and C-M-/
+;;   :bind (("M-/" . dabbrev-completion)
+;;          ("C-M-/" . dabbrev-expand))
+;;   :config
+;;   (add-to-list 'dabbrev-ignored-buffer-regexps "\\` ")
+;;   ;; Since 29.1, use `dabbrev-ignored-buffer-regexps' on older.
+;;   (add-to-list 'dabbrev-ignored-buffer-modes 'doc-view-mode)
+;;   (add-to-list 'dabbrev-ignored-buffer-modes 'pdf-view-mode)
+;;   (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode))
 
 ;; ;; Default minibuffer completion
 ;; (use-package icomplete
@@ -286,27 +286,27 @@
 (use-package yasnippet-snippets
   :ensure t)
 
-(use-package corfu
-  :ensure t
-  :custom
-  (corfu-cycle t)
-  (corfu-auto t)
-  (corfu-auto-delay 0.1)
-  (corfu-auto-prefix 2)
-  (corfu-quit-no-match 'separator)
-  :init
-  (defun corfu-enable-in-minibuffer ()
-  "Enable Corfu in the minibuffer."
-  (when (local-variable-p 'completion-at-point-functions)
-    ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
-    (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-                corfu-popupinfo-delay nil)
-    (corfu-mode +1)))
-  (global-corfu-mode)
-  :hook ((prog-mode . corfu-mode)
-         (shell-mode . corfu-mode)
-         (eshell-mode . corfu-mode)
-	 (minibuffer-setup . #'corfu-enable-in-minibuffer)))
+;; (use-package corfu
+;;   :ensure t
+;;   :custom
+;;   (corfu-cycle t)
+;;   (corfu-auto t)
+;;   (corfu-auto-delay 0.1)
+;;   (corfu-auto-prefix 2)
+;;   (corfu-quit-no-match 'separator)
+;;   :init
+;;   (defun corfu-enable-in-minibuffer ()
+;;   "Enable Corfu in the minibuffer."
+;;   (when (local-variable-p 'completion-at-point-functions)
+;;     ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+;;     (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+;;                 corfu-popupinfo-delay nil)
+;;     (corfu-mode +1)))
+;;   (global-corfu-mode)
+;;   :hook ((prog-mode . corfu-mode)
+;;          (shell-mode . corfu-mode)
+;;          (eshell-mode . corfu-mode)
+;; 	 (minibuffer-setup . #'corfu-enable-in-minibuffer)))
 
 ;; ;; Inline completion
 ;; (use-package company
