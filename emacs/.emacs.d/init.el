@@ -317,6 +317,10 @@
   :hook
   (after-init . global-company-mode))
 
+;; Git porcelain
+(use-package magit
+  :ensure t)
+
 ;; Example configuration for Consult
 (use-package consult
   :ensure t
