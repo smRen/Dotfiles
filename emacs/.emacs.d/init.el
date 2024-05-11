@@ -312,8 +312,8 @@
 (use-package company
   :ensure t
   :config
-  (setq company-minimum-prefix-length 1
-        company-idle-delay 0.0)
+  (setq company-minimum-prefix-length 2
+        company-idle-delay 0.1)
   :hook
   (after-init . global-company-mode))
 
