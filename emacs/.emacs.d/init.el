@@ -94,8 +94,12 @@
   (tab-always-indent 'complete)
 
   ;; Backup settings
+  (lock-file-name-transforms
+	'(("\\`/.*/\\([^/]+\\)\\'" "~/.emacs.d/aux/\\1" t)))
+  (auto-save-file-name-transforms
+	'(("\\`/.*/\\([^/]+\\)\\'" "~/.emacs.d/aux/\\1" t)))
   (backup-directory-alist
-   `((".*" . ,(concat user-emacs-directory "backups"))))
+	'((".*" . "~/.emacs.d/aux/")))
   (kept-old-versions 2)
   (kept-new-versions 6)
   (vc-make-backup-files t)
