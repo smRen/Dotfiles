@@ -2,7 +2,7 @@
 (use-package emacs
   :config
   ;; Set side fringes
-  (set-fringe-mode 30)
+  (set-fringe-mode 10)
   
   ;; Disable menu bar, tool bar, and scroll bar
   (menu-bar-mode -1)
