@@ -471,11 +471,11 @@
   :hook
   (marginalia-mode . all-the-icons-completion-marginalia-setup))
 
-;; Faster lsp
-(use-package eglot-booster
-  :after eglot
-  :config
-  (eglot-booster-mode))
+;; ;; Faster lsp
+;; (use-package eglot-booster
+;;   :after eglot
+;;   :config
+;;   (eglot-booster-mode))
 
 ;; Project management
 (use-package projectile
