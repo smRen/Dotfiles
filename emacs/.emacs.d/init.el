@@ -127,6 +127,7 @@
   ;; Use hippie expand
   ([remap dabbrev-completion] . hippie-expand))
 
+;; Add color to compilation buffer
 (use-package ansi-color
   :config
   (defun my/ansi-colorize-buffer ()
