@@ -1,4 +1,9 @@
-;; -*- lexical-binding: t -*-
+;;; Emacs-config-file --- Summary  -*- lexical-binding:t -*-
+
+;;; Commentary:
+;; Init file for Emacs
+
+;;; Code:
 (use-package emacs
   :config
   ;; Set side fringes
@@ -534,3 +539,5 @@
   ;; but you can use any other Nerd Font if you want
   ;; (nerd-icons-font-family "Symbols Nerd Font Mono")
   )
+
+;;; init.el ends here
