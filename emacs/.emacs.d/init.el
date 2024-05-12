@@ -293,36 +293,27 @@
 (use-package yasnippet-snippets
   :ensure t)
 
-;; (use-package corfu
-;;   :ensure t
-;;   :custom
-;;   (corfu-cycle t)
-;;   (corfu-auto t)
-;;   (corfu-auto-delay 0.1)
-;;   (corfu-auto-prefix 2)
-;;   (corfu-quit-no-match 'separator)
-;;   :init
-;;   (defun corfu-enable-in-minibuffer ()
-;;   "Enable Corfu in the minibuffer."
-;;   (when (local-variable-p 'completion-at-point-functions)
-;;     ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
-;;     (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-;;                 corfu-popupinfo-delay nil)
-;;     (corfu-mode +1)))
-;;   (global-corfu-mode)
-;;   :hook ((prog-mode . corfu-mode)
-;;          (shell-mode . corfu-mode)
-;;          (eshell-mode . corfu-mode)
-;; 	 (minibuffer-setup . #'corfu-enable-in-minibuffer)))
-
-;; Inline completion
-(use-package company
+(use-package corfu
   :ensure t
-  :config
-  (setq company-minimum-prefix-length 2
-        company-idle-delay 0.1)
-  :hook
-  (after-init . global-company-mode))
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-delay 0.1)
+  (corfu-auto-prefix 2)
+  (corfu-quit-no-match 'separator)
+  :init
+  (defun corfu-enable-in-minibuffer ()
+  "Enable Corfu in the minibuffer."
+  (when (local-variable-p 'completion-at-point-functions)
+    ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+    (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+                corfu-popupinfo-delay nil)
+    (corfu-mode +1)))
+  (global-corfu-mode)
+  :hook ((prog-mode . corfu-mode)
+         (shell-mode . corfu-mode)
+         (eshell-mode . corfu-mode)
+	 (minibuffer-setup . #'corfu-enable-in-minibuffer)))
 
 ;; Git porcelain
 (use-package magit
