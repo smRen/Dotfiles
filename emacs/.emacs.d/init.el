@@ -130,7 +130,7 @@
   ;; (completions-detailed t)
   :bind
   ;; Use hippie expand
-  ([remap dabbrev-completion] . hippie-expand))
+  ([remap dabbrev-expand] . hippie-expand))
 
 ;; Add color to compilation buffer
 (use-package ansi-color
