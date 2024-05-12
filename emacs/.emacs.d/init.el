@@ -53,8 +53,6 @@
   (setq read-process-output-max (* 64 1024 1024))
   (setq process-adaptive-read-buffering nil)
   (setq process-connection-type nil)
-  ;; (let ((process-connection-type nil))
-  ;;   (async-shell-command command buffer))
 
   ;; Set fonts
   (add-to-list 'default-frame-alist
@@ -70,8 +68,6 @@
   (load custom-file 'noerror)
   
   :hook
-  ;; Enable eglot in the following modes
-  ;; ((c++-ts-mode bash-ts-mode) .  eglot-ensure)
 
   ;; Enable line modes in programming modes
   (prog-mode . display-line-numbers-mode)
@@ -399,20 +395,6 @@
   :ensure t
   :config
   (global-flycheck-mode +1))
-  ;;:hook (;; Set multiple checkers for flycheck
-	 ;; Note: Check the LSP for integration
-	 ;; May not be necessary
-	 ;; (lsp-managed-mode . (lambda ()
-	 ;; 		       (flycheck-mode)
-	 ;; 		       (let ((current-prog-mode major-mode))
-	 ;; 			 (cond ((eq current-prog-mode 'c++-ts-mode)
-	 ;; 				(setq flycheck-checker 'c/c++-cppcheck)
-	 ;; 				(flycheck-add-next-checker 'c/c++-cppcheck 'lsp))
-	 ;; 			       ;; ((eq current-prog-mode 'bash-ts-mode)
-	 ;; 			       ;; 	(setq flycheck-checker 'sh-shellcheck)
-	 ;; 			       ;; 	(flycheck-add-next-checker 'sh-shellcheck 'lsp))
-	 ;; 			       ))))
-;;	 ))
 
 (use-package consult-flycheck
   :ensure t)
@@ -427,7 +409,7 @@
   :ensure t
   :defer t)
 
-;; ;; Automated treesitter
+;; Automated treesitter
 (use-package treesit-auto
   :ensure t
   :commands (global-treesit-auto-mode treesit-auto-add-to-auto-mode-alist)
@@ -484,12 +466,6 @@
   :config
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
-
-;; ;; Faster lsp
-;; (use-package eglot-booster
-;;   :after eglot
-;;   :config
-;;   (eglot-booster-mode))
 
 ;; Project management
 (use-package projectile
