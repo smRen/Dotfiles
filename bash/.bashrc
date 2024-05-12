@@ -44,6 +44,9 @@ HISTFILESIZE=5000
 HISTFILE=~/.history
 shopt -s "histappend" "checkwinsize" "extglob" "globstar"
 
+# Enable forward search for interactive shell
+[[ $- == *i* ]] && stty -ixon
+
 # Aliases
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
