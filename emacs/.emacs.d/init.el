@@ -523,4 +523,12 @@
   :init
   (unless (display-graphic-p)
     (corfu-terminal-mode +1)))
+
+(use-package nerd-icons-corfu
+  :ensure t
+  :after corfu
+  :commands (nerd-icons-corfu-formatter)
+  :init
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
 ;;; init.el ends here
