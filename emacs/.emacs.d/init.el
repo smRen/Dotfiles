@@ -503,4 +503,21 @@
   :custom
   (doom-modeline-vcs-max-length 30))
 
+(use-package cape
+  :bind (("M-p p" . completion-at-point)
+         ("M-p t" . complete-tag)
+         ("M-p d" . cape-dabbrev)        
+         ("M-p h" . cape-history)
+         ("M-p f" . cape-file)
+         ("M-p k" . cape-keyword)
+         ("M-p s" . cape-elisp-symbol)
+         ("M-p e" . cape-elisp-block)
+         ("M-p a" . cape-abbrev)
+         ("M-p l" . cape-line)
+         ("M-p w" . cape-dict)
+         ("M-p :" . cape-emoji)
+         ("M-p _" . cape-tex)
+         ("M-p &" . cape-sgml)
+         ("M-p r" . cape-rfc1345)))
+
 ;;; init.el ends here
