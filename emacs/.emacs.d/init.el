@@ -475,12 +475,15 @@
   (marginalia-mode +1))
 
 ;; Icons
-(use-package all-the-icons-completion
+(use-package nerd-icons
+  :ensure t)
+
+(use-package nerd-icons-completion
   :ensure t
-  :init
-  (all-the-icons-completion-mode +1)
-  :hook
-  (marginalia-mode . all-the-icons-completion-marginalia-setup))
+  :after marginalia
+  :config
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
 ;; ;; Faster lsp
 ;; (use-package eglot-booster
@@ -532,8 +535,5 @@
   :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-vcs-max-length 30))
-
-(use-package nerd-icons
-  :ensure t)
 
 ;;; init.el ends here
