@@ -430,12 +430,12 @@
   (completion-category-overrides nil)
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
-;; Move minibuffer stuff to middle
-;; Very glitchy
-(use-package vertico-posframe
-  :ensure t
-  :config
-  (vertico-posframe-mode 1))
+;; ;; Move minibuffer stuff to middle
+;; ;; Very glitchy
+;; (use-package vertico-posframe
+;;   :ensure t
+;;   :config
+;;   (vertico-posframe-mode 1))
 
 ;; Completion style
 (use-package orderless
