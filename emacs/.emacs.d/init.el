@@ -506,6 +506,16 @@
 	 ("M-p :" . cape-emoji)
 	 ("M-p _" . cape-tex)
 	 ("M-p &" . cape-sgml)
-	 ("M-p r" . cape-rfc1345)))
+	 ("M-p r" . cape-rfc1345)
+	 ("M-p y" . yasnippet-capf))
+  :init
+  (defun smren/elisp-capf-setup ()
+    (add-to-list 'completion-at-point-functions #'cape-elisp-symbol))
+  :hook
+  (emacs-lisp-mode . smren/elisp-capf-setup))
+
+(use-package yasnippet-capf
+  :ensure t
+  :after cape)
 
 ;;; init.el ends here
