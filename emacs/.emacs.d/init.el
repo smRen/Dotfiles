@@ -8,7 +8,7 @@
   :config
   ;; Set side fringes
   (set-fringe-mode 10)
-  
+
   ;; Disable menu bar, tool bar, and scroll bar
   (menu-bar-mode -1)
   (tool-bar-mode -1)
@@ -43,7 +43,7 @@
   (add-to-list 'auto-mode-alist '(".bashrc" . bash-ts-mode))
   (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-ts-mode))
   (add-to-list 'auto-mode-alist '("Containerfile" . dockerfile-ts-mode))
-  
+
   ;; Third party packages
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -56,7 +56,7 @@
 
   ;; Set fonts
   (add-to-list 'default-frame-alist
-               '(font . "Hack-11"))
+	       '(font . "Hack-11"))
   (set-face-attribute 'default t :font "Hack-11")
 
   ;; Start emacs maximized
@@ -66,12 +66,12 @@
   ;; Custom settings in its own file
   (setq custom-file (concat user-emacs-directory "custom.el"))
   (load custom-file 'noerror)
-  
+
   :hook
 
   ;; Enable line modes in programming modes
   (prog-mode . display-line-numbers-mode)
-  
+
   ;; Do not allow the cursor in the minibuffer prompt
   (minibuffer-setup . cursor-intangible-mode)
 
@@ -102,7 +102,7 @@
   (backup-by-copying t)
   (delete-old-versions t)
   (version-control t)
-  
+
   ;; Disable startup screen and messages
   (inhibit-startup-screen t)
   (inhibit-startup-message t)
@@ -216,36 +216,36 @@
      (when (equal (following-char) ?#)
        (let ((bytecode (read (current-buffer))))
 	 (when (byte-code-function-p bytecode)
-           (funcall bytecode))))
+	   (funcall bytecode))))
      (apply old-fn args)))
   (advice-add (if (progn (require 'json)
 			 (fboundp 'json-parse-buffer))
-                  'json-parse-buffer
+		  'json-parse-buffer
 		'json-read)
-              :around
-              #'lsp-booster--advice-json-parse)
+	      :around
+	      #'lsp-booster--advice-json-parse)
 
   (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
     "Prepend emacs-lsp-booster command to lsp CMD."
     (let ((orig-result (funcall old-fn cmd test?)))
       (if (and (not test?) ;; for check lsp-server-present?
-               (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
-               lsp-use-plists
-               (not (functionp 'json-rpc-connection)) ;; native json-rpc
-               (executable-find "emacs-lsp-booster"))
-          (progn
-            (message "Using emacs-lsp-booster for %s!" orig-result)
-            (cons "emacs-lsp-booster" orig-result))
+	       (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+	       lsp-use-plists
+	       (not (functionp 'json-rpc-connection)) ;; native json-rpc
+	       (executable-find "emacs-lsp-booster"))
+	  (progn
+	    (message "Using emacs-lsp-booster for %s!" orig-result)
+	    (cons "emacs-lsp-booster" orig-result))
 	orig-result)))
-  
+
   (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
 
   (setq lsp-keymap-prefix "C-c l")
 
   (defun my/lsp-mode-setup-completion ()
     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-          '(orderless))) ;; Configure orderless
-  
+	  '(orderless))) ;; Configure orderless
+
   :hook (;; Auto start in the following modes
 	 ((c++-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode dockerfile-ts-mode) . lsp-deferred)
 	 (lsp-completion-mode . my/lsp-mode-setup-completion))
@@ -307,12 +307,12 @@
   (when (local-variable-p 'completion-at-point-functions)
     ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
     (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-                corfu-popupinfo-delay nil)
+		corfu-popupinfo-delay nil)
     (corfu-mode +1)))
   (global-corfu-mode)
   :hook ((prog-mode . corfu-mode)
-         (shell-mode . corfu-mode)
-         (eshell-mode . corfu-mode)
+	 (shell-mode . corfu-mode)
+	 (eshell-mode . corfu-mode)
 	 (minibuffer-setup . #'corfu-enable-in-minibuffer)))
 
 ;; Git porcelain
@@ -329,7 +329,7 @@
 	 ("C-x t b" . consult-buffer-other-tab) ;; orig. switch-to-buffer-other-tab
 	 ("C-x r b" . consult-bookmark)		;; orig. bookmark-jump
 	 ("C-x p b" . consult-project-buffer) ;; orig. project-switch-to-buffer
-	 
+
 	 ;; Other custom bindings
 	 ("M-y" . consult-yank-pop) ;; orig. yank-pop
 	 ;; M-g bindings in `goto-map'
@@ -464,7 +464,7 @@
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-              ("C-c p" . projectile-command-map))
+	      ("C-c p" . projectile-command-map))
   :hook
   (project-find-functions . project-projectile)
   :custom
@@ -505,19 +505,19 @@
 
 (use-package cape
   :bind (("M-p p" . completion-at-point)
-         ("M-p t" . complete-tag)
-         ("M-p d" . cape-dabbrev)        
-         ("M-p h" . cape-history)
-         ("M-p f" . cape-file)
-         ("M-p k" . cape-keyword)
-         ("M-p s" . cape-elisp-symbol)
-         ("M-p e" . cape-elisp-block)
-         ("M-p a" . cape-abbrev)
-         ("M-p l" . cape-line)
-         ("M-p w" . cape-dict)
-         ("M-p :" . cape-emoji)
-         ("M-p _" . cape-tex)
-         ("M-p &" . cape-sgml)
-         ("M-p r" . cape-rfc1345)))
+	 ("M-p t" . complete-tag)
+	 ("M-p d" . cape-dabbrev)
+	 ("M-p h" . cape-history)
+	 ("M-p f" . cape-file)
+	 ("M-p k" . cape-keyword)
+	 ("M-p s" . cape-elisp-symbol)
+	 ("M-p e" . cape-elisp-block)
+	 ("M-p a" . cape-abbrev)
+	 ("M-p l" . cape-line)
+	 ("M-p w" . cape-dict)
+	 ("M-p :" . cape-emoji)
+	 ("M-p _" . cape-tex)
+	 ("M-p &" . cape-sgml)
+	 ("M-p r" . cape-rfc1345)))
 
 ;;; init.el ends here
