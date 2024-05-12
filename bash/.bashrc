@@ -16,6 +16,9 @@ if [[ "$INSIDE_EMACS" != 'vterm' ]]; then
     cd "$HOME" || return
 fi
 
+#GPG allow input of passphrase in tty
+export GPG_TTY=$(tty)
+
 # Customize prompt
 BLACK="\[$(tput setaf 0)\]"
 YELLOW="\[$(tput setaf 3)\]"
