@@ -518,4 +518,9 @@
   :ensure t
   :after cape)
 
+(use-package corfu-terminal
+  :ensure t
+  :init
+  (unless (display-graphic-p)
+    (corfu-terminal-mode +1)))
 ;;; init.el ends here
