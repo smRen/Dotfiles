@@ -373,7 +373,9 @@
 (use-package flycheck
   :ensure t
   :config
-  (global-flycheck-mode +1))
+  (global-flycheck-mode +1)
+  :custom
+  (flycheck-check-syntax-automatically '(save mode-enable)))
 
 (use-package consult-flycheck
   :ensure t)
