@@ -79,6 +79,9 @@
   (minibuffer-setup . cursor-intangible-mode)
 
   :custom
+  ;; Allow pin entry inside of emacs minibuffer
+  (setq epg-pinentry-mode 'loopback)
+  
   ;; Do not allow the cursor in the minibuffer prompt
   (minibuffer-prompt-properties
    '(read-only t cursor-intangible t face minibuffer-prompt))
