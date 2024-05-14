@@ -548,4 +548,10 @@
 	 ("C-c g SPC" . git-gutter:mark-hunk)
 	 ("C-c g =" . git-gutter:popup-hunk)))
 
+(use-package avy
+  :ensure t
+  :init
+  (avy-setup-default)
+  :bind (("C-:" . avy-goto-char)))
+
 ;;; init.el ends here
