@@ -8,7 +8,7 @@ RUN sed -i "s/ParallelDownloads = 5/ParallelDownloads = 10/" /etc/pacman.conf \
     && pacman -Sy \
     && pacman -S --noconfirm \
     # System packages
-    archlinux-keyring archlinux-xdg-menu nfs-utils libvterm intel-media-driver libva-utils intel-gpu-tools \
+    archlinux-keyring archlinux-xdg-menu nfs-utils libvterm intel-media-driver libva-utils intel-gpu-tools bash-language-server wlroots\
     # Virtualization
     virt-manager \
     # Container packages
