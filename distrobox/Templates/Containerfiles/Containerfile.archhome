@@ -2,18 +2,18 @@ FROM quay.io/toolbx/arch-toolbox:latest
 
 # Parallel arch downloads and colored output
 RUN sed -i "s/ParallelDownloads = 5/ParallelDownloads = 10/" /etc/pacman.conf \
-	&& sed -i "s/#Color/Color/" /etc/pacman.conf \
-	&& pacman-key --init \
-	&& pacman-key --populate archlinux \
-	&& pacman -Sy \
-	&& pacman -S --noconfirm \
-	# System packages
-	archlinux-keyring archlinux-xdg-menu nfs-utils libvterm intel-media-driver libva-utils intel-gpu-tools nvidia libva-nvidia-driver \
-	# Virtualization
-	virt-manager \
-	# Container packages
-	podman slirp4netns podman-compose podman-docker \
-	# Development packages
-	cmake ninja nodejs npm \
-	# Gui and terminal tools
-	emacs-wayland neovim chromium firefox htop tmux podman kitty stow mpv unrar noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-hack dolphin plasma-workspace
+    && sed -i "s/#Color/Color/" /etc/pacman.conf \
+    && pacman-key --init \
+    && pacman-key --populate archlinux \
+    && pacman -Sy \
+    && pacman -S --noconfirm \
+    # System packages
+    archlinux-keyring archlinux-xdg-menu nfs-utils libvterm intel-media-driver libva-utils intel-gpu-tools nvidia libva-nvidia-driver \
+    # Virtualization
+    virt-manager \
+    # Container packages
+    podman slirp4netns podman-compose podman-docker \
+    # Development packages
+    cmake ninja nodejs npm \
+    # Gui and terminal tools
+    emacs-wayland neovim chromium firefox htop tmux podman kitty stow mpv unrar noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-hack dolphin plasma-workspace
