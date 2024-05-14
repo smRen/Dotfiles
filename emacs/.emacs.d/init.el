@@ -497,6 +497,7 @@
   (doom-modeline-vcs-max-length 30))
 
 (use-package cape
+  :ensure t
   :bind (("C-c c p" . completion-at-point)
 	 ("C-c c t" . complete-tag)
 	 ("C-c c d" . cape-dabbrev)
