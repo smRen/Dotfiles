@@ -12,10 +12,6 @@ if ! shopt -oq posix; then
     fi
 fi
 
-if [[ "$INSIDE_EMACS" != 'vterm' ]]; then
-    cd "$HOME" || return
-fi
-
 #GPG allow input of passphrase in tty
 export GPG_TTY=$(tty)
 
@@ -65,6 +61,10 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
 	vterm_printf "51;Evterm-clear-scrollback"
 	tput clear
     }
+fi
+
+if [[ "$INSIDE_EMACS" != 'vterm' ]]; then
+    cd "$HOME" || return
 fi
 
 vterm_printf() {
