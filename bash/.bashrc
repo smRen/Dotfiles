@@ -95,4 +95,6 @@ vterm_cmd() {
 }
 
 # Temporary fix for dolphin open with
-XDG_MENU_PREFIX=plasma- kbuildsycoca6 &> /dev/null
+if [ -f "/.dockerenv" ]; then
+    XDG_MENU_PREFIX=plasma- kbuildsycoca6 &> /dev/null
+fi
