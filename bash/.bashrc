@@ -38,7 +38,6 @@ else
     export PROMPT_COMMAND='__git_ps1 "[${GREEN}${BOLD}\u${BLUE}@${RED}${BOLD}\h${RESET} ${CYAN}\w${RESET}]" "\$ " " (${MAGENTA}${BOLD}git:%s${RESET}) "'
 fi
 
-
 # History settings
 HISTCONTROL=ignoreboth
 HISTSIZE=10000
@@ -99,3 +98,6 @@ vterm_cmd() {
 
     vterm_printf "51;E$vterm_elisp"
 }
+
+# Temporary fix for dolphin open with
+XDG_MENU_PREFIX=plasma- kbuildsycoca6 &> /dev/null
