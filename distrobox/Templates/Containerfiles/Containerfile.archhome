@@ -16,4 +16,4 @@ RUN sed -i "s/ParallelDownloads = 5/ParallelDownloads = 10/" /etc/pacman.conf \
     # Development packages
     cmake ninja nodejs npm \
     # Gui and terminal tools
-    emacs-wayland neovim chromium firefox htop tmux podman kitty stow mpv unrar noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-hack dolphin plasma-workspace
+    emacs-wayland neovim chromium firefox htop tmux kitty stow mpv unrar noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-hack dolphin plasma-workspace
