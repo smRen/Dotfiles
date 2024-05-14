@@ -67,6 +67,9 @@
   (setq custom-file (concat user-emacs-directory "custom.el"))
   (load custom-file 'noerror)
 
+  ;;; Prevent Extraneous Tabs
+  (setq-default indent-tabs-mode nil)
+
   :hook
 
   ;; Enable line modes in programming modes
