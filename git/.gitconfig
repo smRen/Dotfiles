@@ -8,3 +8,4 @@
 	gpgSign = true
 [maintenance]
 	repo = /home/smakey18/Projects/Dotfiles
+	repo = /DistroboxHomes/arch/smakey18/Projects/Dotfiles
