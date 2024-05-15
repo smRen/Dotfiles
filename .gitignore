@@ -10,6 +10,11 @@ flatpak_configs/.var/app/io.neovim.nvim/*
 docker/.docker/*
 !docker/.docker/config.json
 
+# Gpg
+gpg/.gnupg/*
+!gpg/.gnupg/gpg-agent.conf
+!gpg/.gnupg/gpg.conf
+
 # Emacs
 emacs/.emacs.d/*
 !emacs/.emacs.d/early-init.el
