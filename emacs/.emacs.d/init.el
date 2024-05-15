@@ -556,13 +556,7 @@
 (use-package git-gutter
   :ensure t
   :init
-  (global-git-gutter-mode +1)
-  :bind (("C-c g n" . git-gutter:next-hunk)
-	 ("C-c g p" . git-gutter:previous-hunk)
-	 ("C-c g s" . git-gutter:stage-hunk)
-	 ("C-c g r" . git-gutter:revert-hunk)
-	 ("C-c g SPC" . git-gutter:mark-hunk)
-	 ("C-c g =" . git-gutter:popup-hunk)))
+  (global-git-gutter-mode +1))
 
 (use-package avy
   :ensure t
