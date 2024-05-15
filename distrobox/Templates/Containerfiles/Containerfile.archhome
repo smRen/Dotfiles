@@ -14,4 +14,4 @@ RUN sed -i "s/#Color/Color/" /etc/pacman.conf \
     vscode-html-languageserver bash-language-server yaml-language-server jedi-language-server \
     lua-language-server python-lsp-server typescript-language-server \
     # Gui and terminal tools
-    emacs-wayland neovim chromium firefox htop tmux kitty stow mpv unrar noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-hack dolphin plasma-workspace
+    emacs-wayland neovim chromium firefox htop tmux kitty stow mpv unrar noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-hack ttf-hack-nerd dolphin plasma-workspace
