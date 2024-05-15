@@ -12,6 +12,12 @@ if ! shopt -oq posix; then
     fi
 fi
 
+# Load fzf keybindings if in arch
+if [[ "$HOSTNAME" = *"arch"* ]]; then
+    . /usr/share/fzf/key-bindings.bash
+    . /usr/share/fzf/completion.bash
+fi
+
 #GPG allow input of passphrase in tty
 export GPG_TTY=$(tty)
 
