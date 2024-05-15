@@ -566,6 +566,6 @@
   :ensure t
   :init
   (avy-setup-default)
-  :bind (("C-:" . avy-goto-char)))
+  :bind (("C-c f c" . avy-goto-char)))
 
 ;;; init.el ends here
