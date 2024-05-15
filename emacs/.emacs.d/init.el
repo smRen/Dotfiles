@@ -322,7 +322,9 @@
 
 ;; Git porcelain
 (use-package magit
-  :ensure t)
+  :ensure t
+  :bind (("C-c g" . magit-dispatch)
+         ("C-c f" . magit-file-dispatch)))
 
 ;; Example configuration for Consult
 (use-package consult
