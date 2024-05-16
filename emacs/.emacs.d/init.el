@@ -413,15 +413,9 @@
   :ensure t
   :defer t)
 
-;; Automated treesitter
+;; For downloading treesit languages
 (use-package treesit-auto
-  :ensure t
-  :commands (global-treesit-auto-mode treesit-auto-add-to-auto-mode-alist)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode)
-  :custom
-  (treesit-font-lock-level 4))
+  :ensure t)
 
 ;; Autofind python env
 (use-package pet
