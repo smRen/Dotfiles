@@ -181,6 +181,10 @@
   (c-ts-mode-indent-offset 4)
   (c-ts-mode-indent-style 'linux))
 
+(use-package c++-ts-mode
+  :config
+  (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode)))
+
 ;; Custom settings for json-ts
 (use-package json-ts-mode
   :custom
