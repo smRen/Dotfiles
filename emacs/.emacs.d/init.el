@@ -459,22 +459,22 @@
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
-;; Project management
-(use-package projectile
-  :ensure t
-  :commands (projectile-mode)
-  :defines (projectile-mode-map)
-  :init
-  (projectile-mode +1)
-  :bind (:map projectile-mode-map
-	      ("C-c p" . projectile-command-map))
-  :hook
-  (project-find-functions . project-projectile)
-  :custom
-  ;; Allow compilation buffer to be editable (useful for interactive apps)
-  (projectile-comint-mode t)
-  ;; Auto search Projects folder for projects
-  (projectile-project-search-path '("~/Projects")))
+;; ;; Project management
+;; (use-package projectile
+;;   :ensure t
+;;   :commands (projectile-mode)
+;;   :defines (projectile-mode-map)
+;;   :init
+;;   (projectile-mode +1)
+;;   :bind (:map projectile-mode-map
+;; 	      ("C-c p" . projectile-command-map))
+;;   :hook
+;;   (project-find-functions . project-projectile)
+;;   :custom
+;;   ;; Allow compilation buffer to be editable (useful for interactive apps)
+;;   (projectile-comint-mode t)
+;;   ;; Auto search Projects folder for projects
+;;   (projectile-project-search-path '("~/Projects")))
 
 ;; (use-package consult-projectile
 ;;   :ensure t
