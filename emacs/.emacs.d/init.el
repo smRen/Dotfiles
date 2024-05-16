@@ -179,7 +179,9 @@
   :custom
   ;; Indent and code style
   (c-ts-mode-indent-offset 4)
-  (c-ts-mode-indent-style 'linux))
+  (c-ts-mode-indent-style 'linux)
+  :config
+  (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode)))
 
 (use-package c++-ts-mode
   :config
