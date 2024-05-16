@@ -137,7 +137,9 @@
   ;; (completions-detailed t)
   :bind
   ;; Use hippie expand
-  ([remap dabbrev-expand] . hippie-expand))
+  ([remap dabbrev-expand] . hippie-expand)
+  ;; Recent files
+  ("C-x C-r" . recentf))
 
 ;; Native LSP
 ;; (use-package eglot
