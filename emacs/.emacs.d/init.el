@@ -39,10 +39,10 @@
   (recentf-mode +1)
 
   ;; Associate certain files to correct ts-mode
-  (add-to-list 'auto-mode-alist '("CMakeLists.txt" . cmake-ts-mode))
-  (add-to-list 'auto-mode-alist '(".bashrc" . bash-ts-mode))
-  (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-ts-mode))
-  (add-to-list 'auto-mode-alist '("Containerfile" . dockerfile-ts-mode))
+  (add-to-list 'auto-mode-alist '("/CMakeLists\\.txt" . cmake-ts-mode))
+  (add-to-list 'auto-mode-alist '("/\\.bashrc\\'" . bash-ts-mode))
+  (add-to-list 'auto-mode-alist '("/Dockerfile[[:alpha:][:digit:].]*\\'" . dockerfile-ts-mode))
+  (add-to-list 'auto-mode-alist '("/Containerfile[[:alpha:][:digit:].]*\\'" . dockerfile-ts-mode))
 
   ;; Third party packages
   (defvar package-archives)
