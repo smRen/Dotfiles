@@ -542,12 +542,12 @@
   :init
   (global-git-gutter-mode +1))
 
-(use-package avy
-  :ensure t
-  :commands (avy-setup-default)
-  :init
-  (avy-setup-default)
-  :bind (("C-c a c" . avy-goto-char)))
+;; (use-package avy
+;;   :ensure t
+;;   :commands (avy-setup-default)
+;;   :init
+;;   (avy-setup-default)
+;;   :bind (("C-c a c" . avy-goto-char)))
 
 ;; Faster lsp
 (use-package eglot-booster
