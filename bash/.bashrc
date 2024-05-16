@@ -23,13 +23,11 @@ elif [[ "$DISTRIBUTION_NAME" == *"Ubuntu"* ]]; then
 fi
 
 #GPG allow input of passphrase in tty
-export GPG_TTY=$(tty)
+TTY=$(tty)
+export GPG_TTY=$TTY
 
 # Customize prompt
-BLACK="\[$(tput setaf 0)\]"
-YELLOW="\[$(tput setaf 3)\]"
 MAGENTA="\[$(tput setaf 5)\]"
-WHITE="\[$(tput setaf 7)\]"
 RED="\[$(tput setaf 1)\]"
 GREEN="\[$(tput setaf 2)\]"
 BLUE="\[$(tput setaf 4)\]"
