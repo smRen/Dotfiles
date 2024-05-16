@@ -6,6 +6,8 @@
 ;;; Code:
 (use-package emacs
   :config
+  (load-theme 'modus-vivendi t)
+  
   ;; Set side fringes
   (set-fringe-mode 10)
 
@@ -184,104 +186,6 @@
   :custom
   (json-ts-mode-indent-offset 8))
 
-;; ;; Default minibuffer completion
-;; (use-package icomplete
-;;   :demand t
-;;   :custom
-;;   (completion-styles '(partial-completion substring flex))
-;;   (completion-category-overrides '((file (styles basic substring))))
-;;   ;;  (read-file-name-completion-ignore-case t)
-;;   (read-buffer-completion-ignore-case t)
-;;   ;;  (completion-ignore-case t)
-;;   :config
-;;   ;;  (icomplete-mode)
-;;   ;;  (icomplete-vertical-mode)
-;;   (fido-vertical-mode +1)
-;;   :bind (:map icomplete-minibuffer-map
-;;               ("C-n" . icomplete-forward-completions)
-;;               ("C-p" . icomplete-backward-completions)))
-
-;; ;; Color theme
-(use-package doom-themes
-  :ensure t
-  :commands (doom-themes-visual-bell-config doom-themes-org-config)
-  :custom
-  (doom-vibrant-brighter-comments t)
-  (doom-themes-enable-bold t)
-  (doom-themes-enable-italic t)
-  (doom-vibrant-brighter-comments t)
-  (doom-vibrant-brighter-modeline t)
-  (doom-vibrant-padded-modeline t)
-  :init
-  (load-theme 'doom-vibrant t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-org-config))
-
-;; LSP Mode
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :commands (lsp-booster--advice-final-command lsp-booster--advice-json-parse)
-;;   :init
-;;   ;; For LSP Booster
-;;   (defun lsp-booster--advice-json-parse (old-fn &rest args)
-;;     "Try to parse bytecode instead of json."
-;;     (or
-;;      (when (equal (following-char) ?#)
-;;        (let ((bytecode (read (current-buffer))))
-;; 	 (when (byte-code-function-p bytecode)
-;; 	   (funcall bytecode))))
-;;      (apply old-fn args)))
-;;   (advice-add (if (progn (require 'json)
-;; 			 (fboundp 'json-parse-buffer))
-;; 		  'json-parse-buffer
-;; 		'json-read)
-;; 	      :around
-;; 	      #'lsp-booster--advice-json-parse)
-
-;;   (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
-;;     "Prepend emacs-lsp-booster command to lsp CMD."
-;;     (let ((orig-result (funcall old-fn cmd test?)))
-;;       (if (and (not test?) ;; for check lsp-server-present?
-;; 	       (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
-;; 	       lsp-use-plists
-;; 	       (not (functionp 'json-rpc-connection)) ;; native json-rpc
-;; 	       (executable-find "emacs-lsp-booster"))
-;; 	  (progn
-;; 	    (message "Using emacs-lsp-booster for %s!" orig-result)
-;; 	    (cons "emacs-lsp-booster" orig-result))
-;; 	orig-result)))
-
-;;   (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
-
-;;   (setq lsp-keymap-prefix "C-c l")
-
-;;   (defun my/lsp-mode-setup-completion ()
-;;     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-;; 	  '(orderless))) ;; Configure orderless
-
-;;   :hook (;; Auto start in the following modes
-;; 	 ((c++-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode dockerfile-ts-mode) . lsp-deferred)
-;; 	 (lsp-completion-mode . my/lsp-mode-setup-completion))
-;;   :commands (lsp lsp-deferred)
-;;   :custom
-;;   (lsp-completion-provider :none) ;; For corfu
-;;   (lsp-idle-delay 0.1)
-;;   (gc-cons-threshold 100000000)
-;;   (read-process-output-max (* 1024 1024)))
-
-;; (use-package dap-mode
-;;   :ensure t
-;;   :hook ((dap-stopped) . (lambda () (call-interactively #'dap-hydra)))
-;;   :config
-;;   (dap-auto-configure-mode +1)
-;;   (require 'dap-cpptools)
-;;   (require 'dap-node))
-
-;; ;; Extra lsp features
-;; (use-package lsp-ui
-;;   :ensure t
-;;   :commands lsp-ui-mode)
-
 ;; Better terminal
 (use-package vterm
   :ensure t)
@@ -298,6 +202,7 @@
 (use-package yasnippet-snippets
   :ensure t)
 
+;; Completions
 (use-package corfu
   :ensure t
   :commands (global-corfu-mode)
@@ -317,79 +222,6 @@
   :ensure t
   :bind (("C-c g" . magit-dispatch)
          ("C-c f" . magit-file-dispatch)))
-
-;; Example configuration for Consult
-;; (use-package consult
-;;   :ensure t)
-  ;; :bind (("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
-  ;;        ;; ("C-x b" . consult-buffer) ;; orig. switch-to-buffer
-  ;;        ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-  ;;        ("C-x 5 b" . consult-buffer-other-frame) ;; orig. switch-to-buffer-other-frame
-  ;;        ("C-x t b" . consult-buffer-other-tab) ;; orig. switch-to-buffer-other-tab
-  ;;        ("C-x r b" . consult-bookmark)		;; orig. bookmark-jump
-  ;;        ("C-x p b" . consult-project-buffer) ;; orig. project-switch-to-buffer
-
-  ;;        ;; Other custom bindings
-  ;;        ("M-y" . consult-yank-pop) ;; orig. yank-pop
-  ;;        ;; M-g bindings in `goto-map'
-  ;;        ("M-g e" . consult-compile-error)
-  ;;        ("M-g f" . consult-flymake)
-  ;;        ("M-g g" . consult-goto-line)		  ;; orig. goto-line
-  ;;        ("M-g M-g" . consult-goto-line)	  ;; orig. goto-line
-  ;;        ("M-g o" . consult-outline) ;; Alternative: consult-org-heading
-  ;;        ("M-g m" . consult-mark)
-  ;;        ("M-g k" . consult-global-mark)
-  ;;        ("M-g i" . consult-imenu)
-  ;;        ("M-g I" . consult-imenu-multi)
-  ;;        ;; M-s bindings in `search-map'
-  ;;        ("M-s d" . consult-fd) ;; Alternative: consult-fd
-  ;;        ("M-s c" . consult-locate)
-  ;;        ("M-s g" . consult-grep)
-  ;;        ("M-s G" . consult-git-grep)
-  ;;        ("M-s r" . consult-ripgrep)
-  ;;        ("M-s l" . consult-line)
-  ;;        ("M-s L" . consult-line-multi)
-  ;;        ("M-s k" . consult-keep-lines)
-  ;;        ("M-s u" . consult-focus-lines)
-  ;;        ;; Isearch integration
-  ;;        ("M-s e" . consult-isearch-history)
-  ;;        :map isearch-mode-map
-  ;;        ("M-e" . consult-isearch-history) ;; orig. isearch-edit-string
-  ;;        ("M-s e" . consult-isearch-history) ;; orig. isearch-edit-string
-  ;;        ("M-s l" . consult-line) ;; needed by consult-line to detect isearch
-  ;;        ("M-s L" . consult-line-multi) ;; needed by consult-line to detect isearch
-  ;;        ;; Minibuffer history
-  ;;        :map minibuffer-local-map
-  ;;        ("M-s" . consult-history) ;; orig. next-matching-history-element
-  ;;        ("M-r" . consult-history))
-  ;; orig. previous-matching-history-element
-  ;; Enable automatic preview at point in the *Completions* buffer. This is
-  ;; relevant when you use the default completion UI.
-  ;; :hook (completion-list-mode . consult-preview-at-point-mode)
-  ;; :config
-  ;; :custom
-  ;; (consult-narrow-key "<")
-  ;; (xref-show-xrefs-function #'consult-xref)
-  ;; (xref-show-definitions-function #'consult-xref))
-
-;; (use-package flycheck
-;;   :ensure t
-;;   :config
-;;   (global-flycheck-mode +1)
-;;   :custom
-;;   (flycheck-check-syntax-automatically '(save mode-enable)))
-
-;; (use-package consult-flycheck
-;;   :ensure t)
-
-;; (use-package consult-lsp
-;;   :ensure t
-;;   :config
-;;   (define-key lsp-mode-map [remap xref-find-apropos] #'consult-lsp-symbols))
-
-;; Centered window
-;; (use-package writeroom-mode
-;;   :ensure t)
 
 ;; For downloading treesit languages
 (use-package treesit-auto
@@ -415,13 +247,6 @@
   (completion-category-overrides nil)
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
-;; ;; Move minibuffer stuff to middle
-;; ;; Very glitchy
-;; (use-package vertico-posframe
-;;   :ensure t
-;;   :config
-;;   (vertico-posframe-mode 1))
-
 ;; Completion style
 (use-package orderless
   :ensure t)
@@ -446,74 +271,11 @@
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
-;; ;; Project management
-;; (use-package projectile
-;;   :ensure t
-;;   :commands (projectile-mode)
-;;   :defines (projectile-mode-map)
-;;   :init
-;;   (projectile-mode +1)
-;;   :bind (:map projectile-mode-map
-;; 	      ("C-c p" . projectile-command-map))
-;;   :hook
-;;   (project-find-functions . project-projectile)
-;;   :custom
-;;   ;; Allow compilation buffer to be editable (useful for interactive apps)
-;;   (projectile-comint-mode t)
-;;   ;; Auto search Projects folder for projects
-;;   (projectile-project-search-path '("~/Projects")))
-
-;; (use-package consult-projectile
-;;   :ensure t
-;;   :bind (:map projectile-mode-map
-;; 	      ([remap projectile-find-file] . consult-projectile-find-file)
-;; 	      ([remap projectile-find-dir] . consult-projectile-find-dir)
-;; 	      ([remap projectile-find-file-other-window] . consult-projectile-find-file-other-window)
-;; 	      ([remap projectile-switch-to-buffer-other-window] . consult-projectile-switch-to-buffer-other-window)
-;; 	      ([remap projectile-recentf] . consult-projectile-recentf)
-;; 	      ([remap projectile-switch-to-buffer] . consult-projectile-switch-to-buffer))
-;;   :after projectile)
-
 (use-package golden-ratio-scroll-screen
   :ensure t
   :bind
   (([remap scroll-down-command] . golden-ratio-scroll-screen-down)
    ([remap scroll-up-command] . golden-ratio-scroll-screen-up)))
-
-;; (use-package doom-modeline
-;;   :ensure t
-;;   :commands (doom-modeline-mode)
-;;   :init (doom-modeline-mode 1)
-;;   :custom
-;;   (doom-modeline-vcs-max-length 30))
-
-;; (use-package cape
-;;   :ensure t
-;;   :bind (("C-c c p" . completion-at-point)
-;; 	 ("C-c c t" . complete-tag)
-;; 	 ("C-c c d" . cape-dabbrev)
-;; 	 ("C-c c h" . cape-history)
-;; 	 ("C-c c f" . cape-file)
-;; 	 ("C-c c k" . cape-keyword)
-;; 	 ("C-c c s" . cape-elisp-symbol)
-;; 	 ("C-c c e" . cape-elisp-block)
-;; 	 ("C-c c a" . cape-abbrev)
-;; 	 ("C-c c l" . cape-line)
-;; 	 ("C-c c w" . cape-dict)
-;; 	 ("C-c c :" . cape-emoji)
-;; 	 ("C-c c _" . cape-tex)
-;; 	 ("C-c c &" . cape-sgml)
-;; 	 ("C-c c r" . cape-rfc1345)
-;; 	 ("C-c c y" . yasnippet-capf))
-;;   :init
-;;   (defun smren/elisp-capf-setup ()
-;;     (add-to-list 'completion-at-point-functions #'cape-elisp-symbol))
-;;   :hook
-;;   (emacs-lisp-mode . smren/elisp-capf-setup))
-
-;; (use-package yasnippet-capf
-;;   :ensure t
-;;   :after cape)
 
 (use-package corfu-terminal
   :ensure t
@@ -535,13 +297,6 @@
   :commands (global-git-gutter-mode)
   :init
   (global-git-gutter-mode +1))
-
-;; (use-package avy
-;;   :ensure t
-;;   :commands (avy-setup-default)
-;;   :init
-;;   (avy-setup-default)
-;;   :bind (("C-c a c" . avy-goto-char)))
 
 ;; Faster lsp
 (use-package eglot-booster
