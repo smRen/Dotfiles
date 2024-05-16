@@ -78,7 +78,7 @@
 
   :custom
   ;; Allow pin entry inside of emacs minibuffer
-  (setq epg-pinentry-mode 'loopback)
+  (epg-pinentry-mode 'loopback)
   
   ;; Do not allow the cursor in the minibuffer prompt
   (minibuffer-prompt-properties
