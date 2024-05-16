@@ -45,6 +45,7 @@
   (add-to-list 'auto-mode-alist '("Containerfile" . dockerfile-ts-mode))
 
   ;; Third party packages
+  (defvar package-archives)
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   (package-initialize)
@@ -206,6 +207,7 @@
 ;; ;; Color theme
 (use-package doom-themes
   :ensure t
+  :commands (doom-themes-visual-bell-config doom-themes-org-config)
   :custom
   (doom-vibrant-brighter-comments t)
   (doom-themes-enable-bold t)
@@ -213,7 +215,7 @@
   (doom-vibrant-brighter-comments t)
   (doom-vibrant-brighter-modeline t)
   (doom-vibrant-padded-modeline t)
-  :config
+  :init
   (load-theme 'doom-vibrant t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config))
@@ -309,6 +311,7 @@
 
 (use-package corfu
   :ensure t
+  :commands (global-corfu-mode)
   :custom
   (corfu-cycle t)
   (corfu-auto t)
@@ -350,7 +353,7 @@
 	 ("M-y" . consult-yank-pop) ;; orig. yank-pop
 	 ;; M-g bindings in `goto-map'
 	 ("M-g e" . consult-compile-error)
-	 ("M-g f" . consult-flycheck)
+	 ("M-g f" . consult-flymake)
 	 ("M-g g" . consult-goto-line)		  ;; orig. goto-line
 	 ("M-g M-g" . consult-goto-line)	  ;; orig. goto-line
 	 ("M-g o" . consult-outline) ;; Alternative: consult-org-heading
@@ -383,16 +386,7 @@
   ;; Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI.
   :hook (completion-list-mode . consult-preview-at-point-mode)
-
   :config
-  (consult-customize
-   consult-theme :preview-key '(:debounce 0.2 any)
-   consult-ripgrep consult-git-grep consult-grep
-   consult-bookmark consult-recent-file consult-xref
-   consult--source-bookmark consult--source-file-register
-   consult--source-recent-file consult--source-project-recent-file
-   :preview-key '(:debounce 0.4 any))
-
   :custom
   (consult-narrow-key "<")
   (xref-show-xrefs-function #'consult-xref)
@@ -438,6 +432,7 @@
 ;; Minibuffer Completion
 (use-package vertico
   :ensure t
+  :commands (vertico-mode)
   :init
   (vertico-mode)
   :custom
@@ -462,6 +457,7 @@
 ;; Annotations
 (use-package marginalia
   :ensure t
+  :commands (marginalia-mode)
   :init
   (marginalia-mode +1))
 
@@ -472,6 +468,7 @@
 (use-package nerd-icons-completion
   :ensure t
   :after marginalia
+  :commands (nerd-icons-completion-mode nerd-icons-completion-marginalia-setup)
   :config
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
@@ -479,6 +476,8 @@
 ;; Project management
 (use-package projectile
   :ensure t
+  :commands (projectile-mode)
+  :defines (projectile-mode-map)
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
@@ -517,6 +516,7 @@
 
 (use-package doom-modeline
   :ensure t
+  :commands (doom-modeline-mode)
   :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-vcs-max-length 30))
@@ -551,6 +551,7 @@
 
 (use-package corfu-terminal
   :ensure t
+  :commands (corfu-terminal-mode)
   :init
   (unless (display-graphic-p)
     (corfu-terminal-mode +1)))
@@ -558,17 +559,20 @@
 (use-package nerd-icons-corfu
   :ensure t
   :after corfu
+  :defines (corfu-margin-formatters)
   :commands (nerd-icons-corfu-formatter)
   :init
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package git-gutter
   :ensure t
+  :commands (global-git-gutter-mode)
   :init
   (global-git-gutter-mode +1))
 
 (use-package avy
   :ensure t
+  :commands (avy-setup-default)
   :init
   (avy-setup-default)
   :bind (("C-c a c" . avy-goto-char)))
