@@ -327,7 +327,6 @@
     (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
 		corfu-popupinfo-delay nil)
     (corfu-mode +1)))
-  (global-corfu-mode)
   :hook ((prog-mode . corfu-mode)
 	 (shell-mode . corfu-mode)
 	 (eshell-mode . corfu-mode)
