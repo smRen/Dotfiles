@@ -578,4 +578,11 @@
   (avy-setup-default)
   :bind (("C-c a c" . avy-goto-char)))
 
-;;; init.el ends here
+;; Faster lsp
+(use-package eglot-booster
+  :after eglot
+  :commands (eglot-booster-mode)
+  :init
+  (eglot-booster-mode))
+
+;;; Init.el ends here
