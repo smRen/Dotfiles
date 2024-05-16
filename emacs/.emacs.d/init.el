@@ -131,14 +131,15 @@
   ("C-x C-r" . recentf))
 
 ;; Native LSP
-;; (use-package eglot
-;;   :hook ((c++-ts-mode bash-ts-mode typescript-ts-mode) . eglot-ensure)
-;;   :custom
-;;   (eldoc-echo-area-use-multiline-p nil))
+(use-package eglot
+  :hook ((c++-ts-mode bash-ts-mode typescript-ts-mode) . eglot-ensure)
+  :custom
+  (eldoc-echo-area-use-multiline-p nil))
 
-;; (use-package flymake
-;;   :hook ((emacs-lisp-mode) . flymake-mode)
-;;   :custom ((flymake-no-changes-timeout 3)))
+;; Native file checking
+(use-package flymake
+  :hook ((emacs-lisp-mode) . flymake-mode)
+  :custom ((flymake-no-changes-timeout 3)))
 
 ;; Window movement
 (use-package windmove
@@ -377,12 +378,12 @@
   ;; (xref-show-xrefs-function #'consult-xref)
   ;; (xref-show-definitions-function #'consult-xref))
 
-(use-package flycheck
-  :ensure t
-  :config
-  (global-flycheck-mode +1)
-  :custom
-  (flycheck-check-syntax-automatically '(save mode-enable)))
+;; (use-package flycheck
+;;   :ensure t
+;;   :config
+;;   (global-flycheck-mode +1)
+;;   :custom
+;;   (flycheck-check-syntax-automatically '(save mode-enable)))
 
 ;; (use-package consult-flycheck
 ;;   :ensure t)
