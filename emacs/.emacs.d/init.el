@@ -26,9 +26,6 @@
   ;; Show column number
   (column-number-mode +1)
 
-  ;; Always use spaces for tabs
-  (indent-tabs-mode -1)
-
   ;; Save minibuffer history
   (savehist-mode +1)
 
