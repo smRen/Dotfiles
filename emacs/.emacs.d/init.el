@@ -124,14 +124,6 @@
   (scroll-conservatively 101)
   (scroll-preserve-screen-position +1)
 
-  ;; ;; Completion related settings
-  ;; (completion-auto-help 'always)
-  ;; (completion-styles '(flex partial-completion substring))
-  ;; (completion-category-overrides '((file (styles basic substring))))
-  ;; (read-buffer-completion-ignore-case t)
-  ;; (completions-format 'one-column)
-  ;; (completion-auto-select 'second-tab)
-  ;; (completions-detailed t)
   :bind
   ;; Use hippie expand
   ([remap dabbrev-expand] . hippie-expand)
