@@ -494,13 +494,6 @@
 ;; 	      ([remap projectile-recentf] . consult-projectile-recentf)
 ;; 	      ([remap projectile-switch-to-buffer] . consult-projectile-switch-to-buffer))
 ;;   :after projectile)
-
-(use-package ripgrep
-  :ensure t)
-
-(use-package git-modes
-  :ensure t)
-
 (use-package golden-ratio-scroll-screen
   :ensure t
   :bind
