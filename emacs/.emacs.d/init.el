@@ -138,6 +138,15 @@
   ;; Use hippie expand
   ([remap dabbrev-expand] . hippie-expand))
 
+;; Native LSP
+(use-package eglot
+  :hook ((c++-ts-mode bash-ts-mode typescript-ts-mode) . eglot-ensure)
+  :custom
+  (eldoc-echo-area-use-multiline-p nil))
+
+(use-package flymake
+  :hook ((emacs-lisp-mode) . flymake-mode))
+
 ;; Window movement
 (use-package windmove
   :bind (("C-c w h" . windmove-left)
