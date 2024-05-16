@@ -176,7 +176,6 @@
 
 ;; Custom settings for C/C++
 (use-package c-ts-mode
-  :defer t
   :custom
   ;; Indent and code style
   (c-ts-mode-indent-offset 4)
@@ -184,7 +183,6 @@
 
 ;; Custom settings for json-ts
 (use-package json-ts-mode
-  :defer t
   :custom
   (json-ts-mode-indent-offset 8))
 
@@ -288,13 +286,11 @@
 
 ;; Better terminal
 (use-package vterm
-  :ensure t
-  :defer t)
+  :ensure t)
 
 ;; Markdown
 (use-package markdown-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 ;; Snippets
 (use-package yasnippet
@@ -410,8 +406,7 @@
 
 ;; Centered window
 (use-package writeroom-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 ;; For downloading treesit languages
 (use-package treesit-auto
@@ -420,7 +415,6 @@
 ;; Autofind python env
 (use-package pet
   :ensure t
-  :defer t
   :config
   (add-hook 'python-base-mode-hook 'pet-mode -10))
 
@@ -497,8 +491,7 @@
   :after projectile)
 
 (use-package ripgrep
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package git-modes
   :ensure t)
