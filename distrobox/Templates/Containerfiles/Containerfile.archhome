@@ -10,7 +10,7 @@ RUN sed -i "s/#Color/Color/" /etc/pacman.conf \
     # Virtualization
     virt-manager \
     # Development packages
-    cmake ninja nodejs clang npm \
+    cmake ninja nodejs clang npm shellcheck shfmt\
     vscode-html-languageserver bash-language-server yaml-language-server jedi-language-server \
     lua-language-server python-lsp-server typescript-language-server \
     # Gui and terminal tools
