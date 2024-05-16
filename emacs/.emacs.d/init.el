@@ -394,8 +394,8 @@
 ;;   (define-key lsp-mode-map [remap xref-find-apropos] #'consult-lsp-symbols))
 
 ;; Centered window
-(use-package writeroom-mode
-  :ensure t)
+;; (use-package writeroom-mode
+;;   :ensure t)
 
 ;; For downloading treesit languages
 (use-package treesit-auto
