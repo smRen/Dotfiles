@@ -486,6 +486,7 @@
 ;; 	      ([remap projectile-recentf] . consult-projectile-recentf)
 ;; 	      ([remap projectile-switch-to-buffer] . consult-projectile-switch-to-buffer))
 ;;   :after projectile)
+
 (use-package golden-ratio-scroll-screen
   :ensure t
   :bind
@@ -499,29 +500,29 @@
   :custom
   (doom-modeline-vcs-max-length 30))
 
-(use-package cape
-  :ensure t
-  :bind (("C-c c p" . completion-at-point)
-	 ("C-c c t" . complete-tag)
-	 ("C-c c d" . cape-dabbrev)
-	 ("C-c c h" . cape-history)
-	 ("C-c c f" . cape-file)
-	 ("C-c c k" . cape-keyword)
-	 ("C-c c s" . cape-elisp-symbol)
-	 ("C-c c e" . cape-elisp-block)
-	 ("C-c c a" . cape-abbrev)
-	 ("C-c c l" . cape-line)
-	 ("C-c c w" . cape-dict)
-	 ("C-c c :" . cape-emoji)
-	 ("C-c c _" . cape-tex)
-	 ("C-c c &" . cape-sgml)
-	 ("C-c c r" . cape-rfc1345)
-	 ("C-c c y" . yasnippet-capf))
-  :init
-  (defun smren/elisp-capf-setup ()
-    (add-to-list 'completion-at-point-functions #'cape-elisp-symbol))
-  :hook
-  (emacs-lisp-mode . smren/elisp-capf-setup))
+;; (use-package cape
+;;   :ensure t
+;;   :bind (("C-c c p" . completion-at-point)
+;; 	 ("C-c c t" . complete-tag)
+;; 	 ("C-c c d" . cape-dabbrev)
+;; 	 ("C-c c h" . cape-history)
+;; 	 ("C-c c f" . cape-file)
+;; 	 ("C-c c k" . cape-keyword)
+;; 	 ("C-c c s" . cape-elisp-symbol)
+;; 	 ("C-c c e" . cape-elisp-block)
+;; 	 ("C-c c a" . cape-abbrev)
+;; 	 ("C-c c l" . cape-line)
+;; 	 ("C-c c w" . cape-dict)
+;; 	 ("C-c c :" . cape-emoji)
+;; 	 ("C-c c _" . cape-tex)
+;; 	 ("C-c c &" . cape-sgml)
+;; 	 ("C-c c r" . cape-rfc1345)
+;; 	 ("C-c c y" . yasnippet-capf))
+;;   :init
+;;   (defun smren/elisp-capf-setup ()
+;;     (add-to-list 'completion-at-point-functions #'cape-elisp-symbol))
+;;   :hook
+;;   (emacs-lisp-mode . smren/elisp-capf-setup))
 
 (use-package yasnippet-capf
   :ensure t
