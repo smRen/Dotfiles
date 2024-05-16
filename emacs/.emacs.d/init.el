@@ -147,9 +147,9 @@
 ;;   :custom
 ;;   (eldoc-echo-area-use-multiline-p nil))
 
-(use-package flymake
-  :hook ((emacs-lisp-mode) . flymake-mode)
-  :custom ((flymake-no-changes-timeout 3)))
+;; (use-package flymake
+;;   :hook ((emacs-lisp-mode) . flymake-mode)
+;;   :custom ((flymake-no-changes-timeout 3)))
 
 ;; Window movement
 (use-package windmove
