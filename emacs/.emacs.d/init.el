@@ -291,18 +291,12 @@
   :ensure t)
 
 ;; Snippets
-;; (use-package yasnippet
-;;   :ensure t
-;;   :commands (yas-reload-all)
-;;   :config
-;;   (yas-reload-all)
-;;   :hook
-;;   ;; Enable yas-snippets in the following modes
-;;   ((c++-ts-mode bash-ts-mode emacs-lisp-mode cmake-ts-mode json-ts-mode typescript-ts-mode) . yas-minor-mode))
+(use-package yasnippet
+  :ensure t)
 
 ;; Actual snippets
-;; (use-package yasnippet-snippets
-;;   :ensure t)
+(use-package yasnippet-snippets
+  :ensure t)
 
 (use-package corfu
   :ensure t
