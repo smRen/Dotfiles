@@ -256,8 +256,7 @@
   :ensure t
   :commands (marginalia-mode)
   :init
-  (if (display-graphic-p)
-    (marginalia-mode +1)))
+  (marginalia-mode +1))
 
 ;; Icons
 (use-package nerd-icons
