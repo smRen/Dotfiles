@@ -471,7 +471,8 @@
 (use-package consult-projectile
   :ensure t
   :bind (:map projectile-mode-map
-	      ([remap projectile-find-file] . consult-projectile-find-file)
+              ([remap projectile-switch-project] . consult-projectile-switch-project)
+              ([remap projectile-find-file] . consult-projectile-find-file)
 	      ([remap projectile-find-dir] . consult-projectile-find-dir)
 	      ([remap projectile-find-file-other-window] . consult-projectile-find-file-other-window)
 	      ([remap projectile-switch-to-buffer-other-window] . consult-projectile-switch-to-buffer-other-window)
