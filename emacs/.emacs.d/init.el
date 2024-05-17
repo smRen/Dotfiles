@@ -152,7 +152,9 @@
 (use-package winner
   :bind (:map winner-mode-map
               ("C-c u" . winner-undo)
-              ("C-c r" . winner-redo)))
+              ("C-c r" . winner-redo))
+  :config
+  (winner-mode +1))
 
 ;; Window movement
 (use-package windmove
