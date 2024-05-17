@@ -340,6 +340,68 @@
   :bind (("C-c g" . magit-dispatch)
          ("C-c f" . magit-file-dispatch)))
 
+;; Example configuration for Consult
+(use-package consult
+  :ensure t
+  :bind (("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
+	 ("C-x b" . consult-buffer) ;; orig. switch-to-buffer
+	 ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+	 ("C-x 5 b" . consult-buffer-other-frame) ;; orig. switch-to-buffer-other-frame
+	 ("C-x t b" . consult-buffer-other-tab) ;; orig. switch-to-buffer-other-tab
+	 ("C-x r b" . consult-bookmark)		;; orig. bookmark-jump
+	 ("C-x p b" . consult-project-buffer) ;; orig. project-switch-to-buffer
+
+	 ;; Other custom bindings
+	 ("M-y" . consult-yank-pop) ;; orig. yank-pop
+	 ;; M-g bindings in `goto-map'
+	 ("M-g e" . consult-compile-error)
+	 ("M-g f" . consult-flycheck)
+	 ("M-g g" . consult-goto-line)		  ;; orig. goto-line
+	 ("M-g M-g" . consult-goto-line)	  ;; orig. goto-line
+	 ("M-g o" . consult-outline) ;; Alternative: consult-org-heading
+	 ("M-g m" . consult-mark)
+	 ("M-g k" . consult-global-mark)
+	 ("M-g i" . consult-imenu)
+	 ("M-g I" . consult-imenu-multi)
+	 ;; M-s bindings in `search-map'
+	 ("M-s d" . consult-fd) ;; Alternative: consult-fd
+	 ("M-s c" . consult-locate)
+	 ("M-s g" . consult-grep)
+	 ("M-s G" . consult-git-grep)
+	 ("M-s r" . consult-ripgrep)
+	 ("M-s l" . consult-line)
+	 ("M-s L" . consult-line-multi)
+	 ("M-s k" . consult-keep-lines)
+	 ("M-s u" . consult-focus-lines)
+	 ;; Isearch integration
+	 ("M-s e" . consult-isearch-history)
+	 :map isearch-mode-map
+	 ("M-e" . consult-isearch-history) ;; orig. isearch-edit-string
+	 ("M-s e" . consult-isearch-history) ;; orig. isearch-edit-string
+	 ("M-s l" . consult-line) ;; needed by consult-line to detect isearch
+	 ("M-s L" . consult-line-multi) ;; needed by consult-line to detect isearch
+	 ;; Minibuffer history
+	 :map minibuffer-local-map
+	 ("M-s" . consult-history) ;; orig. next-matching-history-element
+	 ("M-r" . consult-history)) ;; orig. previous-matching-history-element
+
+  ;; Enable automatic preview at point in the *Completions* buffer. This is
+  ;; relevant when you use the default completion UI.
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :config
+  :custom
+  (consult-narrow-key "<")
+  (xref-show-xrefs-function #'consult-xref)
+  (xref-show-definitions-function #'consult-xref))
+
+(use-package consult-flycheck
+  :ensure t)
+
+(use-package consult-lsp
+  :ensure t
+  :config
+  (define-key lsp-mode-map [remap xref-find-apropos] #'consult-lsp-symbols))
+
 ;; For downloading treesit languages
 (use-package treesit-auto
   :ensure t)
@@ -404,6 +466,24 @@
   ;; Auto search Projects folder for projects
   (projectile-project-search-path '("~/Projects")))
 
+(use-package consult-projectile
+  :ensure t
+  :bind (:map projectile-mode-map
+	      ([remap projectile-find-file] . consult-projectile-find-file)
+	      ([remap projectile-find-dir] . consult-projectile-find-dir)
+	      ([remap projectile-find-file-other-window] . consult-projectile-find-file-other-window)
+	      ([remap projectile-switch-to-buffer-other-window] . consult-projectile-switch-to-buffer-other-window)
+	      ([remap projectile-recentf] . consult-projectile-recentf)
+	      ([remap projectile-switch-to-buffer] . consult-projectile-switch-to-buffer))
+  :after projectile)
+
+(use-package ripgrep
+  :ensure t)
+
+(use-package git-modes
+  :ensure t)
+
+>>>>>>> parent of d9b173b (Disable consult)
 (use-package golden-ratio-scroll-screen
   :ensure t
   :bind
