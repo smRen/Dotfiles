@@ -198,6 +198,87 @@
   :custom
   (json-ts-mode-indent-offset 8))
 
+;; Color theme
+(use-package doom-themes
+  :ensure t
+  :commands (doom-themes-visual-bell-config doom-themes-org-config)
+  :custom
+  (doom-vibrant-brighter-comments t)
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t)
+  (doom-vibrant-brighter-comments t)
+  (doom-vibrant-brighter-modeline t)
+  (doom-vibrant-padded-modeline t)
+  :init
+  (load-theme 'doom-vibrant t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-org-config))
+
+;; LSP Mode
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp-booster--advice-final-command lsp-booster--advice-json-parse)
+  :init
+  ;; For LSP Booster
+  (defun lsp-booster--advice-json-parse (old-fn &rest args)
+    "Try to parse bytecode instead of json."
+    (or
+     (when (equal (following-char) ?#)
+       (let ((bytecode (read (current-buffer))))
+	 (when (byte-code-function-p bytecode)
+	   (funcall bytecode))))
+     (apply old-fn args)))
+  (advice-add (if (progn (require 'json)
+			 (fboundp 'json-parse-buffer))
+		  'json-parse-buffer
+		'json-read)
+	      :around
+	      #'lsp-booster--advice-json-parse)
+
+  (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+    "Prepend emacs-lsp-booster command to lsp CMD."
+    (let ((orig-result (funcall old-fn cmd test?)))
+      (if (and (not test?) ;; for check lsp-server-present?
+	       (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+	       lsp-use-plists
+	       (not (functionp 'json-rpc-connection)) ;; native json-rpc
+	       (executable-find "emacs-lsp-booster"))
+	  (progn
+	    (message "Using emacs-lsp-booster for %s!" orig-result)
+	    (cons "emacs-lsp-booster" orig-result))
+	orig-result)))
+
+  (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
+
+  (setq lsp-keymap-prefix "C-c l")
+
+  (defun my/lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+	  '(orderless))) ;; Configure orderless
+
+  :hook (;; Auto start in the following modes
+	 ((c++-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode dockerfile-ts-mode) . lsp-deferred)
+	 (lsp-completion-mode . my/lsp-mode-setup-completion))
+  :commands (lsp lsp-deferred)
+  :custom
+  (lsp-completion-provider :none) ;; For corfu
+  (lsp-idle-delay 0.1)
+  (gc-cons-threshold 100000000)
+  (read-process-output-max (* 1024 1024)))
+
+(use-package dap-mode
+  :ensure t
+  :hook ((dap-stopped) . (lambda () (call-interactively #'dap-hydra)))
+  :config
+  (dap-auto-configure-mode +1)
+  (require 'dap-cpptools)
+  (require 'dap-node))
+
+;; Extra lsp features
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+
 ;; Better terminal
 (use-package vterm
   :ensure t)
