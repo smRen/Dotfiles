@@ -185,6 +185,14 @@
   ;; Enable electric pairs in following modes
   ((c++-ts-mode bash-ts-mode emacs-lisp-mode typescript-ts-mode) . electric-pair-local-mode))
 
+(use-package sh-script
+  :config
+  (add-to-list 'major-mode-remap-alist '(sh-mode . bash-ts-mode)))
+
+(use-package yaml-ts-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode)))
+
 ;; Custom settings for C/C++
 (use-package c-ts-mode
   :custom
@@ -197,6 +205,10 @@
 (use-package c++-ts-mode
   :config
   (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode)))
+
+;; (use-package css-mode
+;;   :config
+;;   (add-to-list 'major-mode-remap-alist '(-mode . c++-ts-mode)))
 
 (use-package js
   :config
@@ -271,7 +283,7 @@
 	  '(orderless))) ;; Configure orderless
 
   :hook (;; Auto start in the following modes
-	 ((c++-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode dockerfile-ts-mode) . lsp)
+	 ((c++-ts-mode css-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode dockerfile-ts-mode yaml-ts-mode) . lsp)
 	 (lsp-completion-mode . my/lsp-mode-setup-completion))
   :custom
   (lsp-completion-provider :none) ;; For corfu
