@@ -132,16 +132,16 @@
   ;; Recent files
   ("C-x C-r" . recentf))
 
-;; Native LSP
-(use-package eglot
-  :hook ((c++-ts-mode bash-ts-mode typescript-ts-mode) . eglot-ensure)
-  :custom
-  (eldoc-echo-area-use-multiline-p nil))
+;; ;; Native LSP
+;; (use-package eglot
+;;   :hook ((c++-ts-mode bash-ts-mode typescript-ts-mode) . eglot-ensure)
+;;   :custom
+;;   (eldoc-echo-area-use-multiline-p nil))
 
 ;; Native file checking
-(use-package flymake
-  :hook ((emacs-lisp-mode) . flymake-mode)
-  :custom ((flymake-no-changes-timeout 3)))
+;; (use-package flymake
+;;   :hook ((emacs-lisp-mode) . flymake-mode)
+;;   :custom ((flymake-no-changes-timeout 3)))
 
 ;; Window movement
 (use-package windmove
@@ -391,10 +391,10 @@
   (global-git-gutter-mode +1))
 
 ;; Faster lsp
-(use-package eglot-booster
-  :after eglot
-  :commands (eglot-booster-mode)
-  :init
-  (eglot-booster-mode))
+;; (use-package eglot-booster
+;;   :after eglot
+;;   :commands (eglot-booster-mode)
+;;   :init
+;;   (eglot-booster-mode))
 
 ;;; Init.el ends here
