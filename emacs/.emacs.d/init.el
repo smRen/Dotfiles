@@ -279,6 +279,13 @@
   :ensure t
   :commands lsp-ui-mode)
 
+(use-package flycheck
+  :ensure t
+  :config
+  (global-flycheck-mode +1)
+  :custom
+  (flycheck-check-syntax-automatically '(save mode-enable)))
+
 ;; Better terminal
 (use-package vterm
   :ensure t)
