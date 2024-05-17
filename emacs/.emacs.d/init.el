@@ -292,10 +292,16 @@
 
 (use-package flycheck
   :ensure t
+  :commands (flycheck-add-next-checker)
   :config
   (global-flycheck-mode +1)
+  (defun smren/elisp-checker ()
+    (flycheck-mode)
+    (flycheck-add-next-checker 'emacs-lisp 'emacs-lisp-checkdoc))
+  :hook
+  ((emacs-lisp-mode smren/elisp-check))
   :custom
-  (flycheck-check-syntax-automatically '(save mode-enable)))
+  (flycheck-idle-change-delay 3))
 
 ;; Better terminal
 (use-package vterm
