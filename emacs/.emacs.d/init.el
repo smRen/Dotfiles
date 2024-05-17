@@ -148,16 +148,23 @@
 ;;   :init
 ;;   (eglot-booster-mode))
 
+;; Window history
+(use-package winner
+  :bind (:map winner-mode-map
+              ("C-c u" . winner-undo)
+              ("C-c r" . winner-redo)))
+
 ;; Window movement
 (use-package windmove
-  :bind (("C-c w h" . windmove-left)
-         ("C-c w l" . windmove-right)
-         ("C-c w k" . windmove-up)
-         ("C-c w j" . windmove-down)
-         ("C-c w H" . windmove-swap-states-left)
-         ("C-c w L" . windmove-swap-states-right)
-         ("C-c w K" . windmove-swap-states-up)
-         ("C-c w J" . windmove-swap-states-down)))
+  :bind (:map windmove-mode-map
+              ("C-c w h" . windmove-left)
+              ("C-c w l" . windmove-right)
+              ("C-c w k" . windmove-up)
+              ("C-c w j" . windmove-down)
+              ("C-c w H" . windmove-swap-states-left)
+              ("C-c w L" . windmove-swap-states-right)
+              ("C-c w K" . windmove-swap-states-up)
+              ("C-c w J" . windmove-swap-states-down)))
 
 ;; Add color to compilation buffer
 (use-package ansi-color
