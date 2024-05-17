@@ -172,10 +172,10 @@
 (use-package ansi-color
   :commands (ansi-color-apply-on-region)
   :config
-  (defun my/ansi-colorize-buffer ()
+  (defun smren/ansi-colorize-buffer ()
     (let ((buffer-read-only nil))
       (ansi-color-apply-on-region (point-min) (point-max))))
-  (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer))
+  (add-hook 'compilation-filter-hook 'smren/ansi-colorize-buffer))
 
 (use-package project
   :bind (("C-x p F" . flymake-show-project-diagnostics)))
@@ -479,13 +479,6 @@
 	      ([remap projectile-switch-to-buffer] . consult-projectile-switch-to-buffer))
   :after projectile)
 
-(use-package ripgrep
-  :ensure t)
-
-(use-package git-modes
-  :ensure t)
-
->>>>>>> parent of d9b173b (Disable consult)
 (use-package golden-ratio-scroll-screen
   :ensure t
   :bind
