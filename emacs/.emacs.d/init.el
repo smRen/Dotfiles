@@ -6,8 +6,6 @@
 ;;; Code:
 (use-package emacs
   :config
-  (load-theme 'modus-vivendi t)
-  
   ;; Set side fringes
   (set-fringe-mode 10)
 
@@ -143,6 +141,13 @@
 ;;   :hook ((emacs-lisp-mode) . flymake-mode)
 ;;   :custom ((flymake-no-changes-timeout 3)))
 
+;; Faster lsp
+;; (use-package eglot-booster
+;;   :after eglot
+;;   :commands (eglot-booster-mode)
+;;   :init
+;;   (eglot-booster-mode))
+
 ;; Window movement
 (use-package windmove
   :bind (("C-c w h" . windmove-left)
@@ -217,7 +222,7 @@
 ;; LSP Mode
 (use-package lsp-mode
   :ensure t
-  :commands (lsp-booster--advice-final-command lsp-booster--advice-json-parse)
+  :commands (lsp lsp-booster--advice-final-command lsp-booster--advice-json-parse)
   :init
   ;; For LSP Booster
   (defun lsp-booster--advice-json-parse (old-fn &rest args)
@@ -257,9 +262,8 @@
 	  '(orderless))) ;; Configure orderless
 
   :hook (;; Auto start in the following modes
-	 ((c++-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode dockerfile-ts-mode) . lsp-deferred)
+	 ((c++-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode dockerfile-ts-mode) . lsp)
 	 (lsp-completion-mode . my/lsp-mode-setup-completion))
-  :commands (lsp lsp-deferred)
   :custom
   (lsp-completion-provider :none) ;; For corfu
   (lsp-idle-delay 0.1)
@@ -420,12 +424,5 @@
   :commands (global-git-gutter-mode)
   :init
   (global-git-gutter-mode +1))
-
-;; Faster lsp
-;; (use-package eglot-booster
-;;   :after eglot
-;;   :commands (eglot-booster-mode)
-;;   :init
-;;   (eglot-booster-mode))
 
 ;;; Init.el ends here
