@@ -369,6 +369,13 @@
   (([remap scroll-down-command] . golden-ratio-scroll-screen-down)
    ([remap scroll-up-command] . golden-ratio-scroll-screen-up)))
 
+(use-package doom-modeline
+  :ensure t
+  :commands (doom-modeline-mode)
+  :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-vcs-max-length 30))
+
 (use-package corfu-terminal
   :ensure t
   :commands (corfu-terminal-mode)
