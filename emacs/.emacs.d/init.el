@@ -184,6 +184,15 @@
   :config
   (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode)))
 
+(use-package js
+  :config
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode)))
+
+(use-package typescript-ts-mode
+  :config
+  (setq typescript-ts-mode-indent-offset 4)
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode)))
+
 ;; Custom settings for json-ts
 (use-package json-ts-mode
   :custom
