@@ -163,6 +163,9 @@
       (ansi-color-apply-on-region (point-min) (point-max))))
   (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer))
 
+(use-package project
+  :bind (("C-x p F" . flymake-show-project-diagnostics)))
+
 (use-package elec-pair
   :hook
   ;; Enable electric pairs in following modes
