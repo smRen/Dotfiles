@@ -128,7 +128,7 @@
   ;; Use hippie expand
   ([remap dabbrev-expand] . hippie-expand)
   ;; Recent files
-  ("C-x C-r" . recentf))
+  ("C-x C-r" . consult-recent-file))
 
 ;; ;; Native LSP
 ;; (use-package eglot
