@@ -369,7 +369,6 @@
 	 ("M-y" . consult-yank-pop) ;; orig. yank-pop
 	 ;; M-g bindings in `goto-map'
 	 ("M-g e" . consult-compile-error)
-	 ("M-g f" . consult-flycheck)
 	 ("M-g g" . consult-goto-line)		  ;; orig. goto-line
 	 ("M-g M-g" . consult-goto-line)	  ;; orig. goto-line
 	 ("M-g o" . consult-outline) ;; Alternative: consult-org-heading
@@ -409,7 +408,9 @@
   (xref-show-definitions-function #'consult-xref))
 
 (use-package consult-flycheck
-  :ensure t)
+  :ensure t
+  :after flycheck
+  :bind (("M-g f" . consult-flycheck)))
 
 (use-package consult-lsp
   :ensure t
