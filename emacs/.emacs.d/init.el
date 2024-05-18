@@ -308,7 +308,6 @@
   :ensure t
   :commands (flycheck-add-next-checker)
   :config
-  (global-flycheck-mode +1)
   (defun smren/elisp-checker ()
     (flycheck-mode)
     (flycheck-add-next-checker 'emacs-lisp 'emacs-lisp-checkdoc))
@@ -413,6 +412,7 @@
   :bind (("M-g f" . consult-flycheck)))
 
 (use-package consult-lsp
+  :commands (consult-lsp-symbols)
   :ensure t
   :config
   (define-key lsp-mode-map [remap xref-find-apropos] #'consult-lsp-symbols))
