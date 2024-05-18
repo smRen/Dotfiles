@@ -206,9 +206,9 @@
   :config
   (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode)))
 
-;; (use-package css-mode
-;;   :config
-;;   (add-to-list 'major-mode-remap-alist '(-mode . c++-ts-mode)))
+(use-package css-mode
+  :config
+  (add-to-list 'major-mode-remap-alist '(css-mode . css-ts-mode)))
 
 (use-package js
   :config
