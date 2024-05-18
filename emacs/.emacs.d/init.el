@@ -150,9 +150,9 @@
 
 ;; Window history
 (use-package winner
-  :bind (:map winner-mode-map
-              ("C-c u" . winner-undo)
-              ("C-c r" . winner-redo))
+  :commands (winner-undo winner-redo)
+  :bind (("C-c u" . winner-undo)
+         ("C-c r" . winner-redo))
   :config
   (winner-mode +1))
 
