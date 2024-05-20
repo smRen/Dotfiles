@@ -12,14 +12,16 @@ if ! shopt -oq posix; then
     fi
 fi
 
-DISTRIBUTION_NAME=$(grep -E ^NAME /etc/os-release | sed -nr 's/^NAME="(.*)"/\1/p')
-# Load fzf keybindings
-if [[ "$DISTRIBUTION_NAME" == *"Arch"* ]]; then
-    . /usr/share/fzf/key-bindings.bash
-    . /usr/share/fzf/completion.bash
-elif [[ "$DISTRIBUTION_NAME" == *"Ubuntu"* ]]; then
-    . /usr/share/doc/fzf/examples/key-bindings.bash
-    . /usr/share/bash-completion/completions/fzf
+# Load fzf keybindings inside container
+if [[ -f "/run/.containerenv" ]] ; then
+    DISTRIBUTION_NAME=$(grep -E ^NAME /etc/os-release | sed -nr 's/^NAME="(.*)"/\1/p')
+    if [[ "$DISTRIBUTION_NAME" == *"Arch"* ]]; then
+        . /usr/share/fzf/key-bindings.bash
+        . /usr/share/fzf/completion.bash
+    elif [[ "$DISTRIBUTION_NAME" == *"Ubuntu"* ]]; then
+        . /usr/share/doc/fzf/examples/key-bindings.bash
+        . /usr/share/bash-completion/completions/fzf
+    fi
 fi
 
 #GPG allow input of passphrase in tty
