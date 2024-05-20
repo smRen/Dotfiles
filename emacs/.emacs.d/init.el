@@ -6,6 +6,24 @@
 ;;; Code:
 (use-package emacs
   :config
+  ;; Straight package manager
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          (or (bound-and-true-p straight-base-dir)
+              user-emacs-directory)))
+        (bootstrap-version 7))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+  (straight-use-package 'use-package)
+  
   ;; Set side fringes
   (set-fringe-mode 10)
 
@@ -226,7 +244,7 @@
 
 ;; Color theme
 (use-package doom-themes
-  :ensure t
+  :straight t
   :commands (doom-themes-visual-bell-config doom-themes-org-config)
   :custom
   (doom-vibrant-brighter-comments t)
@@ -242,7 +260,7 @@
 
 ;; LSP Mode
 (use-package lsp-mode
-  :ensure t
+  :straight t
   :commands (lsp lsp-booster--advice-final-command lsp-booster--advice-json-parse)
   :init
   ;; For LSP Booster
@@ -292,7 +310,7 @@
   (read-process-output-max (* 1024 1024)))
 
 (use-package dap-mode
-  :ensure t
+  :straight t
   :hook ((dap-stopped) . (lambda () (call-interactively #'dap-hydra)))
   :config
   (dap-auto-configure-mode +1)
@@ -301,11 +319,11 @@
 
 ;; Extra lsp features
 (use-package lsp-ui
-  :ensure t
+  :straight t
   :commands lsp-ui-mode)
 
 (use-package flycheck
-  :ensure t
+  :straight t
   :commands (flycheck-add-next-checker)
   :config
   (defun smren/elisp-checker ()
@@ -318,23 +336,23 @@
 
 ;; Better terminal
 (use-package vterm
-  :ensure t)
+  :straight t)
 
 ;; Markdown
 (use-package markdown-mode
-  :ensure t)
+  :straight t)
 
 ;; Snippets
 (use-package yasnippet
-  :ensure t)
+  :straight t)
 
 ;; Actual snippets
 (use-package yasnippet-snippets
-  :ensure t)
+  :straight t)
 
 ;; Completions
 (use-package corfu
-  :ensure t
+  :straight t
   :commands (global-corfu-mode)
   :custom
   (corfu-cycle t)
@@ -349,13 +367,13 @@
 
 ;; Git porcelain
 (use-package magit
-  :ensure t
+  :straight t
   :bind (("C-c g" . magit-dispatch)
          ("C-c f" . magit-file-dispatch)))
 
 ;; Example configuration for Consult
 (use-package consult
-  :ensure t
+  :straight t
   :bind (("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
 	 ("C-x b" . consult-buffer) ;; orig. switch-to-buffer
 	 ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
@@ -407,29 +425,29 @@
   (xref-show-definitions-function #'consult-xref))
 
 (use-package consult-flycheck
-  :ensure t
+  :straight t
   :after flycheck
   :bind (("M-g f" . consult-flycheck)))
 
 (use-package consult-lsp
   :commands (consult-lsp-symbols)
-  :ensure t
+  :straight t
   :config
   (define-key lsp-mode-map [remap xref-find-apropos] #'consult-lsp-symbols))
 
 ;; For downloading treesit languages
 (use-package treesit-auto
-  :ensure t)
+  :straight t)
 
 ;; Autofind python env
 (use-package pet
-  :ensure t
+  :straight t
   :config
   (add-hook 'python-base-mode-hook 'pet-mode -10))
 
 ;; Minibuffer Completion
 (use-package vertico
-  :ensure t
+  :straight t
   :commands (vertico-mode)
   :init
   (vertico-mode)
@@ -443,21 +461,21 @@
 
 ;; Completion style
 (use-package orderless
-  :ensure t)
+  :straight t)
 
 ;; Annotations
 (use-package marginalia
-  :ensure t
+  :straight t
   :commands (marginalia-mode)
   :init
   (marginalia-mode +1))
 
 ;; Icons
 (use-package nerd-icons
-  :ensure t)
+  :straight t)
 
 (use-package nerd-icons-completion
-  :ensure t
+  :straight t
   :after marginalia
   :commands (nerd-icons-completion-mode nerd-icons-completion-marginalia-setup)
   :config
@@ -466,7 +484,7 @@
 
 ;; Project management
 (use-package projectile
-  :ensure t
+  :straight t
   :commands (projectile-mode)
   :defines (projectile-mode-map)
   :init
@@ -482,7 +500,7 @@
   (projectile-project-search-path '("~/Projects")))
 
 (use-package consult-projectile
-  :ensure t
+  :straight t
   :bind (:map projectile-mode-map
               ([remap projectile-switch-project] . consult-projectile-switch-project)
               ([remap projectile-find-file] . consult-projectile-find-file)
@@ -494,27 +512,27 @@
   :after projectile)
 
 (use-package golden-ratio-scroll-screen
-  :ensure t
+  :straight t
   :bind
   (([remap scroll-down-command] . golden-ratio-scroll-screen-down)
    ([remap scroll-up-command] . golden-ratio-scroll-screen-up)))
 
 (use-package doom-modeline
-  :ensure t
+  :straight t
   :commands (doom-modeline-mode)
   :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-vcs-max-length 30))
 
 (use-package corfu-terminal
-  :ensure t
+  :straight t
   :commands (corfu-terminal-mode)
   :init
   (unless (display-graphic-p)
     (corfu-terminal-mode +1)))
 
 (use-package nerd-icons-corfu
-  :ensure t
+  :straight t
   :after corfu
   :defines (corfu-margin-formatters)
   :commands (nerd-icons-corfu-formatter)
@@ -522,7 +540,7 @@
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package git-gutter
-  :ensure t
+  :straight t
   :commands (global-git-gutter-mode)
   :init
   (global-git-gutter-mode +1))
