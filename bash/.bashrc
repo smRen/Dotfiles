@@ -103,8 +103,3 @@ vterm_cmd() {
 
     vterm_printf "51;E$vterm_elisp"
 }
-
-# Temporary fix for dolphin open with
-if [ -f "/.dockerenv" ]; then
-    XDG_MENU_PREFIX=plasma- kbuildsycoca6 &> /dev/null
-fi
