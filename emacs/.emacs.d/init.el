@@ -174,9 +174,8 @@
 
 ;; Window history
 (use-package winner
-  :commands (winner-undo winner-redo)
-  :bind (("C-c u" . winner-undo)
-         ("C-c r" . winner-redo))
+  :bind (("C-c w u" . winner-undo)
+         ("C-c w r" . winner-redo))
   :config
   (winner-mode +1))
 
