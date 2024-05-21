@@ -148,6 +148,12 @@
   ;; Recent files
   ("C-x C-r" . consult-recent-file))
 
+;; Org mode
+(use-package org
+  :bind (("C-c o s" . org-store-link)
+         ("C-c o c" . org-capture)
+         ("C-c o a" . org-agenda)))
+
 ;; ;; Native LSP
 ;; (use-package eglot
 ;;   :hook ((c++-ts-mode bash-ts-mode typescript-ts-mode) . eglot-ensure)
