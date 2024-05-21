@@ -544,4 +544,12 @@
   :init
   (global-git-gutter-mode +1))
 
+(use-package exec-path-from-shell
+  :straight t
+  :config
+  (dolist (var '("LANG"))
+    (add-to-list 'exec-path-from-shell-variables var))
+    (when (daemonp)
+      (exec-path-from-shell-initialize)))
+
 ;;; Init.el ends here
