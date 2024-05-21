@@ -91,6 +91,9 @@
   ;; Enable line modes in programming modes
   (prog-mode . display-line-numbers-mode)
 
+  ;; Enable line modes in specific modes
+  ((Info-mode org-mode) . display-line-numbers-mode)
+
   ;; Do not allow the cursor in the minibuffer prompt
   (minibuffer-setup . cursor-intangible-mode)
 
