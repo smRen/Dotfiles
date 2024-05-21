@@ -176,15 +176,14 @@
 
 ;; Window movement
 (use-package windmove
-  :bind (:map windmove-mode-map
-              ("C-c w h" . windmove-left)
-              ("C-c w l" . windmove-right)
-              ("C-c w k" . windmove-up)
-              ("C-c w j" . windmove-down)
-              ("C-c w H" . windmove-swap-states-left)
-              ("C-c w L" . windmove-swap-states-right)
-              ("C-c w K" . windmove-swap-states-up)
-              ("C-c w J" . windmove-swap-states-down)))
+  :bind (("C-c w h" . windmove-left)
+         ("C-c w l" . windmove-right)
+         ("C-c w k" . windmove-up)
+         ("C-c w j" . windmove-down)
+         ("C-c w H" . windmove-swap-states-left)
+         ("C-c w L" . windmove-swap-states-right)
+         ("C-c w K" . windmove-swap-states-up)
+         ("C-c w J" . windmove-swap-states-down)))
 
 ;; Add color to compilation buffer
 (use-package ansi-color
