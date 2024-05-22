@@ -22,9 +22,3 @@ if [ -n "$BASH_VERSION" ]; then
 	. "$HOME/.bashrc"
     fi
 fi
-
-# Guix setup
-export GUIX_PROFILE="$HOME/.config/guix/current"
-# shellcheck source=/dev/null
-. "$GUIX_PROFILE/etc/profile"
-export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
