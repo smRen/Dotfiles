@@ -155,7 +155,9 @@
 (use-package org
   :bind (("C-c o s" . org-store-link)
          ("C-c o c" . org-capture)
-         ("C-c o a" . org-agenda)))
+         ("C-c o a" . org-agenda)
+         :map org-mode-map
+         ("C-c o <RET>" . org-meta-return)))
 
 ;; ;; Native LSP
 ;; (use-package eglot
