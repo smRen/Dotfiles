@@ -2,6 +2,4 @@
 .cache/
 .DS_STORE
 *.cache
-/emacs/.emacs.d/straight/build-cache.el
-/emacs/.emacs.d/straight/repos/
-/emacs/.emacs.d/straight/build/
+/emacs/.emacs.d/
