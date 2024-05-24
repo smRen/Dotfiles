@@ -27,9 +27,6 @@
   ;; Desktop mode
   (desktop-save-mode +1)
   
-  ;; Set side fringes
-  (set-fringe-mode 10)
-
   ;; Disable menu bar, tool bar, and scroll bar
   (menu-bar-mode -1)
   (tool-bar-mode -1)
