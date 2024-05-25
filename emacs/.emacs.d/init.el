@@ -257,14 +257,13 @@
   :straight t
   :commands (doom-themes-visual-bell-config doom-themes-org-config)
   :custom
-  (doom-vibrant-brighter-comments t)
   (doom-themes-enable-bold t)
   (doom-themes-enable-italic t)
-  (doom-vibrant-brighter-comments t)
-  (doom-vibrant-brighter-modeline t)
-  (doom-vibrant-padded-modeline t)
+  (doom-outrun-electric-brighter-comments t)
+  (doom-outrun-electric-padded-modeline t)
+  (doom-outrun-electric-brighter-modeline t)
   :init
-  (load-theme 'doom-vibrant t)
+  (load-theme 'doom-outrun-electric t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config))
 
