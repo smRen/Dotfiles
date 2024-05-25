@@ -25,8 +25,9 @@
   (straight-use-package 'use-package)
 
   ;; Desktop mode
-  (desktop-save-mode +1)
-  
+  (unless (daemonp)
+    (desktop-save-mode +1))
+    
   ;; Disable menu bar, tool bar, and scroll bar
   (menu-bar-mode -1)
   (tool-bar-mode -1)
