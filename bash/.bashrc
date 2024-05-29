@@ -24,6 +24,11 @@ fi
 #GPG allow input of passphrase in tty
 TTY=$(tty)
 export GPG_TTY=$TTY
+gpg-connect-agent updatestartuptty /bye >/dev/null
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi
 
 # Customize prompt
 MAGENTA="\[$(tput setaf 5)\]"
