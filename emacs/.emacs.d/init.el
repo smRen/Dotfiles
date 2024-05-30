@@ -557,9 +557,9 @@
 (use-package exec-path-from-shell
   :straight t
   :config
-  (dolist (var '("LANG"))
+  (dolist (var '("LANG" "SSH_AUTH_SOCK"))
     (add-to-list 'exec-path-from-shell-variables var))
-    (when (daemonp)
-      (exec-path-from-shell-initialize)))
+  (when (daemonp)
+    (exec-path-from-shell-initialize)))
 
 ;;; Init.el ends here
