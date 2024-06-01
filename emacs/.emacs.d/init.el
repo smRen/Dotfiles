@@ -149,6 +149,8 @@
   :bind
   ;; Use hippie expand
   ([remap dabbrev-expand] . hippie-expand)
+  ;; Ibuffer
+  ("C-x C-b" . ibuffer-other-window)
   ;; Recent files
   ("C-x C-r" . consult-recent-file))
 
