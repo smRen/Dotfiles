@@ -575,7 +575,4 @@
   (when (daemonp)
     (exec-path-from-shell-initialize)))
 
-(use-package ob-async
-  :ensure t)
-
 ;;; Init.el ends here
