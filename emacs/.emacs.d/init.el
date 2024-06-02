@@ -566,12 +566,6 @@
   :init
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
-(use-package git-gutter
-  :straight t
-  :commands (global-git-gutter-mode)
-  :init
-  (global-git-gutter-mode +1))
-
 (use-package exec-path-from-shell
   :straight t
   :config
