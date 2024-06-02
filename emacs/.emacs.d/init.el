@@ -234,6 +234,12 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode)))
 
+(use-package python
+  :config
+  (add-to-list 'auto-mode-alist '(python-mode . python-ts-mode))
+  :custom
+  (python-indent-guess-indent-offset nil))
+
 ;; Custom settings for C/C++
 (use-package c-ts-mode
   :custom
