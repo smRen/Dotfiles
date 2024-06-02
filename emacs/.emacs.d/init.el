@@ -69,12 +69,7 @@
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   (package-initialize)
 
-  ;; Make async shell command faster
-  (setq read-process-output-max (* 64 1024 1024))
-  (setq process-adaptive-read-buffering nil)
-  (setq process-connection-type nil)
-
-  ;; Set fonts
+    ;; Set fonts
   (add-to-list 'default-frame-alist
 	       '(font . "Hack Nerd Font-11"))
   (set-face-attribute 'default t :font "Hack Nerd Font-11")
