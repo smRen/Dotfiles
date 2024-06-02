@@ -236,7 +236,7 @@
 
 (use-package python
   :config
-  (add-to-list 'auto-mode-alist '(python-mode . python-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
   :custom
   (python-indent-guess-indent-offset nil))
 
