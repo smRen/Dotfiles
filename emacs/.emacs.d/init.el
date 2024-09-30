@@ -334,7 +334,7 @@
 	  '(orderless))) ;; Configure orderless
 
   :hook (;; Auto start in the following modes
-	 ((c++-ts-mode css-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode dockerfile-ts-mode yaml-ts-mode) . lsp)
+	 ((python-ts-mode c++-ts-mode css-ts-mode bash-ts-mode cmake-ts-mode json-ts-mode typescript-ts-mode dockerfile-ts-mode yaml-ts-mode) . lsp)
 	 (lsp-completion-mode . my/lsp-mode-setup-completion))
   :custom
   (lsp-completion-provider :none) ;; For corfu
