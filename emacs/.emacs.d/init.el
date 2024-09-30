@@ -25,8 +25,8 @@
   (straight-use-package 'use-package)
 
   ;; Desktop mode
-  (unless (daemonp)
-    (desktop-save-mode +1))
+  ;; (unless (daemonp)
+  ;;   (desktop-save-mode +1))
 
   ;; Default theme
   (load-theme 'modus-vivendi t)
@@ -215,13 +215,13 @@
          ("C-c w J" . windmove-swap-states-down)))
 
 ;; Add color to compilation buffer
-(use-package ansi-color
-  :commands (ansi-color-apply-on-region)
-  :config
-  (defun smren/ansi-colorize-buffer ()
-    (let ((buffer-read-only nil))
-      (ansi-color-apply-on-region (point-min) (point-max))))
-  (add-hook 'compilation-filter-hook 'smren/ansi-colorize-buffer))
+;; (use-package ansi-color
+;;   :commands (ansi-color-apply-on-region)
+;;   :config
+;;   (defun smren/ansi-colorize-buffer ()
+;;     (let ((buffer-read-only nil))
+;;       (ansi-color-apply-on-region (point-min) (point-max))))
+;;   (add-hook 'compilation-filter-hook 'smren/ansi-colorize-buffer))
 
 (use-package project
   :bind (("C-x p F" . flymake-show-project-diagnostics)))
