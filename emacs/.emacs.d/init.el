@@ -29,7 +29,7 @@
   ;;   (desktop-save-mode +1))
 
   ;; Default theme
-  (load-theme 'modus-vivendi t)
+  ;; (load-theme 'modus-vivendi t)
     
   ;; Disable menu bar, tool bar, and scroll bar
   (menu-bar-mode -1)
@@ -277,19 +277,19 @@
   (json-ts-mode-indent-offset 8))
 
 ;; Color theme
-;; (use-package doom-themes
-;;   :straight t
-;;   :commands (doom-themes-visual-bell-config doom-themes-org-config)
-;;   :custom
-;;   (doom-themes-enable-bold t)
-;;   (doom-themes-enable-italic t)
-;;   (doom-outrun-electric-brighter-comments t)
-;;   (doom-outrun-electric-padded-modeline t)
-;;   (doom-outrun-electric-brighter-modeline t)
-;;   :init
-;;   (load-theme 'doom-outrun-electric t)
-;;   (doom-themes-visual-bell-config)
-;;   (doom-themes-org-config))
+(use-package doom-themes
+  :straight t
+  :commands (doom-themes-visual-bell-config doom-themes-org-config)
+  :custom
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t)
+  (doom-outrun-electric-brighter-comments t)
+  (doom-outrun-electric-padded-modeline t)
+  (doom-outrun-electric-brighter-modeline t)
+  :init
+  (load-theme 'doom-outrun-electric t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-org-config))
 
 ;; LSP Mode
 (use-package lsp-mode
