@@ -196,12 +196,12 @@
 ;;   :init
 ;;   (eglot-booster-mode))
 
-;; Window history
-(use-package winner
-  :bind (("C-c w u" . winner-undo)
-         ("C-c w r" . winner-redo))
-  :config
-  (winner-mode +1))
+;; ;; Window history
+;; (use-package winner
+;;   :bind (("C-c w u" . winner-undo)
+;;          ("C-c w r" . winner-redo))
+;;   :config
+;;   (winner-mode +1))
 
 ;; Window movement
 (use-package windmove
@@ -340,15 +340,16 @@
   (lsp-completion-provider :none) ;; For corfu
   (lsp-idle-delay 0.1)
   (gc-cons-threshold 100000000)
+  (lsp-enable-snippet nil)
   (read-process-output-max (* 1024 1024)))
 
-(use-package dap-mode
-  :straight t
-  :hook ((dap-stopped) . (lambda () (call-interactively #'dap-hydra)))
-  :config
-  (dap-auto-configure-mode +1)
-  (require 'dap-cpptools)
-  (require 'dap-node))
+;; (use-package dap-mode
+;;   :straight t
+;;   :hook ((dap-stopped) . (lambda () (call-interactively #'dap-hydra)))
+;;   :config
+;;   (dap-auto-configure-mode +1)
+;;   (require 'dap-cpptools)
+;;   (require 'dap-node))
 
 ;; Extra lsp features
 (use-package lsp-ui
@@ -371,17 +372,17 @@
 (use-package vterm
   :straight t)
 
-;; Markdown
-(use-package markdown-mode
-  :straight t)
+;; ;; Markdown
+;; (use-package markdown-mode
+;;   :straight t)
 
-;; Snippets
-(use-package yasnippet
-  :straight t)
+;; ;; Snippets
+;; (use-package yasnippet
+;;   :straight t)
 
-;; Actual snippets
-(use-package yasnippet-snippets
-  :straight t)
+;; ;; Actual snippets
+;; (use-package yasnippet-snippets
+;;   :straight t)
 
 ;; Completions
 (use-package corfu
@@ -457,10 +458,10 @@
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref))
 
-(use-package consult-flycheck
-  :straight t
-  :after flycheck
-  :bind (("M-g f" . consult-flycheck)))
+;; (use-package consult-flycheck
+;;   :straight t
+;;   :after flycheck
+;;   :bind (("M-g f" . consult-flycheck)))
 
 (use-package consult-lsp
   :commands (consult-lsp-symbols)
@@ -497,52 +498,52 @@
   :straight t)
 
 ;; Annotations
-(use-package marginalia
-  :straight t
-  :commands (marginalia-mode)
-  :init
-  (marginalia-mode +1))
+;; (use-package marginalia
+;;   :straight t
+;;   :commands (marginalia-mode)
+;;   :init
+;;   (marginalia-mode +1))
 
 ;; Icons
-(use-package nerd-icons
-  :straight t)
+;; (use-package nerd-icons
+;;   :straight t)
 
-(use-package nerd-icons-completion
-  :straight t
-  :after marginalia
-  :commands (nerd-icons-completion-mode nerd-icons-completion-marginalia-setup)
-  :config
-  (nerd-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+;; (use-package nerd-icons-completion
+;;   :straight t
+;;   :after marginalia
+;;   :commands (nerd-icons-completion-mode nerd-icons-completion-marginalia-setup)
+;;   :config
+;;   (nerd-icons-completion-mode)
+;;   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
-;; Project management
-(use-package projectile
-  :straight t
-  :commands (projectile-mode)
-  :defines (projectile-mode-map)
-  :init
-  (projectile-mode +1)
-  :bind (:map projectile-mode-map
-	      ("C-c p" . projectile-command-map))
-  :hook
-  (project-find-functions . project-projectile)
-  :custom
-  ;; Allow compilation buffer to be editable (useful for interactive apps)
-  (projectile-comint-mode t)
-  ;; Auto search Projects folder for projects
-  (projectile-project-search-path '("~/Projects")))
+;; ;; Project management
+;; (use-package projectile
+;;   :straight t
+;;   :commands (projectile-mode)
+;;   :defines (projectile-mode-map)
+;;   :init
+;;   (projectile-mode +1)
+;;   :bind (:map projectile-mode-map
+;; 	      ("C-c p" . projectile-command-map))
+;;   :hook
+;;   (project-find-functions . project-projectile)
+;;   :custom
+;;   ;; Allow compilation buffer to be editable (useful for interactive apps)
+;;   (projectile-comint-mode t)
+;;   ;; Auto search Projects folder for projects
+;;   (projectile-project-search-path '("~/Projects")))
 
-(use-package consult-projectile
-  :straight t
-  :bind (:map projectile-mode-map
-              ([remap projectile-switch-project] . consult-projectile-switch-project)
-              ([remap projectile-find-file] . consult-projectile-find-file)
-	      ([remap projectile-find-dir] . consult-projectile-find-dir)
-	      ([remap projectile-find-file-other-window] . consult-projectile-find-file-other-window)
-	      ([remap projectile-switch-to-buffer-other-window] . consult-projectile-switch-to-buffer-other-window)
-	      ([remap projectile-recentf] . consult-projectile-recentf)
-	      ([remap projectile-switch-to-buffer] . consult-projectile-switch-to-buffer))
-  :after projectile)
+;; (use-package consult-projectile
+;;   :straight t
+;;   :bind (:map projectile-mode-map
+;;               ([remap projectile-switch-project] . consult-projectile-switch-project)
+;;               ([remap projectile-find-file] . consult-projectile-find-file)
+;; 	      ([remap projectile-find-dir] . consult-projectile-find-dir)
+;; 	      ([remap projectile-find-file-other-window] . consult-projectile-find-file-other-window)
+;; 	      ([remap projectile-switch-to-buffer-other-window] . consult-projectile-switch-to-buffer-other-window)
+;; 	      ([remap projectile-recentf] . consult-projectile-recentf)
+;; 	      ([remap projectile-switch-to-buffer] . consult-projectile-switch-to-buffer))
+;;   :after projectile)
 
 (use-package golden-ratio-scroll-screen
   :straight t
@@ -550,66 +551,66 @@
   (([remap scroll-down-command] . golden-ratio-scroll-screen-down)
    ([remap scroll-up-command] . golden-ratio-scroll-screen-up)))
 
-;; (use-package doom-modeline
+(use-package doom-modeline
+  :straight t
+  :commands (doom-modeline-mode)
+  :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-vcs-max-length 30))
+
+;; (use-package corfu-terminal
 ;;   :straight t
-;;   :commands (doom-modeline-mode)
-;;   :init (doom-modeline-mode 1)
-;;   :custom
-;;   (doom-modeline-vcs-max-length 30))
+;;   :commands (corfu-terminal-mode)
+;;   :init
+;;   (unless (display-graphic-p)
+;;     (corfu-terminal-mode +1)))
 
-(use-package corfu-terminal
-  :straight t
-  :commands (corfu-terminal-mode)
-  :init
-  (unless (display-graphic-p)
-    (corfu-terminal-mode +1)))
+;; (use-package nerd-icons-corfu
+;;   :straight t
+;;   :after corfu
+;;   :defines (corfu-margin-formatters)
+;;   :commands (nerd-icons-corfu-formatter)
+;;   :init
+;;   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
-(use-package nerd-icons-corfu
-  :straight t
-  :after corfu
-  :defines (corfu-margin-formatters)
-  :commands (nerd-icons-corfu-formatter)
-  :init
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+;; (use-package exec-path-from-shell
+;;   :straight t
+;;   :config
+;;   (dolist (var '("LANG" "SSH_AUTH_SOCK"))
+;;     (add-to-list 'exec-path-from-shell-variables var))
+;;   (exec-path-from-shell-initialize))
 
-(use-package exec-path-from-shell
-  :straight t
-  :config
-  (dolist (var '("LANG" "SSH_AUTH_SOCK"))
-    (add-to-list 'exec-path-from-shell-variables var))
-  (exec-path-from-shell-initialize))
+;; (use-package embark
+;;   :straight t
+;;   :bind
+;;   (("C-." . embark-act)         ;; pick some comfortable binding
+;;    ("C-;" . embark-dwim)        ;; good alternative: M-.
+;;    ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+;;   :init
+;;   ;; Optionally replace the key help with a completing-read interface
+;;   (setq prefix-help-command #'embark-prefix-help-command)
+;;   ;; Show the Embark target at point via Eldoc. You may adjust the
+;;   ;; Eldoc strategy, if you want to see the documentation from
+;;   ;; multiple providers. Beware that using this can be a little
+;;   ;; jarring since the message shown in the minibuffer can be more
+;;   ;; than one line, causing the modeline to move up and down:
 
-(use-package embark
-  :straight t
-  :bind
-  (("C-." . embark-act)         ;; pick some comfortable binding
-   ("C-;" . embark-dwim)        ;; good alternative: M-.
-   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
-  :init
-  ;; Optionally replace the key help with a completing-read interface
-  (setq prefix-help-command #'embark-prefix-help-command)
-  ;; Show the Embark target at point via Eldoc. You may adjust the
-  ;; Eldoc strategy, if you want to see the documentation from
-  ;; multiple providers. Beware that using this can be a little
-  ;; jarring since the message shown in the minibuffer can be more
-  ;; than one line, causing the modeline to move up and down:
+  ;; ;; (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
+  ;; ;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
+  ;; :config
+  ;; ;; Hide the mode line of the Embark live/completions buffers
+  ;; (add-to-list 'display-buffer-alist
+  ;;              '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+  ;;                nil
+  ;;                (window-parameters (mode-line-format . none)))))
 
-  ;; (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
-  ;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
-  :config
-  ;; Hide the mode line of the Embark live/completions buffers
-  (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
-                 (window-parameters (mode-line-format . none)))))
+;; ;; Consult users will also want the embark-consult package.
+;; (use-package embark-consult
+;;   :straight t ; only need to install it, embark loads it after consult if found
+;;   :hook
+;;   (embark-collect-mode . consult-preview-at-point-mode))
 
-;; Consult users will also want the embark-consult package.
-(use-package embark-consult
-  :straight t ; only need to install it, embark loads it after consult if found
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
-
-(use-package inf-ruby
-  :straight t)
+;; (use-package inf-ruby
+;;   :straight t)
 
 ;;; Init.el ends here
